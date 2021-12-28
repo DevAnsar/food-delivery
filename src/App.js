@@ -5,15 +5,18 @@ import MainTheme from "./components/MainTheme";
 import IndexPage from "./pages/IndexPage";
 
 import { TabsProvider } from "./components/layouts/Tabs";
+import AuthProvider from "./providers/AuthProvider";
 
 function App() {
   return (
     <MainTheme className="App">
-      <TabsProvider>
-        <Routes>
-          <Route path="/" element={<IndexPage />} />
-        </Routes>
-      </TabsProvider>
+      <AuthProvider>
+        <TabsProvider>
+          <Routes>
+            <Route path="/" element={<IndexPage />} />
+          </Routes>
+        </TabsProvider>
+      </AuthProvider>
     </MainTheme>
   );
 }
