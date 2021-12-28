@@ -1,12 +1,12 @@
 import NavBar from "./layouts/NavBar";
 import { Grid } from "@mui/material";
-
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { deepOrange, common, grey } from "@mui/material/colors";
 import { ThemeProvider, createTheme } from "@mui/material";
-import {BottomNavigation} from './layouts/NavBar'
+import { BottomNavigation } from "./layouts/NavBar";
+import { useShowTheme } from "./../hooks/useShowTheme";
 
 // Create rtl cache
 const cacheRtl = createCache({
@@ -34,25 +34,27 @@ const theme = createTheme({
     contrastThreshold: 3,
     tonalOffset: 0.2,
   },
-  typography:{
-    fontFamily:[
-      'Yekan'
-    ],
-  }
+  typography: {
+    fontFamily: ["Yekan"],
+  },
 });
 
 function MainTheme({ children, className }) {
+  const { showTheme } = useShowTheme();
   return (
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={theme}>
-        <Grid container spacing={2} {...className}>
-          <Grid item xs={12} md={12}>
-            <NavBar />
-          </Grid>
-          <Grid sx={{ paddingTop: 0 }} xs={12} md={12}>
+        <Grid container spacing={1} {...className} sx={{minHeight:'100%'}}>
+          {showTheme && (
+            <Grid item xs={12} md={12}>
+              <NavBar />
+            </Grid>
+          )}
+
+          <Grid sx={{ paddingTop: 0,minHeight:'100%' }} xs={12} md={12}>
             {children}
 
-            <BottomNavigation />
+            {showTheme && <BottomNavigation />}
           </Grid>
         </Grid>
       </ThemeProvider>
