@@ -18,6 +18,7 @@ import { useAuth } from "./../hooks/useAuth";
 
 import { PhoneCustomInput, LoginCodeCostumInput } from "./../components/auth";
 import { phoneRegex, loginCodeRegex } from "../configs/variables";
+import { sendPhoneNumberApi, sendLoginCodeApi } from "../api/Login";
 
 const maxSecoundToResendCode = 15;
 function LoginPage() {
@@ -87,22 +88,30 @@ function LoginPage() {
   const stopTimer = () => {
     return clearInterval(timerInterval);
   };
+  const filterPhoneNumber = () =>phoneNumber.split("").filter((n) => n !== " ").join("");
 
-  const handleSendMobile = () => {
-    let phone = phoneNumber
-      .split("")
-      .filter((n) => n !== " ")
-      .join("");
-    console.log("phone:", phone);
+  const handleSendMobile = async () => {
+    console.log("phone:", filterPhoneNumber);
 
+    let phone=filterPhoneNumber();
     let validate = phoneRegex(phone);
     if (validate) {
       setError("");
       setLoading(true);
       //post phone number to server
-      setLoading(false);
-      setLastSendTime(Date.now());
-      setLevel(2);
+      try {
+        const res = await sendPhoneNumberApi(phone);
+        const { data } = res;
+        console.log(data);
+        /*
+         */
+        setLoading(false);
+        setLastSendTime(Date.now());
+        setLevel(2);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     } else {
       setError("شماره موبایل تایید شده نمیباشد");
     }
@@ -117,19 +126,19 @@ function LoginPage() {
     //send code to mobile
     // console.log("send code to mobile");
     setCode(null);
-    setError("")
+    setError("");
     stopTimer();
     setLastSendTime(Date.now());
   };
 
   const handleResendCodeByCall = () => {
     //call to mobile and say code
-    setCode(null)
+    setCode(null);
     stopTimer();
     setLastSendTime(Date.now());
   };
 
-  const handleSendCode = () => {
+  const handleSendCode = async () => {
     // console.log(phoneNumber)
     let loginCode = code
       ? code
@@ -144,9 +153,21 @@ function LoginPage() {
       setError("");
       setLoading(true);
       //post login code to server
-      setLoading(false);
-      toggleAuth();
-      navigate("/");
+      try {
+        const res = await sendLoginCodeApi(filterPhoneNumber(),loginCode);
+        const { data } = res;
+        console.log(data);
+        /* 
+        save user token to storage if authentication is success
+        */
+        setLoading(false);
+        toggleAuth();
+        navigate("/");
+      } catch (error) {
+        // setError(error);
+        setLoading(false);
+        console.log(error);
+      }
     } else {
       setError("کد را به صورت صحیح وارد کنید");
     }
