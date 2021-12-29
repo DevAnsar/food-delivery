@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useShowTheme } from "./../hooks/useShowTheme";
 import {
   Container,
@@ -8,25 +8,151 @@ import {
   Typography,
   Link as LinkComponent,
   Button,
+  CircularProgress,
 } from "@mui/material";
+import { red } from "@mui/material/colors";
+import { Call as CallIcon, Chat as ChatIcon, Phone } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { orange, common } from "@mui/material/colors";
+import { orange, common, grey } from "@mui/material/colors";
+import { useAuth } from "./../hooks/useAuth";
 
-import { PhoneCustomInput } from "./../components/auth";
+import { PhoneCustomInput, LoginCodeCostumInput } from "./../components/auth";
+import { phoneRegex, loginCodeRegex } from "../configs/variables";
 
+const maxSecoundToResendCode = 15;
 function LoginPage() {
+  const {
+    user: { loggedIn, level, lastSendTime },
+    setLevel,
+    setLastSendTime,
+    toggleAuth,
+  } = useAuth();
+  const navigate = useNavigate();
+
   const { setShowTheme } = useShowTheme();
   const [phoneNumber, setPhoneNumber] = useState("09");
+  const [code, setCode] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [resendTimer, setResendTimer] = useState(maxSecoundToResendCode);
+  const [timerInterval, setTimerInterval] = useState(null);
+
   useEffect(() => {
     setShowTheme(false);
-    return () => setShowTheme(true);
+    if (loggedIn) {
+      navigate("/");
+    }
+    return () => {
+      setShowTheme(true);
+      stopTimer();
+    };
   }, []);
 
-  const handleSendCode =()=>{
+  useEffect(() => {
+    setResendTimer(diffSecound);
+    if (level === 2) {
+      // console.log("level 2");
+      startTimer();
+    } else {
+      // console.log("level 1");
+      stopTimer();
+    }
+  }, [level, lastSendTime]);
+
+  useEffect(() => {
+    if (resendTimer === 0) {
+      stopTimer();
+    }
+  }, [resendTimer]);
+
+  const diffSecound = () => {
+    let endDate = lastSendTime + Number(maxSecoundToResendCode * 1000);
+    let nowDate = Date.now();
+    let diff = Math.floor((endDate - nowDate) / 1000);
+    if (diff <= 0) diff = 0;
+    return diff;
+  };
+
+  const startTimer = () => {
+    let timerInit = setInterval(() => {
+      let diff = diffSecound();
+      setResendTimer(diff);
+      if (diff <= 0) {
+        console.log("diff:", diff);
+        // stopTimer();
+      }
+    }, 1000);
+    setTimerInterval(timerInit);
+  };
+  const stopTimer = () => {
+    return clearInterval(timerInterval);
+  };
+
+  const handleSendMobile = () => {
+    let phone = phoneNumber
+      .split("")
+      .filter((n) => n !== " ")
+      .join("");
+    console.log("phone:", phone);
+
+    let validate = phoneRegex(phone);
+    if (validate) {
+      setError("");
+      setLoading(true);
+      //post phone number to server
+      setLoading(false);
+      setLastSendTime(Date.now());
+      setLevel(2);
+    } else {
+      setError("شماره موبایل تایید شده نمیباشد");
+    }
+  };
+
+  const handleChangeMobile = () => {
+    setLastSendTime(null);
+    setError("");
+    setLevel(1);
+  };
+  const handleResendCode = () => {
+    //send code to mobile
+    // console.log("send code to mobile");
+    setCode(null);
+    setError("")
+    stopTimer();
+    setLastSendTime(Date.now());
+  };
+
+  const handleResendCodeByCall = () => {
+    //call to mobile and say code
+    setCode(null)
+    stopTimer();
+    setLastSendTime(Date.now());
+  };
+
+  const handleSendCode = () => {
     // console.log(phoneNumber)
-    let phone=phoneNumber.split("").filter(n => n!== " ").join("");
-    console.log(phone)
-  }
+    let loginCode = code
+      ? code
+          .split("-")
+          .filter((n) => n !== " ")
+          .join("")
+      : "";
+    console.log(loginCode);
+
+    let validate = loginCodeRegex(loginCode);
+    if (validate) {
+      setError("");
+      setLoading(true);
+      //post login code to server
+      setLoading(false);
+      toggleAuth();
+      navigate("/");
+    } else {
+      setError("کد را به صورت صحیح وارد کنید");
+    }
+    // console.log(validate);
+  };
+
   return (
     <Grid
       container
@@ -71,43 +197,147 @@ function LoginPage() {
           container
           direction="row"
           justifyContent="center"
-          alignItems="flex-end"
+          alignItems="flex-start"
         >
-          <Grid
-            container
-            direction="column"
-            justifyContent="flex-end"
-            alignItems="center"
-            xs={12}
-            md={6}
-            lg={6}
-            sx={{ direction: "ltr", pt: 3 }}
-          >
-            {/* {phoneNumber
-              .split("")
-              .filter((n) => n !== " ")
-              .join("")} */}
-            <Grid container xs={12} sm={7} md={6} lg={5}>
-              <PhoneCustomInput seter={(number) => setPhoneNumber(number)} />
-            </Grid>
-            <Typography sx={{ mt: 2,fontSize:{xs:'0.9rem',sm:"1rem"} }}>
-              برای ورود یا ثبت نام در سایت شماره موبایل خود را در بخش بالا وارد
-              نمایید و سپس دکمه ی ارسال کد را بزنید
-            </Typography>
+          {level === 1 ? (
+            <Grid
+              container
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="center"
+              xs={12}
+              md={6}
+              lg={6}
+              sx={{ direction: "ltr", pt: 3 }}
+            >
+              <Grid container xs={12} sm={6} md={9} lg={6}>
+                <PhoneCustomInput
+                  error={error}
+                  seter={(number) => setPhoneNumber(number)}
+                />
+              </Grid>
+              <Typography sx={{ fontSize: "0.8rem", color: red[600] }}>
+                {error && JSON.stringify(error)}
+              </Typography>
+              <Typography
+                sx={{ mt: 2, fontSize: { xs: "0.9rem", sm: "1rem" } }}
+              >
+                برای ورود یا ثبت نام در سایت شماره موبایل خود را در بخش بالا
+                وارد نمایید و سپس دکمه ی ارسال کد را بزنید
+              </Typography>
 
-            <Typography sx={{ mt: 5,fontSize:{xs:'0.8rem',sm:"1rem"} }}>
-              با ثبت نام و ورود به سایت شما قوانین استفاده ازآن را قبول میکنید
-            </Typography>
+              <Typography
+                sx={{ mt: 5, fontSize: { xs: "0.8rem", sm: "1rem" } }}
+              >
+                با ثبت نام و ورود به سایت شما قوانین استفاده ازآن را قبول میکنید
+              </Typography>
 
-            <Typography sx={{ my: 2,fontSize:{xs:'0.8rem',sm:"0.9rem"} }}>
-              <Link to="/terms-of-use">
-                <LinkComponent>مشاهده قوانین استفاده از دتال</LinkComponent>
-              </Link>
-            </Typography>
-            <Grid container xs={12} sm={6} md={4} lg={3}>
-              <DetalButton onClick={handleSendCode} variant="contained">ارسال کد تایید</DetalButton>
+              <Typography
+                sx={{ my: 2, fontSize: { xs: "0.8rem", sm: "0.9rem" } }}
+              >
+                <Link to="/terms-of-use">
+                  <LinkComponent>مشاهده قوانین استفاده از دتال</LinkComponent>
+                </Link>
+              </Typography>
+              <Grid container xs={12} sm={6} md={9} lg={6}>
+                <DetalButton
+                  disabled={loading}
+                  onClick={handleSendMobile}
+                  variant="contained"
+                >
+                  ارسال کد تایید
+                </DetalButton>
+              </Grid>
+              {loading && <CircularProgress sx={{ mt: 3 }} size="1.5rem" />}
             </Grid>
-          </Grid>
+          ) : (
+            <Grid
+              container
+              direction="column"
+              justifyContent="flex-end"
+              alignItems="center"
+              xs={12}
+              md={6}
+              lg={6}
+              sx={{ direction: "ltr", pt: 3 }}
+            >
+              <Grid container xs={12} sm={7} md={9} lg={5}>
+                <LoginCodeCostumInput
+                  error={error}
+                  seter={(number) => setCode(number)}
+                />
+              </Grid>
+              <Typography sx={{ fontSize: "0.8rem", color: red[600] }}>
+                {error && JSON.stringify(error)}
+              </Typography>
+              <Typography
+                sx={{ mt: 2, fontSize: { xs: "0.9rem", sm: "1rem" } }}
+              >
+                برای شما یک پیامک حاوی کد تایید ارسال شده است ، لطفا کد ارسال
+                شده را در بخش بالا وارد نمایید.{" "}
+                <LinkComponent
+                  sx={{ cursor: "pointer" }}
+                  onClick={handleChangeMobile}
+                >
+                  تغییر شماره تلفن
+                </LinkComponent>
+              </Typography>
+
+              {resendTimer > 0 ? (
+                <Typography
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    fontSize: { xs: "0.8rem", sm: "1rem", fontWeight: "bold" },
+                  }}
+                >
+                  {resendTimer} ثانیه بعد میتوانید مجدد از یکی از روش های زیر
+                  برای دریافت کد تایید استفاده کنید
+                </Typography>
+              ) : (
+                <Typography
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    fontSize: { xs: "0.8rem", sm: "1rem", fontWeight: "bold" },
+                  }}
+                >
+                  کدی دریافت نکرده اید؟ از یکی از روش های زیر برای دریافت مجدد
+                  کد تایید استفاده کنید
+                </Typography>
+              )}
+
+              <Grid container xs={12} sm={6} md={9} lg={6}>
+                <ResendButton
+                  onClick={handleResendCode}
+                  variant="contained"
+                  sx={{ mb: 1 }}
+                  disabled={resendTimer !== 0}
+                >
+                  <ChatIcon sx={{ mr: 2 }} />
+                  ارسال مجدد کد از طریق پیامک
+                </ResendButton>
+                <ResendButton
+                  onClick={handleResendCodeByCall}
+                  variant="contained"
+                  sx={{ mb: 2 }}
+                  disabled={resendTimer !== 0}
+                >
+                  <CallIcon sx={{ mr: 2 }} />
+                  ارسال مجدد کد از طریق تماس صوتی مکانیزه
+                </ResendButton>
+
+                <DetalButton
+                  disabled={loading}
+                  onClick={handleSendCode}
+                  variant="contained"
+                >
+                  ورود
+                </DetalButton>
+              </Grid>
+              {loading && <CircularProgress sx={{ mt: 3 }} size="1.5rem" />}
+            </Grid>
+          )}
         </Grid>
       </Container>
     </Grid>
@@ -119,6 +349,16 @@ const DetalButton = styled(Button)(({ theme }) => ({
   backgroundColor: orange[500],
   "&:hover": {
     backgroundColor: orange[700],
+  },
+  width: "100%",
+  height: "50px",
+}));
+
+const ResendButton = styled(Button)(({ theme }) => ({
+  color: grey[700],
+  backgroundColor: grey[200],
+  "&:hover": {
+    backgroundColor: grey[300],
   },
   width: "100%",
   height: "50px",

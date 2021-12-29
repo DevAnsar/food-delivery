@@ -5,6 +5,8 @@ const AuthContext = createContext(undefined);
 function AuthProvider({ children }) {
   const [storageValue, setLocalStorageValue] = useLocalStorage("user", {
     loggedIn: false,
+    level : 1,
+    lastSendTime:null
   });
 
   const [user, setUser] = useState(storageValue);
@@ -19,8 +21,25 @@ function AuthProvider({ children }) {
       loggedIn: !prev.loggedIn,
     }));
   };
+
+  
+  const setLevel = (level) => {
+    setUser((prev) => ({
+      ...prev,
+      level
+    }));
+  };
+
+    
+  const setLastSendTime = (lastSendTime) => {
+    setUser((prev) => ({
+      ...prev,
+      lastSendTime
+    }));
+  };
+
   return (
-    <AuthContext.Provider value={{ user, toggleAuth }}>
+    <AuthContext.Provider value={{ user, toggleAuth ,setLevel,setLastSendTime }}>
       {children}
     </AuthContext.Provider>
   );
