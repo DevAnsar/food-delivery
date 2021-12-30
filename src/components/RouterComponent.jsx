@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 //import pages
-import { IndexPage, LoginPage } from "../pages";
+import { IndexPage, LoginPage , AddressesPage } from "../pages";
 
 //import components
 import {TermsOfUse} from '../components/auth'
@@ -20,6 +20,12 @@ const routes = [
     path: "/login",
     element: <LoginPage />,
     private: false,
+  },
+  
+  {
+    path: "/my-addresses",
+    element: <AddressesPage />,
+    private: true,
   },
   {
     path: "/terms-of-use",

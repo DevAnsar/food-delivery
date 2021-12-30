@@ -1,4 +1,4 @@
-import Axios from "./Axios";
+import {Axios} from "./Axios";
 
 const sendPhoneNumberApi = (phone) => Axios.post(`/auth/phone`, { phone });
 const sendLoginCodeApi = (phone , code) => Axios.post(`/auth/code`, { phone , code });

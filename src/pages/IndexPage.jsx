@@ -1,4 +1,4 @@
-import React, { useContext,useEffect,useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Chip, Grid, Stack, Container, Divider } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { useTheme } from "@mui/material/styles";
@@ -10,18 +10,23 @@ import {
 } from "./../components/layouts/Tabs";
 import { detalBaseLinearGradient } from "./../configs/variables";
 import { CenterVitrin } from "./../components/centers";
-import {useLocalStorage} from './../hooks/useLocalStorage';
-import {AddressFormModal} from './../components/forms';
+import { useLocalStorage } from "./../hooks/useLocalStorage";
+import { useNavigate } from "react-router-dom";
+
 
 function IndexPage() {
   const theme = useTheme();
-  const [addresses] =useLocalStorage("user-addresses",null);
+  const navigate = useNavigate();
+  const [address] = useLocalStorage("user-address", null);
   const { selectedTab, setSelectedTab } = useContext(TabContext);
-  const [addressModalOpen,setAddressModalOpen]=useState(true);
-  useEffect(()=>{
-
-    console.log('addresses:',addresses);
-  },[]);
+  useEffect(() => {
+    console.log("address", address);
+    if (address === null) {
+      navigate("/my-addresses");
+      // setAddressesModalOpen(true)
+      // setAddressModalOpen(true)
+    }
+  }, []);
   const handleChangeIndex = (index) => {
     setSelectedTab(index);
   };
@@ -119,7 +124,6 @@ function IndexPage() {
           </TabPanel>
         </SwipeableViews>
       </Container>
-      <AddressFormModal address={null} open={addressModalOpen} setOpen={setAddressModalOpen} />
     </div>
   );
 }

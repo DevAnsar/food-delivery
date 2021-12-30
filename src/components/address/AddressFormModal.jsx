@@ -17,10 +17,11 @@ import {
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import { common } from "@mui/material/colors";
-import { OrangeButton } from "./../buttons";
+import { OrangeButton } from "../buttons";
 import { useForm } from "react-hook-form";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
+import { saveAddressApi } from "../../api/Address";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -53,10 +54,7 @@ function AddressFormModal({ open, setOpen, address }) {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const [localStorageAddress, setLocalStorageAddress] = useLocalStorage(
-    "user-address",
-    null
-  );
+  const [, setLocalStorageAddress] = useLocalStorage("user-address", null);
 
   const [loading, setLoading] = React.useState(false);
   const [selectedCityUnits, setSelectedCityUnits] = React.useState([]);
@@ -68,18 +66,30 @@ function AddressFormModal({ open, setOpen, address }) {
     let units = cities.filter((city) => city.name === value)[0].units;
     setSelectedCityUnits(units);
   };
-  const handleFormSubmit = (data) => {
-    console.log(data);
-    setLocalStorageAddress("user-address", data);
-    /*
-    send data for save to database
-    */
-    navigate("/");
-    setOpen(false);
+  const handleFormSubmit = async (formData) => {
+    try {
+      setLoading(true);
+      // console.log(data);
+      /*
+      send data for save to database
+      */
+      const res = await saveAddressApi(formData);
+      const { data } = res;
+      console.log(data);
+      setLocalStorageAddress("user-address", data);
+
+      setLoading(false);
+      setOpen(false);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleClose = () => {
-    setOpen(false);
+    if (!loading) {
+      setOpen(false);
+    }
   };
 
   return (
