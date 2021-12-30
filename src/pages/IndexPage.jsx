@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect,useState } from "react";
 import { Box, Chip, Grid, Stack, Container, Divider } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { useTheme } from "@mui/material/styles";
@@ -10,11 +10,18 @@ import {
 } from "./../components/layouts/Tabs";
 import { detalBaseLinearGradient } from "./../configs/variables";
 import { CenterVitrin } from "./../components/centers";
+import {useLocalStorage} from './../hooks/useLocalStorage';
+import {AddressFormModal} from './../components/forms';
 
 function IndexPage() {
   const theme = useTheme();
+  const [addresses] =useLocalStorage("user-addresses",null);
   const { selectedTab, setSelectedTab } = useContext(TabContext);
+  const [addressModalOpen,setAddressModalOpen]=useState(true);
+  useEffect(()=>{
 
+    console.log('addresses:',addresses);
+  },[]);
   const handleChangeIndex = (index) => {
     setSelectedTab(index);
   };
@@ -112,6 +119,7 @@ function IndexPage() {
           </TabPanel>
         </SwipeableViews>
       </Container>
+      <AddressFormModal address={null} open={addressModalOpen} setOpen={setAddressModalOpen} />
     </div>
   );
 }
