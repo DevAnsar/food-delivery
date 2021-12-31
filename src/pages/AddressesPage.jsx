@@ -5,6 +5,7 @@ import { OrangeButton } from "../components/buttons";
 import { getMyAllAddressApi } from "../api/Address";
 import AddressRow from "../components/address/AddressRow";
 import { Box } from "@mui/system";
+import toast from 'react-hot-toast';
 
 function AddressesPage() {
   const [addressModalOpen, setAddressModalOpen] = useState(false);
@@ -18,12 +19,21 @@ function AddressesPage() {
   const getUserAllAddresses = async () => {
     try {
       setLoading(true);
-      const res = await getMyAllAddressApi();
-      const { data } = res;
-      console.log(data);
+      const {data} = await getMyAllAddressApi();
+      const { status ,message , addresses  } = data;
+      // console.log(data);
       setLoading(false);
-      setAddresses(data);
-    } catch (error) {}
+      if(status){
+        setAddresses(addresses);
+      }else{
+        // console.log(message);
+        toast.error(message);
+      }
+
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   };
 
   return (

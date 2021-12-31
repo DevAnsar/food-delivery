@@ -7,7 +7,7 @@ import { deepOrange, common, grey } from "@mui/material/colors";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { BottomNavigation } from "./layouts/NavBar";
 import { useShowTheme } from "./../hooks/useShowTheme";
-
+import { Toaster } from 'react-hot-toast';
 // Create rtl cache
 const cacheRtl = createCache({
   key: "muirtl",
@@ -44,18 +44,17 @@ function MainTheme({ children, className }) {
   return (
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={theme}>
-        <Grid container spacing={1} {...className} sx={{minHeight:'100%'}}>
+        <Grid container spacing={1} {...className} sx={{ minHeight: "100%" }}>
           {showTheme && (
             <Grid item xs={12} md={12}>
               <NavBar />
             </Grid>
           )}
-
-          <Grid sx={{ paddingTop: 0,minHeight:'100%' }} xs={12} md={12}>
+          <Grid sx={{ paddingTop: 0, minHeight: "100%" }} xs={12} md={12}>
             {children}
-
             {showTheme && <BottomNavigation />}
           </Grid>
+          <Toaster />
         </Grid>
       </ThemeProvider>
     </CacheProvider>

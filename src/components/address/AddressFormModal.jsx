@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { saveAddressApi } from "../../api/Address";
+import toast from 'react-hot-toast';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -73,14 +74,18 @@ function AddressFormModal({ open, setOpen, address }) {
       /*
       send data for save to database
       */
-      const res = await saveAddressApi(formData);
-      const { data } = res;
-      console.log(data);
-      setLocalStorageAddress("user-address", data);
-
-      setLoading(false);
-      setOpen(false);
-      navigate("/");
+      const {data} = await saveAddressApi(formData);
+      const { status,address,message } = data;
+      // console.log(data);
+      if(status){
+        setLocalStorageAddress("user-address", data);
+        setLoading(false);
+        setOpen(false);
+        navigate("/");
+        
+      }else{
+        toast.error(message);
+      }
     } catch (error) {
       console.log(error);
     }

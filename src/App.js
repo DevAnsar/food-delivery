@@ -10,13 +10,13 @@ import { AuthProvider, ThemeProvider } from "./providers";
 function App() {
   return (
     <ThemeProvider>
-      <MainTheme className="App">
-        <AuthProvider>
-          <TabsProvider>
-            <RouterComponent />
-          </TabsProvider>
-        </AuthProvider>
-      </MainTheme>
+        <MainTheme className="App">
+          <AuthProvider>
+            <TabsProvider>
+              <RouterComponent />
+            </TabsProvider>
+          </AuthProvider>
+        </MainTheme>
     </ThemeProvider>
   );
 }

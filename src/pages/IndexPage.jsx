@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Chip, Grid, Stack, Container, Divider } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { useTheme } from "@mui/material/styles";
@@ -26,7 +26,7 @@ function IndexPage() {
       // setAddressesModalOpen(true)
       // setAddressModalOpen(true)
     }
-  }, []);
+  }, [address,navigate]);
   const handleChangeIndex = (index) => {
     setSelectedTab(index);
   };
@@ -55,7 +55,7 @@ function IndexPage() {
                 }}
               />
             </Grid>
-            <Grid xs={8}>
+            <Grid xs={8} item>
               {/* slider */}
               <Box
                 sx={{
@@ -70,7 +70,7 @@ function IndexPage() {
             </Grid>
           </Grid>
 
-          <Grid xs={12} position="sticky" top="30px">
+          <Grid  position="sticky" top="30px">
             <CategoriesTabs />
           </Grid>
         </Container>
@@ -102,7 +102,7 @@ function IndexPage() {
               deliveryTime="35-50"
             />
             <Divider />
-            <CenterVitrin />
+            
           </TabPanel>
 
           <TabPanel value={selectedTab} index={1}>

@@ -19,8 +19,9 @@ import { useAuth } from "./../hooks/useAuth";
 import { PhoneCustomInput, LoginCodeCostumInput } from "./../components/auth";
 import { phoneRegex, loginCodeRegex } from "../configs/variables";
 import { sendPhoneNumberApi, sendLoginCodeApi } from "../api/Login";
+import toast from 'react-hot-toast';
 
-const maxSecoundToResendCode = 15;
+const maxSecoundToResendCode = 25;
 function LoginPage() {
   const {
     user: { loggedIn, level, lastSendTime },
@@ -88,34 +89,11 @@ function LoginPage() {
   const stopTimer = () => {
     return clearInterval(timerInterval);
   };
-  const filterPhoneNumber = () =>phoneNumber.split("").filter((n) => n !== " ").join("");
-
-  const handleSendMobile = async () => {
-    console.log("phone:", filterPhoneNumber);
-
-    let phone=filterPhoneNumber();
-    let validate = phoneRegex(phone);
-    if (validate) {
-      setError("");
-      setLoading(true);
-      //post phone number to server
-      try {
-        const res = await sendPhoneNumberApi(phone);
-        const { data } = res;
-        console.log(data);
-        /*
-         */
-        setLoading(false);
-        setLastSendTime(Date.now());
-        setLevel(2);
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-      }
-    } else {
-      setError("شماره موبایل تایید شده نمیباشد");
-    }
-  };
+  const filterPhoneNumber = () =>
+    phoneNumber
+      .split("")
+      .filter((n) => n !== " ")
+      .join("");
 
   const handleChangeMobile = () => {
     setLastSendTime(null);
@@ -138,33 +116,63 @@ function LoginPage() {
     setLastSendTime(Date.now());
   };
 
+  const handleSendMobile = async () => {
+    let phone = filterPhoneNumber();
+    let validate = phoneRegex(phone);
+    if (validate) {
+      setError("");
+      setLoading(true);
+      try {
+        const res = await sendPhoneNumberApi(phone);
+        const {
+          data: { status, message, loginCode },
+        } = res;
+        if (status) {
+          console.log(loginCode);
+          setLastSendTime(Date.now());
+          setLevel(2);
+        } else {
+          toast.error(message);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    } else {
+      setError("شماره موبایل تایید شده نمیباشد");
+    }
+  };
+
   const handleSendCode = async () => {
-    // console.log(phoneNumber)
     let loginCode = code
       ? code
           .split("-")
           .filter((n) => n !== " ")
           .join("")
       : "";
-    console.log(loginCode);
+    // console.log(loginCode);
 
     let validate = loginCodeRegex(loginCode);
     if (validate) {
       setError("");
       setLoading(true);
-      //post login code to server
       try {
-        const res = await sendLoginCodeApi(filterPhoneNumber(),loginCode);
+        const res = await sendLoginCodeApi(filterPhoneNumber(), loginCode);
         const { data } = res;
         console.log(data);
-        /* 
-        save user token to storage if authentication is success
-        */
+        const {
+          data: { status, message, user },
+        } = res;
+        if (status) {
+          toggleAuth(user);
+          navigate("/");
+        } else {
+          // console.log(message);
+          toast.error(message)
+        }
         setLoading(false);
-        toggleAuth();
-        navigate("/");
       } catch (error) {
-        // setError(error);
         setLoading(false);
         console.log(error);
       }
