@@ -9,6 +9,7 @@ import {
   Link as LinkComponent,
   Button,
   CircularProgress,
+  colors,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { Call as CallIcon, Chat as ChatIcon, Phone } from "@mui/icons-material";
@@ -19,7 +20,8 @@ import { useAuth } from "./../hooks/useAuth";
 import { PhoneCustomInput, LoginCodeCostumInput } from "./../components/auth";
 import { phoneRegex, loginCodeRegex } from "../configs/variables";
 import { sendPhoneNumberApi, sendLoginCodeApi } from "../api/Login";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import DetalLogo from "./../images/detal.png";
 
 const maxSecoundToResendCode = 25;
 function LoginPage() {
@@ -129,7 +131,7 @@ function LoginPage() {
         } = res;
         if (status) {
           // console.log(loginCode);
-          toast(loginCode)
+          toast(loginCode);
           setLastSendTime(Date.now());
           setLevel(2);
         } else {
@@ -170,7 +172,7 @@ function LoginPage() {
           navigate("/");
         } else {
           // console.log(message);
-          toast.error(message)
+          toast.error(message);
         }
         setLoading(false);
       } catch (error) {
@@ -198,9 +200,17 @@ function LoginPage() {
             height: "40vh",
             backgroundImage: "linear-gradient(120deg, #FAD961 0%, #F76B1C 57%)",
           }}
+          display="flex"
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center"
         >
           <Container maxWidth="lg">
             <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="center"
               sx={{
                 backgroundColor: "primary",
                 "&:hover": {
@@ -208,7 +218,12 @@ function LoginPage() {
                   opacity: [0.9, 0.8, 0.7],
                 },
               }}
-            />
+            >
+              <img style={{ width: "120px" }} src={DetalLogo} />
+            </Box>
+            <Typography display="flex" justifyContent="center" sx={{color:colors.common.white,fontSize:'0.8rem',mt:1}}>
+                نسخه ی آزمایشی
+              </Typography>
           </Container>
         </Grid>
       </Grid>

@@ -4,11 +4,17 @@ import "./fonts/Yekan/Yekan.css";
 import MainTheme from "./components/MainTheme";
 import RouterComponent from "./components/RouterComponent";
 
-import { AuthProvider, ThemeProvider ,TabsProvider } from "./providers";
+import {
+  AuthProvider,
+  ThemeProvider,
+  TabsProvider,
+  SplashProvider,
+} from "./providers";
 
 function App() {
   return (
     <ThemeProvider>
+      <SplashProvider>
         <MainTheme className="App">
           <AuthProvider>
             <TabsProvider>
@@ -16,6 +22,7 @@ function App() {
             </TabsProvider>
           </AuthProvider>
         </MainTheme>
+      </SplashProvider>
     </ThemeProvider>
   );
 }
