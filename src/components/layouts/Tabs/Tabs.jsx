@@ -1,36 +1,32 @@
-import React,{useContext} from "react";
-import {Tabs as Menu, Tab } from "@mui/material";
-import {TabContext} from './'
+import React from "react";
+import { Tabs as Menu, Tab } from "@mui/material";
+import { useTab } from "./../../../hooks/useTab";
 
 function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
-  }
-
-function Tabs(){
-
-    const{selectedTab,setSelectedTab}=useContext(TabContext);
-    const handleChange = (event, newValue) => {
-        event.preventDefault();
-        setSelectedTab(newValue);
-      };
-
-    return(
-        <Menu
-        value={selectedTab}
-        onChange={handleChange}
-        aria-label="basic tabs example"
-        textColor="secondary"
-        indicatorColor="secondary"
-        aria-label="primary tabs example"
-      >
-        <Tab label="رستوران" {...a11yProps(0)} />
-        <Tab label="فست فود" {...a11yProps(1)} />
-        <Tab label="صبحانه" {...a11yProps(2)} />
-        <Tab label="سایر" {...a11yProps(3)} />
-      </Menu>
-    )
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
 }
-export {Tabs}
+
+function Tabs() {
+  const { selectedTab, setTab, categories } = useTab();
+  const handleChange = (event, newValue) => {
+    event.preventDefault();
+    setTab(newValue);
+  };
+
+  return (
+    <Menu
+      value={selectedTab}
+      onChange={handleChange}
+      aria-label="basic tabs example"
+      textColor="secondary"
+      indicatorColor="secondary"
+      aria-label="primary tabs example"
+    >
+      {categories?.map((category,index) =><Tab key={`cat-${category.id}`} label={category.title} {...a11yProps(index)} />)}
+    </Menu>
+  );
+}
+export { Tabs };

@@ -3,32 +3,32 @@ import { Box, Chip, Grid, Stack, Container, Divider } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { useTheme } from "@mui/material/styles";
 import SwipeableViews from "react-swipeable-views";
-import {
-  TabContext,
-  Tabs as CategoriesTabs,
-  TabPanel,
-} from "./../components/layouts/Tabs";
+import { Tabs as CategoriesTabs, TabPanel } from "./../components/layouts/Tabs";
 import { detalBaseLinearGradient } from "./../configs/variables";
 import { CenterVitrin } from "./../components/centers";
 import { useLocalStorage } from "./../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
-
+import { useTab } from "../hooks/useTab";
 
 function IndexPage() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [address] = useLocalStorage("user-address", null);
-  const { selectedTab, setSelectedTab } = useContext(TabContext);
+  const {
+    selectedTab,
+    subSelectedTab,
+    setTab,
+    categories,
+    getSubCategoryDeliveries
+  } = useTab();
+
   useEffect(() => {
-    console.log("address", address);
     if (address === null) {
       navigate("/my-addresses");
-      // setAddressesModalOpen(true)
-      // setAddressModalOpen(true)
     }
-  }, [address,navigate]);
+  }, [address]);
   const handleChangeIndex = (index) => {
-    setSelectedTab(index);
+    setTab(index);
   };
 
   return (
@@ -70,7 +70,7 @@ function IndexPage() {
             </Grid>
           </Grid>
 
-          <Grid  position="sticky" top="30px">
+          <Grid position="sticky" top="30px">
             <CategoriesTabs />
           </Grid>
         </Container>
@@ -83,45 +83,50 @@ function IndexPage() {
           onChangeIndex={handleChangeIndex}
           slideStyle={{ direction: theme.direction }}
         >
-          <TabPanel value={selectedTab} index={0}>
-            <Stack direction="row" sx={{ pb: 1 }} spacing={1}>
-              <Chip
-                label="همه"
-                sx={{
-                  backgroundImage: detalBaseLinearGradient,
-                  color: common.white,
-                }}
-                variant="filled"
-              />
-              <Chip label="غذای آماده" color="default" variant="outlined" />
-            </Stack>
+          {categories?.map((category, index) => {
+            return (
+              <TabPanel
+                key={`cat-tab-panel-${category.id}`}
+                value={selectedTab}
+                index={index}
+              >
+                <Stack direction="row" sx={{ pb: 1 }} spacing={1}>
 
-            <CenterVitrin
-              name="رستوران جهانگیری - اوبا"
-              description="غذاهای ویژه با برنج اعلای ایرانی با گوشت گوسفندی و کره محلی"
-              deliveryTime="35-50"
-            />
-            <Divider />
-            
-          </TabPanel>
+                  {category.sub.map((subCategory, index) => (
+                    <Chip
+                      onClick={()=>getSubCategoryDeliveries(index,category,subCategory)}
+                      sx={{
+                        backgroundImage:
+                          subSelectedTab === index
+                            ? detalBaseLinearGradient
+                            : "",
+                        color:
+                          subSelectedTab === index
+                            ? common.white
+                            : "default",
+                      }}
+                      key={`cat-${category.id}-panel-${subCategory.id}`}
+                      label={subCategory.title}
+                    />
+                  ))}
+                </Stack>
 
-          <TabPanel value={selectedTab} index={1}>
-            <Stack direction="row-reverse" spacing={2}>
-              <Chip
-                label="primary3"
-                sx={{ mr: 1 }}
-                color="primary"
-                variant="filled"
-              />
-              <Chip label="primary4" color="primary" variant="outlined" />
-            </Stack>
-          </TabPanel>
-          <TabPanel value={selectedTab} index={2}>
-            Item Three
-          </TabPanel>
-          <TabPanel value={selectedTab} index={3}>
-            Item Three
-          </TabPanel>
+                {category.sub[subSelectedTab]?.providers?.map((provider,index) => {
+                  return (
+                    <React.Fragment key={`cat-${category.id}-sub-provider-${index}`}>
+                      <CenterVitrin
+                        name={provider.name}
+                        description={provider.description}
+                        deliveryTime={provider.deliveryTime}
+                      />
+                      <Divider />
+                    </React.Fragment>
+                  );
+                })}
+
+              </TabPanel>
+            );
+          })}
         </SwipeableViews>
       </Container>
     </div>

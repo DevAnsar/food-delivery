@@ -4,8 +4,7 @@ import "./fonts/Yekan/Yekan.css";
 import MainTheme from "./components/MainTheme";
 import RouterComponent from "./components/RouterComponent";
 
-import { TabsProvider } from "./components/layouts/Tabs";
-import { AuthProvider, ThemeProvider } from "./providers";
+import { AuthProvider, ThemeProvider ,TabsProvider } from "./providers";
 
 function App() {
   return (

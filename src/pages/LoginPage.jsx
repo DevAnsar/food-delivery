@@ -128,7 +128,8 @@ function LoginPage() {
           data: { status, message, loginCode },
         } = res;
         if (status) {
-          console.log(loginCode);
+          // console.log(loginCode);
+          toast(loginCode)
           setLastSendTime(Date.now());
           setLevel(2);
         } else {

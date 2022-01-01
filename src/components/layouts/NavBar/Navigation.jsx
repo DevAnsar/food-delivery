@@ -11,6 +11,7 @@ import {
 
 import { Fab } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { NavLink, Link } from "react-router-dom";
 
 const StyledFab = styled(Fab)({
   position: "absolute",
@@ -30,31 +31,35 @@ function Navigation() {
       alignItems="center"
     >
       <Grid>
-        <IconButton color="inherit">
-          <Apps color="secondary" />
+        <NavLink to="/">
+          <IconButton>
+            <Apps color="inherit" />
+          </IconButton>
+        </NavLink>
+      </Grid>
+
+      <Grid>
+        <NavLink to="/term-of-use">
+          <IconButton aria-label="open drawer">
+            <Moped color="inherit" />
+          </IconButton>
+        </NavLink>
+      </Grid>
+
+      <Grid>
+        <IconButton>
+          <SearchIcon color="inherit" />
         </IconButton>
       </Grid>
 
       <Grid>
-        <IconButton color="inherit" aria-label="open drawer">
-          <Moped />
+        <IconButton aria-label="open drawer">
+          <FormatListBulleted color="inherit" />
         </IconButton>
       </Grid>
 
       <Grid>
-        <IconButton color="inherit">
-          <SearchIcon />
-        </IconButton>
-      </Grid>
-
-      <Grid>
-        <IconButton color="inherit" aria-label="open drawer">
-          <FormatListBulleted />
-        </IconButton>
-      </Grid>
-
-      <Grid>
-        <IconButton color="inherit">
+        <IconButton>
           <Person />
         </IconButton>
       </Grid>
@@ -77,9 +82,11 @@ function BottomNavigation() {
           alignItems="center"
         >
           <Grid>
-            <IconButton color="inherit" aria-label="open drawer">
-              <Moped />
-            </IconButton>
+            <Link to="/term-of-use">
+              <IconButton color="inherit" aria-label="open drawer">
+                <Moped />
+              </IconButton>
+            </Link>
           </Grid>
 
           <Grid>
@@ -89,9 +96,19 @@ function BottomNavigation() {
           </Grid>
 
           <Grid>
-            <StyledFab sx={{ bgcolor: colors.red[500] }} aria-label="add">
-              <Apps color="secondary" />
-            </StyledFab>
+            <Link to="/">
+              <StyledFab
+                sx={{
+                  backgroundColor: colors.red[500],
+                  "&:hover": {
+                    backgroundColor: colors.red[600],
+                  },
+                }}
+                aria-label="add"
+              >
+                <Apps sx={{color:colors.common.white}} />
+              </StyledFab>
+            </Link>
             <Box sx={{ flexGrow: 1 }} />
           </Grid>
 
