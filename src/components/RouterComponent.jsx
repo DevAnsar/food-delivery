@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 //import pages
-import { IndexPage, LoginPage , AddressesPage } from "../pages";
+import { IndexPage, LoginPage , AddressesPage,CenterPage } from "../pages";
 
 //import components
 import {TermsOfUse} from '../components/auth'
@@ -22,6 +22,11 @@ const routes = [
     private: false,
   },
   
+  {
+    path: "/center/:id",
+    element: <CenterPage />,
+    private: true,
+  },
   {
     path: "/my-addresses",
     element: <AddressesPage />,

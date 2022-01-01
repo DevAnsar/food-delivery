@@ -1,4 +1,5 @@
 import IndexPage from "./IndexPage";
 import LoginPage from "./LoginPage";
 import AddressesPage from "./AddressesPage";
-export { IndexPage, LoginPage, AddressesPage };
+import CenterPage from "./CenterPage";
+export { IndexPage, LoginPage, AddressesPage, CenterPage };

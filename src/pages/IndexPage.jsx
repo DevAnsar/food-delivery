@@ -19,7 +19,7 @@ function IndexPage() {
     subSelectedTab,
     setTab,
     categories,
-    getSubCategoryDeliveries
+    getSubCategoryDeliveries,
   } = useTab();
 
   useEffect(() => {
@@ -91,19 +91,18 @@ function IndexPage() {
                 index={index}
               >
                 <Stack direction="row" sx={{ pb: 1 }} spacing={1}>
-
                   {category.sub.map((subCategory, index) => (
                     <Chip
-                      onClick={()=>getSubCategoryDeliveries(index,category,subCategory)}
+                      onClick={() =>
+                        getSubCategoryDeliveries(index, category, subCategory)
+                      }
                       sx={{
                         backgroundImage:
                           subSelectedTab === index
                             ? detalBaseLinearGradient
                             : "",
                         color:
-                          subSelectedTab === index
-                            ? common.white
-                            : "default",
+                          subSelectedTab === index ? common.white : "default",
                       }}
                       key={`cat-${category.id}-panel-${subCategory.id}`}
                       label={subCategory.title}
@@ -111,19 +110,23 @@ function IndexPage() {
                   ))}
                 </Stack>
 
-                {category.sub[subSelectedTab]?.providers?.map((provider,index) => {
-                  return (
-                    <React.Fragment key={`cat-${category.id}-sub-provider-${index}`}>
-                      <CenterVitrin
-                        name={provider.name}
-                        description={provider.description}
-                        deliveryTime={provider.deliveryTime}
-                      />
-                      <Divider />
-                    </React.Fragment>
-                  );
-                })}
-
+                {category.sub[subSelectedTab]?.providers?.map(
+                  (provider, index) => {
+                    return (
+                      <React.Fragment
+                        key={`cat-${category.id}-sub-provider-${index}`}
+                      >
+                        <CenterVitrin
+                          centerId={provider.id}
+                          name={provider.name}
+                          description={provider.description}
+                          deliveryTime={provider.deliveryTime}
+                        />
+                        <Divider />
+                      </React.Fragment>
+                    );
+                  }
+                )}
               </TabPanel>
             );
           })}
