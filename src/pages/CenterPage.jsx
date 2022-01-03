@@ -24,7 +24,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Sentiment from "./../components/layouts/Sentiment";
 import SwipeableViews from "react-swipeable-views";
 import { TabPanel } from "./../components/layouts/Tabs";
-import {CenterProduct,EmpityMenu} from "./../components/centers";
+import { CenterProduct, EmpityMenu } from "./../components/centers";
 
 const new_theme = createTheme({
   palette: {
@@ -61,21 +61,21 @@ function CenterPage() {
       setLoading(true);
       const { data } = await getCenterApi(deliveryId);
       const { status, message, delivery } = data;
-      console.log(data);
+      // console.log(data);
       setLoading(false);
       if (status) {
         setDelivery(delivery);
-        if (delivery.menu) {
+        if (delivery.menu && delivery.menu.length > 0) {
           setMenu((prevMenu) => {
             let newMenu = delivery.menu;
             prevMenu = [...newMenu];
             return prevMenu;
           });
         } else {
+          setSelectedTab(1)
           setMenu([]);
         }
         setLoading(false);
-        //set products
       } else {
         // console.log(message);
         toast.error(message);
@@ -90,8 +90,9 @@ function CenterPage() {
     e.preventDefault();
     navigate.go(-1);
   };
-  const handleChangeTab = (e, newValue) => {
-    setSelectedTab(newValue);
+  const handleChangeTab = (index) => {
+    // console.log(index);
+    setSelectedTab(index);
   };
   function a11yProps(index) {
     return {
@@ -302,7 +303,7 @@ function CenterPage() {
             <Grid xs={12}>
               <Tabs
                 value={selectedTab}
-                onChange={handleChangeTab}
+                onChange={(e, index) => handleChangeTab(index, e)}
                 aria-label="basic tabs example"
                 aria-label="primary tabs example"
                 textColor="inherit"
@@ -330,28 +331,29 @@ function CenterPage() {
                 ))}
               </Tabs>
             </Grid>
-            <Grid xs={12}>
+            <Grid xs={12} sx={{mb:{xs:"55px"}}}>
               <SwipeableViews
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                 index={selectedTab}
-                onChangeIndex={handleChangeTab}
+                onChangeIndex={(index) => handleChangeTab(index)}
                 slideStyle={{ direction: theme.direction }}
               >
-                
                 {menu.map((tab, tabIndex) => (
-                  <TabPanel value={selectedTab} index={0}>
-                    {tab?.products?.map((product, productIndex) => (
-                      <React.Fragment
-                        key={`cat-${tabIndex}-sub-provider-${productIndex}`}
-                      >
-                        <CenterProduct product={product} />
-                        <Divider />
-                      </React.Fragment>
-                    ))}
-                  </TabPanel>
+              
+                    <TabPanel value={selectedTab} index={tabIndex}>
+                      {tab?.products?.map((product, productIndex) => (
+                        <React.Fragment
+                          key={`cat-${tabIndex}-sub-provider-${productIndex}`}
+                        >
+                          <CenterProduct product={product} />
+                          <Divider />
+                        </React.Fragment>
+                      ))}
+                    </TabPanel>
+          
                 ))}
-                {!menu.length && (<EmpityMenu deliveryName={delivery.name} />)}
               </SwipeableViews>
+              {menu.length===0 && <EmpityMenu deliveryName={delivery.name} />}
             </Grid>
           </Grid>
         </Container>

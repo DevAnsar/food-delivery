@@ -22,7 +22,7 @@ function CenterProduct({ product }) {
                   fontWeight: "bold",
                 }}
               >
-                پکیج خانواده 2
+                {product.title}
               </Typography>
             ) : (
               <Skeleton width={150} variant="text" />
@@ -51,8 +51,7 @@ function CenterProduct({ product }) {
                 },
               }}
             >
-              2 عدد چلوجوجه، 2 عدد چلو کوبیده، 1 عدد چلوبرگ، نوشابه خانواده،
-              مخصوص 5 نفر
+              {product.description}
             </Typography>
           ) : (
             <Skeleton width={120} variant="text" />

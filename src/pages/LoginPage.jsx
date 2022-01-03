@@ -109,6 +109,7 @@ function LoginPage() {
     setError("");
     stopTimer();
     setLastSendTime(Date.now());
+    handleSendMobile();
   };
 
   const handleResendCodeByCall = () => {
