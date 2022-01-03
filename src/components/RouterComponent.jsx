@@ -2,11 +2,16 @@ import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 
 //import pages
-import { IndexPage, LoginPage , AddressesPage,CenterPage } from "../pages";
+import {
+  IndexPage,
+  LoginPage,
+  AddressesPage,
+  CenterPage,
+  SearchPage,
+} from "../pages";
 
 //import components
-import {TermsOfUse} from '../components/auth'
-
+import { TermsOfUse } from "../components/auth";
 
 // declare app router variable
 const routes = [
@@ -21,7 +26,7 @@ const routes = [
     element: <LoginPage />,
     private: false,
   },
-  
+
   {
     path: "/center/:id",
     element: <CenterPage />,
@@ -30,6 +35,11 @@ const routes = [
   {
     path: "/my-addresses",
     element: <AddressesPage />,
+    private: true,
+  },
+  {
+    path: "/search",
+    element: <SearchPage />,
     private: true,
   },
   {
@@ -42,23 +52,23 @@ const routes = [
 //
 function RouterComponent() {
   return (
-      <Routes>
-        {routes.map((route, index) => {
-          if (route.private) {
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={<ProtectedRoute>{route.element}</ProtectedRoute>}
-              />
-            );
-          } else {
-            return (
-              <Route key={index} path={route.path} element={route.element} />
-            );
-          }
-        })}
-      </Routes>
+    <Routes>
+      {routes.map((route, index) => {
+        if (route.private) {
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={<ProtectedRoute>{route.element}</ProtectedRoute>}
+            />
+          );
+        } else {
+          return (
+            <Route key={index} path={route.path} element={route.element} />
+          );
+        }
+      })}
+    </Routes>
   );
 }
 export default RouterComponent;

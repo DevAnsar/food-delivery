@@ -62,7 +62,6 @@ function CenterPage() {
       const { data } = await getCenterApi(deliveryId);
       const { status, message, delivery } = data;
       // console.log(data);
-      setLoading(false);
       if (status) {
         setDelivery(delivery);
         if (delivery.menu && delivery.menu.length > 0) {

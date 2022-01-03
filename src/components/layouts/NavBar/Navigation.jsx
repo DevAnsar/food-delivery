@@ -47,9 +47,11 @@ function Navigation() {
       </Grid>
 
       <Grid>
-        <IconButton>
-          <SearchIcon color="inherit" />
-        </IconButton>
+        <NavLink to="/search">
+          <IconButton>
+            <SearchIcon color="inherit" />
+          </IconButton>
+        </NavLink>
       </Grid>
 
       <Grid>
@@ -90,9 +92,11 @@ function BottomNavigation() {
           </Grid>
 
           <Grid>
-            <IconButton color="inherit">
-              <SearchIcon />
-            </IconButton>
+            <Link to="/search">
+              <IconButton color="inherit">
+                <SearchIcon />
+              </IconButton>
+            </Link>
           </Grid>
 
           <Grid>
@@ -106,7 +110,7 @@ function BottomNavigation() {
                 }}
                 aria-label="add"
               >
-                <Apps sx={{color:colors.common.white}} />
+                <Apps sx={{ color: colors.common.white }} />
               </StyledFab>
             </Link>
             <Box sx={{ flexGrow: 1 }} />
