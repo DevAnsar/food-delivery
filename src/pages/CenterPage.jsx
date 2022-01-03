@@ -14,29 +14,23 @@ import {
   Tab,
   useTheme,
   ThemeProvider,
-  createTheme
+  createTheme,
 } from "@mui/material";
 import { getCenterApi } from "../api/Center";
 
-import {
-  ArrowBack,
-  Circle,
-  LocationOn,
-  AccessTime,
-
-} from "@mui/icons-material";
+import { ArrowBack, Circle, LocationOn, AccessTime } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import Sentiment from "./../components/layouts/Sentiment";
 import SwipeableViews from "react-swipeable-views";
 import { TabPanel } from "./../components/layouts/Tabs";
-import CenterProduct from "../components/centers/CenterProduct";
+import {CenterProduct,EmpityMenu} from "./../components/centers";
 
 const new_theme = createTheme({
   palette: {
     secondary: {
       main: colors.red[500],
-      contrastText:colors.red[200],
+      contrastText: colors.red[200],
     },
   },
   typography: {
@@ -49,6 +43,11 @@ function CenterPage() {
   const navigate = useNavigate();
   const { id: deliveryId } = useParams();
   const [delivery, setDelivery] = useState({});
+  const [menu, setMenu] = useState([
+    { title: "", products: [{}, {}] },
+    { title: "" },
+    { title: "" },
+  ]);
   const [selectedTab, setSelectedTab] = useState(0);
   const [loading, setLoading] = useState(true);
   const [online, setOnline] = useState(true);
@@ -62,10 +61,21 @@ function CenterPage() {
       setLoading(true);
       const { data } = await getCenterApi(deliveryId);
       const { status, message, delivery } = data;
-      // console.log(data);
+      console.log(data);
       setLoading(false);
       if (status) {
         setDelivery(delivery);
+        if (delivery.menu) {
+          setMenu((prevMenu) => {
+            let newMenu = delivery.menu;
+            prevMenu = [...newMenu];
+            return prevMenu;
+          });
+        } else {
+          setMenu([]);
+        }
+        setLoading(false);
+        //set products
       } else {
         // console.log(message);
         toast.error(message);
@@ -121,7 +131,7 @@ function CenterPage() {
                         fontSize: { xs: "0.8rem", sm: "1rem", md: "1.2rem" },
                       }}
                     >
-                      رستوران جهانگیری - اوبا
+                      {delivery.name}
                     </Typography>
                   )}
 
@@ -248,27 +258,43 @@ function CenterPage() {
                       fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
                     }}
                   />
-                  حداکثر زمان آماده سازی : 35 دقیقه
+                  حداکثر زمان آماده سازی :{delivery.deliveryTime}
+                  دقیقه
                 </Typography>
               )}
             </Grid>
-            <Grid xs={2} display="flex" flexDirection="row-reverse">
-              <Sentiment
-                level={1}
-                sx={{
-                  color: colors.red[600],
-                  fontSize: { xs: "1.5rem", sm: "1.6rem", md: "2rem" },
-                }}
-              />
-              {/* <SentimentVerySatisfied /> */}
-              <Typography
+            <Grid
+              xs={2}
+              display="flex"
+              flexDirection="row-reverse"
+              alignItems={"center"}
+            >
+              {loading ? (
+                <Skeleton width={20} height={20} variant="circular" />
+              ) : (
+                <Sentiment
+                  level={1}
+                  sx={{
+                    color: colors.red[600],
+                    fontSize: { xs: "1.5rem", sm: "1.6rem", md: "2rem" },
+                  }}
+                />
+              )}
+              <Box
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"center"}
-                sx={{ color: colors.grey[400], fontSize: "0.8rem" }}
               >
-                432 ×
-              </Typography>
+                {loading ? (
+                  <Skeleton width={30} variant="text" />
+                ) : (
+                  <Typography
+                    sx={{ color: colors.grey[400], fontSize: "0.8rem" }}
+                  >
+                    432 ×
+                  </Typography>
+                )}
+              </Box>
             </Grid>
           </Grid>
           <Divider />
@@ -281,30 +307,27 @@ function CenterPage() {
                 aria-label="primary tabs example"
                 textColor="inherit"
                 indicatorColor="secondary"
-                sx={{ minHeight:{xs:"30px" , lg :"40px"} }}
+                sx={{ minHeight: { xs: "30px", lg: "40px" } }}
               >
-                <Tab
-                  key={`cat-1`}
-                  sx={{
-                    color: colors.grey[700],
-                    p: 0,
-                    minHeight: { xs: "30px" , lg :"40px"},
-                    minWidth:{xs:"60px" , lg :"70px"},
-                  }}
-                  label="سرویس"
-                  {...a11yProps(0)}
-                />
-                <Tab
-                  key={`cat-2`}
-                  sx={{
-                    color: colors.grey[700],
-                    p: 0,
-                    minHeight: { xs: "30px" },
-                    minWidth:{xs:"60px" , lg :"70px"},
-                  }}
-                  label="ناهار"
-                  {...a11yProps(1)}
-                />
+                {menu.map((tab, tabIndex) => (
+                  <Tab
+                    key={`cat-${tabIndex}`}
+                    sx={{
+                      color: colors.grey[700],
+                      p: 0,
+                      minHeight: { xs: "30px", lg: "40px" },
+                      minWidth: { xs: "60px", lg: "70px" },
+                    }}
+                    {...a11yProps(tabIndex)}
+                    label={
+                      tab.title ? (
+                        tab.title
+                      ) : (
+                        <Skeleton width={50} variant="text" />
+                      )
+                    }
+                  />
+                ))}
               </Tabs>
             </Grid>
             <Grid xs={12}>
@@ -314,12 +337,20 @@ function CenterPage() {
                 onChangeIndex={handleChangeTab}
                 slideStyle={{ direction: theme.direction }}
               >
-                <TabPanel value={selectedTab} index={0}>
-                  <React.Fragment key={`cat-0-sub-provider-0`}>
-                    <CenterProduct />
-                    <Divider />
-                  </React.Fragment>
-                </TabPanel>
+                
+                {menu.map((tab, tabIndex) => (
+                  <TabPanel value={selectedTab} index={0}>
+                    {tab?.products?.map((product, productIndex) => (
+                      <React.Fragment
+                        key={`cat-${tabIndex}-sub-provider-${productIndex}`}
+                      >
+                        <CenterProduct product={product} />
+                        <Divider />
+                      </React.Fragment>
+                    ))}
+                  </TabPanel>
+                ))}
+                {!menu.length && (<EmpityMenu deliveryName={delivery.name} />)}
               </SwipeableViews>
             </Grid>
           </Grid>
