@@ -22,6 +22,7 @@ import { phoneRegex, loginCodeRegex } from "../configs/variables";
 import { sendPhoneNumberApi, sendLoginCodeApi } from "../api/Login";
 import toast from "react-hot-toast";
 import DetalLogo from "./../images/detal.png";
+import { detalBaseLinearGradient } from "./../configs/variables";
 
 const maxSecoundToResendCode = 25;
 function LoginPage() {
@@ -199,7 +200,7 @@ function LoginPage() {
           xs={12}
           sx={{
             height: "40vh",
-            backgroundImage: "linear-gradient(120deg, #FAD961 0%, #F76B1C 57%)",
+            backgroundImage: detalBaseLinearGradient,
           }}
           display="flex"
           flexDirection="row"
@@ -222,9 +223,13 @@ function LoginPage() {
             >
               <img style={{ width: "120px" }} src={DetalLogo} />
             </Box>
-            <Typography display="flex" justifyContent="center" sx={{color:colors.common.white,fontSize:'0.8rem',mt:1}}>
-                نسخه ی آزمایشی
-              </Typography>
+            <Typography
+              display="flex"
+              justifyContent="center"
+              sx={{ color: colors.common.white, fontSize: "0.8rem", mt: 1 }}
+            >
+              نسخه ی آزمایشی
+            </Typography>
           </Container>
         </Grid>
       </Grid>

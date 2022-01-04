@@ -12,6 +12,7 @@ import { getMyOrderApi } from "../api";
 
 import toast from "react-hot-toast";
 import EmpityOrderList from "../components/orders/EmpityOrderList";
+import {detalBaseLinearGradient} from './../configs/variables'
 
 function OrdersPage() {
   const [orders, setOrders] = useState(null);
@@ -45,7 +46,7 @@ function OrdersPage() {
     <div className="container">
       <Box
         sx={{
-          backgroundImage: "linear-gradient(120deg, #FAD961 0%, #F76B1C 57%)",
+          backgroundImage: detalBaseLinearGradient,
         }}
       >
         <Container maxWidth="lg">

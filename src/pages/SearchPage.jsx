@@ -14,7 +14,8 @@ import {CenterVitrin} from './../components/centers'
 
 import toast from "react-hot-toast";
 import { useQueryParam, StringParam } from 'use-query-params';
-import {useSearch} from './../hooks/useSearch'
+import {useSearch} from './../hooks/useSearch';
+import {detalBaseLinearGradient} from './../configs/variables';
 
 function SearchPage() {
 
@@ -51,7 +52,7 @@ function SearchPage() {
     <div className="container">
       <Box
         sx={{
-          backgroundImage: "linear-gradient(120deg, #FAD961 0%, #F76B1C 57%)",
+          backgroundImage: detalBaseLinearGradient,
         }}
       >
         <Container maxWidth="lg">

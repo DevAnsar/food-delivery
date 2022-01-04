@@ -22,7 +22,8 @@ import { useForm } from "react-hook-form";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { saveAddressApi } from "../../api/Address";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import { detalBaseLinearGradient } from "./../../configs/variables";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -74,16 +75,15 @@ function AddressFormModal({ open, setOpen, address }) {
       /*
       send data for save to database
       */
-      const {data} = await saveAddressApi(formData);
-      const { status,address,message } = data;
+      const { data } = await saveAddressApi(formData);
+      const { status, address, message } = data;
       // console.log(data);
-      if(status){
+      if (status) {
         setLocalStorageAddress("user-address", data);
         setLoading(false);
         setOpen(false);
         navigate("/");
-        
-      }else{
+      } else {
         toast.error(message);
       }
     } catch (error) {
@@ -109,7 +109,7 @@ function AddressFormModal({ open, setOpen, address }) {
           position: "relative",
           borderBottom: 1,
           borderColor: "divider",
-          backgroundImage: "linear-gradient(120deg, #FAD961 0%, #F76B1C 57%)",
+          backgroundImage: detalBaseLinearGradient,
         }}
       >
         <Toolbar>

@@ -37,7 +37,7 @@ function IndexPage() {
         sx={{
           borderBottom: 1,
           borderColor: "divider",
-          backgroundImage: "linear-gradient(120deg, #FAD961 0%, #F76B1C 57%)",
+          backgroundImage: detalBaseLinearGradient,
         }}
       >
         <Container maxWidth="lg">

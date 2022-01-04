@@ -25,6 +25,7 @@ import Sentiment from "./../components/layouts/Sentiment";
 import SwipeableViews from "react-swipeable-views";
 import { TabPanel } from "./../components/layouts/Tabs";
 import { CenterProduct, EmpityMenu } from "./../components/centers";
+import {detalBaseLinearGradient}from './../configs/variables';
 
 const new_theme = createTheme({
   palette: {
@@ -104,7 +105,7 @@ function CenterPage() {
       <div className="container">
         <Box
           sx={{
-            backgroundImage: "linear-gradient(120deg, #FAD961 0%, #F76B1C 57%)",
+            backgroundImage:detalBaseLinearGradient,
           }}
         >
           <Container maxWidth="lg">
