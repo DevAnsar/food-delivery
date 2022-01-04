@@ -9,7 +9,8 @@ import {
   CenterPage,
   SearchPage,
   OrdersPage,
-  OrderTrakingPage
+  OrderTrakingPage,
+  ProfilePage
 } from "../pages";
 
 //import components
@@ -52,6 +53,16 @@ const routes = [
   {
     path: "/order-traking",
     element: <OrderTrakingPage />,
+    private: true,
+  },
+  {
+    path: "/my-profile/:page",
+    element: <ProfilePage />,
+    private: true,
+  },
+  {
+    path: "/my-profile",
+    element: <ProfilePage />,
     private: true,
   },
   {

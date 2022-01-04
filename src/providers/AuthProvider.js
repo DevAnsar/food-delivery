@@ -5,8 +5,13 @@ const AuthContext = createContext(undefined);
 function AuthProvider({ children }) {
   const [storageValue, setLocalStorageValue] = useLocalStorage("user", {
     loggedIn: false,
-    level : 1,
-    lastSendTime:null
+    level: 1,
+    lastSendTime: null,
+    name: null,
+    email: null,
+    mobile: null,
+    birth:null,
+    newsletter:false
   });
 
   const [user, setUser] = useState(storageValue);
@@ -22,24 +27,43 @@ function AuthProvider({ children }) {
     }));
   };
 
-  
   const setLevel = (level) => {
     setUser((prev) => ({
       ...prev,
-      level
+      level,
     }));
   };
 
-    
+  
+  const setMobile = (mobile) => {
+    setUser((prev) => ({
+      ...prev,
+      mobile,
+    }));
+  };
+
   const setLastSendTime = (lastSendTime) => {
     setUser((prev) => ({
       ...prev,
-      lastSendTime
+      lastSendTime,
+    }));
+  };
+
+  const setPersonalData = ({name, gender,email,birth,newsletter}) => {
+    setUser((prev) => ({
+      ...prev,
+      name,
+      gender,
+      email,
+      birth,
+      newsletter
     }));
   };
 
   return (
-    <AuthContext.Provider value={{ user, toggleAuth ,setLevel,setLastSendTime }}>
+    <AuthContext.Provider
+      value={{ user, toggleAuth, setLevel, setLastSendTime ,setPersonalData,setMobile }}
+    >
       {children}
     </AuthContext.Provider>
   );

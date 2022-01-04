@@ -63,9 +63,11 @@ function Navigation() {
       </Grid>
 
       <Grid>
-        <IconButton>
-          <Person />
-        </IconButton>
+        <NavLink to="my-profile">
+          <IconButton>
+            <Person />
+          </IconButton>
+        </NavLink>
       </Grid>
     </Grid>
   );
@@ -127,9 +129,11 @@ function BottomNavigation() {
           </Grid>
 
           <Grid>
-            <IconButton color="inherit">
-              <Person />
-            </IconButton>
+            <Link to="/my-profile">
+              <IconButton color="inherit">
+                <Person />
+              </IconButton>
+            </Link>
           </Grid>
         </Grid>
       </Toolbar>

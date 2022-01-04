@@ -30,6 +30,7 @@ function LoginPage() {
     user: { loggedIn, level, lastSendTime },
     setLevel,
     setLastSendTime,
+    setMobile,
     toggleAuth,
   } = useAuth();
   const navigate = useNavigate();
@@ -129,10 +130,11 @@ function LoginPage() {
       try {
         const res = await sendPhoneNumberApi(phone);
         const {
-          data: { status, message, loginCode },
+          data: { status, message, loginCode, mobile },
         } = res;
         if (status) {
-          // console.log(loginCode);
+          // console.log(mobile);
+          setMobile(mobile);
           toast(loginCode);
           setLastSendTime(Date.now());
           setLevel(2);
@@ -170,7 +172,7 @@ function LoginPage() {
           data: { status, message, user },
         } = res;
         if (status) {
-          toggleAuth(user);
+          toggleAuth();
           navigate("/");
         } else {
           // console.log(message);
