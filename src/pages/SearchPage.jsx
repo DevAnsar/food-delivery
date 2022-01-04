@@ -13,35 +13,39 @@ import { getSearchApi } from "../api";
 import {CenterVitrin} from './../components/centers'
 
 import toast from "react-hot-toast";
+import { useQueryParam, StringParam } from 'use-query-params';
+import {useSearch} from './../hooks/useSearch'
 
 function SearchPage() {
-  const [search, setSearch] = useState({
-    loading: false,
-    query: null,
-    results: null,
-  });
 
+  const {results,setResults}=useSearch();
+  const [query,setQuery]=useQueryParam('q',StringParam);
+  const [loading,setLoading]=useState(false);
+
+  useEffect(()=>{
+    handleSearch();
+  },[]);
   const handleSearch = async () => {
     try {
-      setSearch({ ...search, loading: true });
-      const { data } = await getSearchApi(search.query);
+      setLoading(true);
+      const { data } = await getSearchApi(query);
       const { status, message, searchResults } = data;
       // console.log(data);
       if (status) {
-        setSearch({ ...search, results: [...searchResults], loading: false });
+        setResults(searchResults);
       } else {
         // console.log(message);
-        setSearch({ ...search, loading: true });
+        setResults([]);
         toast.error(message);
       }
+      setLoading(false)
     } catch (error) {
-      setSearch({ ...search, loading: true });
+      setLoading(false);
       console.log(error);
     }
   };
 
-  const handleChange = (prop) => (e) =>
-    setSearch({ ...search, [prop]: e.target.value });
+  const handleChangeQueryInput = (e) =>setQuery(e.target.value);
 
   return (
     <div className="container">
@@ -86,7 +90,8 @@ function SearchPage() {
                     }}
                     placeholder="دنبال هر چی میگردی بگو تا پیدا کنم ..."
                     inputProps={{ "aria-label": "search google maps" }}
-                    onChange={handleChange("query")}
+                    onChange={handleChangeQueryInput}
+                    value={query}
                   />
                   <IconButton
                     type="submit"
@@ -105,7 +110,7 @@ function SearchPage() {
       <Container maxWidth="lg">
         <Grid container sx={{ pt: 1, pb: 1 }}>
           <Grid xs={12}>
-            {search.results?.map((provider, index) => {
+            {results?.map((provider, index) => {
               return (
                 <React.Fragment
                   key={`provider-${index}`}

@@ -8,6 +8,7 @@ import {
   AddressesPage,
   CenterPage,
   SearchPage,
+  OrdersPage
 } from "../pages";
 
 //import components
@@ -40,6 +41,11 @@ const routes = [
   {
     path: "/search",
     element: <SearchPage />,
+    private: true,
+  },
+  {
+    path: "/my-orders",
+    element: <OrdersPage />,
     private: true,
   },
   {

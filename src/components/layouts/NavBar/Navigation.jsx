@@ -55,9 +55,11 @@ function Navigation() {
       </Grid>
 
       <Grid>
-        <IconButton aria-label="open drawer">
-          <FormatListBulleted color="inherit" />
-        </IconButton>
+        <NavLink to="/my-orders">
+          <IconButton aria-label="open drawer">
+            <FormatListBulleted color="inherit" />
+          </IconButton>
+        </NavLink>
       </Grid>
 
       <Grid>
@@ -117,9 +119,11 @@ function BottomNavigation() {
           </Grid>
 
           <Grid>
-            <IconButton color="inherit" aria-label="open drawer">
-              <FormatListBulleted />
-            </IconButton>
+            <Link to="/my-orders">
+              <IconButton color="inherit" aria-label="open drawer">
+                <FormatListBulleted />
+              </IconButton>
+            </Link>
           </Grid>
 
           <Grid>

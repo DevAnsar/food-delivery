@@ -1,3 +1,4 @@
+import * as React from "react";
 import "./App.css";
 import "./fonts/Yekan/Yekan.css";
 
@@ -9,19 +10,26 @@ import {
   ThemeProvider,
   TabsProvider,
   SplashProvider,
+  SearchProvider
 } from "./providers";
+import { QueryParamProvider } from "use-query-params";
+import RouteAdapter from "./configs/RouteAdapter";
 
 function App() {
   return (
     <ThemeProvider>
       <SplashProvider>
-        <MainTheme className="App">
-          <AuthProvider>
-            <TabsProvider>
-              <RouterComponent />
-            </TabsProvider>
-          </AuthProvider>
-        </MainTheme>
+        <QueryParamProvider ReactRouterRoute={RouteAdapter}>
+          <MainTheme className="App">
+            <AuthProvider>
+              <TabsProvider>
+                <SearchProvider>
+                  <RouterComponent />
+                </SearchProvider>
+              </TabsProvider>
+            </AuthProvider>
+          </MainTheme>
+        </QueryParamProvider>
       </SplashProvider>
     </ThemeProvider>
   );
