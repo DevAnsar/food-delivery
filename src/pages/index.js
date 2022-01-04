@@ -4,6 +4,7 @@ import AddressesPage from "./AddressesPage";
 import CenterPage from "./CenterPage";
 import SearchPage from "./SearchPage";
 import OrdersPage from "./OrdersPage";
+import OrderTrakingPage from './OrderTrakingPage'
 export {
   IndexPage,
   LoginPage,
@@ -11,4 +12,5 @@ export {
   CenterPage,
   SearchPage,
   OrdersPage,
+  OrderTrakingPage
 };

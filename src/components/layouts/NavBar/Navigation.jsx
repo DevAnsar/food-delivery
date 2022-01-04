@@ -39,7 +39,7 @@ function Navigation() {
       </Grid>
 
       <Grid>
-        <NavLink to="/term-of-use">
+        <NavLink to="/order-traking">
           <IconButton aria-label="open drawer">
             <Moped color="inherit" />
           </IconButton>
@@ -86,7 +86,7 @@ function BottomNavigation() {
           alignItems="center"
         >
           <Grid>
-            <Link to="/term-of-use">
+            <Link to="/order-traking">
               <IconButton color="inherit" aria-label="open drawer">
                 <Moped />
               </IconButton>
