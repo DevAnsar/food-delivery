@@ -4,8 +4,8 @@ const ShoppingBasketContext = createContext(undefined);
 
 function ShoppingBasketProvider({ children }) {
   const [storageValue, setLocalStorageValue] = useLocalStorage("shopping-basket",[]);
-
   const [basket, setBasket] = useState(storageValue);
+  const [showBasket,setShowBasket]=useState(false);
 
   useEffect(() => {
     setLocalStorageValue("shopping-basket", basket);
@@ -14,7 +14,7 @@ function ShoppingBasketProvider({ children }) {
 
   return (
     <ShoppingBasketContext.Provider
-      value={{ basket ,setBasket }}
+      value={{ basket ,setBasket , showBasket , setShowBasket }}
     >
       {children}
     </ShoppingBasketContext.Provider>

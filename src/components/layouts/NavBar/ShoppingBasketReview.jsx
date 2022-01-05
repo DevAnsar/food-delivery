@@ -15,10 +15,13 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 function ShoppingBasketReview() {
-  const {getBasketCount}=useActionShoppingBasket();
+  const {getBasketCount,setIsShow}=useActionShoppingBasket();
   let basketCount=getBasketCount();
+  const handleShowCart = ()=>{
+    setIsShow(true);
+  }
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box sx={{ flexGrow: 0 }} onClick={handleShowCart} style={{cursor:"pointer"}}>
       <Tooltip title="سبد خرید">
         <StyledBadge badgeContent={basketCount} color="secondary">
           <IconButton sx={{ p: 0, color: colors.common.white }}>

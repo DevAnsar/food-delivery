@@ -8,6 +8,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import { BottomNavigation } from "./layouts/NavBar";
 import { useShowTheme } from "./../hooks/useShowTheme";
 import { Toaster } from 'react-hot-toast';
+import { ShoppingBasket } from './centers'
 // Create rtl cache
 const cacheRtl = createCache({
   key: "muirtl",
@@ -54,6 +55,7 @@ function MainTheme({ children, className }) {
             {children}
             {showTheme && <BottomNavigation />}
           </Grid>
+          <ShoppingBasket />
           <Toaster />
         </Grid>
       </ThemeProvider>

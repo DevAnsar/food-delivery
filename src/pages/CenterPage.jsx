@@ -26,8 +26,6 @@ import SwipeableViews from "react-swipeable-views";
 import { TabPanel } from "./../components/layouts/Tabs";
 import { CenterProduct, EmpityMenu } from "./../components/centers";
 import { detalBaseLinearGradient } from "./../configs/variables";
-
-
 const new_theme = createTheme({
   palette: {
     secondary: {
@@ -346,9 +344,7 @@ function CenterPage() {
                       <React.Fragment
                         key={`cat-${tabIndex}-sub-provider-${productIndex}`}
                       >
-                        <CenterProduct
-                          product={product}
-                        />
+                        <CenterProduct product={product} />
                         <Divider />
                       </React.Fragment>
                     ))}
