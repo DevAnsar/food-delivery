@@ -5,6 +5,7 @@ import RemoveFromBasekButton from "./RemoveFromBasekButton";
 import CustomSwitch from "./CustomSwitch";
 import RedButton from "./RedButton";
 import BrownButton from "./BrownButton";
+import WhiteButton from "./WhiteButton";
 
 export {
   OrangeButton,
@@ -13,5 +14,6 @@ export {
   RemoveFromBasekButton,
   CustomSwitch,
   RedButton,
-  BrownButton
+  BrownButton,
+  WhiteButton
 };

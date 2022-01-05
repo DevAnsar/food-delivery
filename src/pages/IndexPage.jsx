@@ -1,5 +1,15 @@
 import React, { useEffect } from "react";
-import { Box, Chip, Grid, Stack, Container, Divider } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Grid,
+  Stack,
+  Container,
+  Divider,
+  Typography,
+  colors,
+} from "@mui/material";
+import { ArrowBack, Circle, LocationOn, AccessTime } from "@mui/icons-material";
 import { common } from "@mui/material/colors";
 import { useTheme } from "@mui/material/styles";
 import SwipeableViews from "react-swipeable-views";
@@ -9,6 +19,7 @@ import { CenterVitrin } from "./../components/centers";
 import { useLocalStorage } from "./../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { useTab } from "../hooks/useTab";
+import { WhiteButton } from "./../components/buttons";
 
 function IndexPage() {
   const theme = useTheme();
@@ -41,6 +52,84 @@ function IndexPage() {
         }}
       >
         <Container maxWidth="lg">
+          <Grid
+            container
+            display="flex"
+            flexDirection="row"
+            justifyContent="center"
+          >
+            <Grid
+              xs={12}
+              md={8}
+              lg={6}
+              sx={{ flexGrow: 1, pt: { xs: 9, sm: 10, md: 11, lg: 12 } }}
+            >
+              <WhiteButton fullWidth onClick={() => navigate("/my-addresses")}>
+                <Grid
+                  container
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                >
+                  <Grid
+                    xs={1}
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                  >
+                    <LocationOn
+                      sx={{
+                        color: colors.grey[700],
+                        fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+                      }}
+                    />
+                  </Grid>
+                  <Grid
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    xs={10}
+                  >
+                    <Typography
+                      sx={{
+                        color: colors.grey[700],
+                        fontSize: { xs: "0.82rem", sm: "1rem", md: "1rem" },
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {address?.name}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        ml: 1,
+                        color: colors.grey[600],
+                        fontSize: { xs: "0.75rem", sm: "1rem", md: "1rem" },
+                      }}
+                    >
+                      {address?.address}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    xs={1}
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                  >
+                    <ArrowBack
+                      sx={{
+                        color: colors.grey[600],
+                        fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </WhiteButton>
+            </Grid>
+          </Grid>
           <Grid container spacing={0}>
             <Grid xs={4} sx={{ flexGrow: 1 }}>
               {/* market */}

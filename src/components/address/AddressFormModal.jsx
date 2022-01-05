@@ -79,7 +79,7 @@ function AddressFormModal({ open, setOpen, address }) {
       const { status, address, message } = data;
       // console.log(data);
       if (status) {
-        setLocalStorageAddress("user-address", data);
+        setLocalStorageAddress("user-address", address);
         setLoading(false);
         setOpen(false);
         navigate("/");
