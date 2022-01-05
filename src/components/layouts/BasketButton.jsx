@@ -5,17 +5,17 @@ import { Add, Remove } from "@mui/icons-material";
 import { AddToBasekButton, RemoveFromBasekButton } from "./../buttons";
 import { useActionShoppingBasket } from "./../../hooks/useShoppingBasket";
 
-function BasketButton({ product }) {
+function BasketButton({ product ,provider }) {
   const { addToBasket, removeFromBasket, getProductCount } =
     useActionShoppingBasket();
 
-  console.log("count:", getProductCount(product.id));
+  // console.log("count:", getProductCount(product.id));
 
   const handleRemove = (e) => {
     removeFromBasket(product);
   };
   const handleAdd = (e) => {
-    addToBasket(product);
+    addToBasket(product,provider);
   };
   return (
     <Box

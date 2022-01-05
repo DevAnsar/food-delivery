@@ -55,7 +55,7 @@ function CenterPage() {
 
   useEffect(() => {
     getDelivery();
-  }, []);
+  }, [deliveryId]);
 
   const getDelivery = async () => {
     try {
@@ -344,7 +344,7 @@ function CenterPage() {
                       <React.Fragment
                         key={`cat-${tabIndex}-sub-provider-${productIndex}`}
                       >
-                        <CenterProduct product={product} />
+                        <CenterProduct provider={delivery} product={product} />
                         <Divider />
                       </React.Fragment>
                     ))}

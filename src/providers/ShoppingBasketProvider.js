@@ -3,7 +3,10 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 const ShoppingBasketContext = createContext(undefined);
 
 function ShoppingBasketProvider({ children }) {
-  const [storageValue, setLocalStorageValue] = useLocalStorage("shopping-basket",[]);
+  const [storageValue, setLocalStorageValue] = useLocalStorage("shopping-basket",{
+    provider : null,
+    products : []
+  });
   const [basket, setBasket] = useState(storageValue);
   const [showBasket,setShowBasket]=useState(false);
 
