@@ -25,7 +25,8 @@ import Sentiment from "./../components/layouts/Sentiment";
 import SwipeableViews from "react-swipeable-views";
 import { TabPanel } from "./../components/layouts/Tabs";
 import { CenterProduct, EmpityMenu } from "./../components/centers";
-import {detalBaseLinearGradient}from './../configs/variables';
+import { detalBaseLinearGradient } from "./../configs/variables";
+
 
 const new_theme = createTheme({
   palette: {
@@ -49,6 +50,7 @@ function CenterPage() {
     { title: "" },
     { title: "" },
   ]);
+
   const [selectedTab, setSelectedTab] = useState(0);
   const [loading, setLoading] = useState(true);
   const [online, setOnline] = useState(true);
@@ -72,7 +74,7 @@ function CenterPage() {
             return prevMenu;
           });
         } else {
-          setSelectedTab(1)
+          setSelectedTab(1);
           setMenu([]);
         }
         setLoading(false);
@@ -105,7 +107,7 @@ function CenterPage() {
       <div className="container">
         <Box
           sx={{
-            backgroundImage:detalBaseLinearGradient,
+            backgroundImage: detalBaseLinearGradient,
           }}
         >
           <Container maxWidth="lg">
@@ -331,7 +333,7 @@ function CenterPage() {
                 ))}
               </Tabs>
             </Grid>
-            <Grid xs={12} sx={{mb:{xs:"55px"}}}>
+            <Grid xs={12} sx={{ mb: { xs: "55px" } }}>
               <SwipeableViews
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                 index={selectedTab}
@@ -339,21 +341,21 @@ function CenterPage() {
                 slideStyle={{ direction: theme.direction }}
               >
                 {menu.map((tab, tabIndex) => (
-              
-                    <TabPanel value={selectedTab} index={tabIndex}>
-                      {tab?.products?.map((product, productIndex) => (
-                        <React.Fragment
-                          key={`cat-${tabIndex}-sub-provider-${productIndex}`}
-                        >
-                          <CenterProduct product={product} />
-                          <Divider />
-                        </React.Fragment>
-                      ))}
-                    </TabPanel>
-          
+                  <TabPanel value={selectedTab} index={tabIndex}>
+                    {tab?.products?.map((product, productIndex) => (
+                      <React.Fragment
+                        key={`cat-${tabIndex}-sub-provider-${productIndex}`}
+                      >
+                        <CenterProduct
+                          product={product}
+                        />
+                        <Divider />
+                      </React.Fragment>
+                    ))}
+                  </TabPanel>
                 ))}
               </SwipeableViews>
-              {menu.length===0 && <EmpityMenu deliveryName={delivery.name} />}
+              {menu.length === 0 && <EmpityMenu deliveryName={delivery.name} />}
             </Grid>
           </Grid>
         </Container>

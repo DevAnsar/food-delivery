@@ -9,6 +9,7 @@ import {
   useTheme,
   ThemeProvider,
   createTheme,
+  Divider
 } from "@mui/material";
 import SwipeableViews from "react-swipeable-views";
 import { TabPanel } from "../components/layouts/Tabs";
@@ -73,7 +74,7 @@ function ProfilePage() {
         >
           <HeaderBox />
         </Box>
-        <Container maxWidth="lg">
+        <Container maxWidth="md">
           <Grid container sx={{ pt: 0 }}>
             <Grid xs={12}>
               <Tabs
@@ -99,6 +100,7 @@ function ProfilePage() {
                   />
                 ))}
               </Tabs>
+              <Divider />
             </Grid>
             <Grid xs={12} sx={{ mb: { xs: "55px" } }}>
               <SwipeableViews

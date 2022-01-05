@@ -3,7 +3,7 @@ import { Grid, Typography, colors, Skeleton, Box } from "@mui/material";
 
 import BasketButton from "../layouts/BasketButton";
 
-function CenterProduct({ product }) {
+function CenterProduct({ product  }) {
   return (
     <Grid container sx={{ my: 1 }}>
       <Grid container>
@@ -93,7 +93,7 @@ function CenterProduct({ product }) {
         >
           {
             product.id ? (
-              <BasketButton />
+              <BasketButton product={{...product}} />
             ):(
               <Skeleton width={28} height={28} variant="circular"  />
             )

@@ -1,15 +1,13 @@
-import {
-  Grid,
-  Container,
-  Typography,
-  IconButton,
-  colors,
-} from "@mui/material";
+import { Grid, Container, Typography, IconButton, colors } from "@mui/material";
 import { ArrowBack, AddCircle } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./../../hooks/useAuth";
 
 function HeaderBox() {
+  const {
+    user: { name },
+  } = useAuth();
   const navigate = useNavigate();
   const handleIncreaseInventory = () => {
     toast("بخش افزایش موجودی فعلا در حال توسعه میباشد");
@@ -49,7 +47,7 @@ function HeaderBox() {
                 fontSize: { xs: "1rem", sm: "1rem", md: "1.2rem" },
               }}
             >
-              انصار میرزایی
+              {name || "کاربر جدید"}
             </Typography>
 
             <Typography
@@ -61,11 +59,7 @@ function HeaderBox() {
                 fontSize: { xs: "0.6rem", sm: "0.8rem", md: "0.9rem" },
               }}
             >
-              موجودی حساب شما
-              {" "}
-              {0}
-              {" "}
-              تومان است
+              موجودی حساب شما {0} تومان است
             </Typography>
 
             <Typography

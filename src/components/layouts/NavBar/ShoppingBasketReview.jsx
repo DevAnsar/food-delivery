@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Box, Tooltip, IconButton, Badge,styled, colors } from "@mui/material";
 import { ShoppingBasket } from "@mui/icons-material";
-import {detalBaseLinearGradient}from './../../../configs/variables'
+import {detalBaseLinearGradient}from './../../../configs/variables';
+import {useActionShoppingBasket} from './../../../hooks/useShoppingBasket'
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: 20,
@@ -14,10 +15,12 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 function ShoppingBasketReview() {
+  const {getBasketCount}=useActionShoppingBasket();
+  let basketCount=getBasketCount();
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="سبد خرید">
-        <StyledBadge badgeContent={4} color="secondary">
+        <StyledBadge badgeContent={basketCount} color="secondary">
           <IconButton sx={{ p: 0, color: colors.common.white }}>
             <ShoppingBasket />
           </IconButton>

@@ -1,18 +1,22 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React from "react";
 import { Box, Typography, colors } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 import { AddToBasekButton, RemoveFromBasekButton } from "./../buttons";
+import { useActionShoppingBasket } from "./../../hooks/useShoppingBasket";
 
-function BasketButton({ initialCount }) {
-  const [count, setCount] = useState(initialCount || 0);
-  const handleRemove=(e)=>{
+function BasketButton({ product }) {
+  const { addToBasket, removeFromBasket, getProductCount } =
+    useActionShoppingBasket();
 
-    setCount(prevCount=>prevCount-1)
-  }
-  const handleAdd = (e)=>{
-    setCount(prevCount=>prevCount+1)
-  }
+  console.log("count:", getProductCount(product.id));
+
+  const handleRemove = (e) => {
+    removeFromBasket(product);
+  };
+  const handleAdd = (e) => {
+    addToBasket(product);
+  };
   return (
     <Box
       display={"flex"}
@@ -20,7 +24,7 @@ function BasketButton({ initialCount }) {
       alignItems={"center"}
       justifyContent={"space-between"}
     >
-      {count > 0 && (
+      {getProductCount(product.id) > 0 && (
         <React.Fragment>
           <RemoveFromBasekButton
             aria-label="remove"
@@ -49,7 +53,7 @@ function BasketButton({ initialCount }) {
               fontWeight: "bold",
             }}
           >
-            {count}
+            {getProductCount(product.id)}
           </Typography>
         </React.Fragment>
       )}

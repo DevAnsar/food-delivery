@@ -3,6 +3,7 @@ import ThemeProvider, { ThemeShowContext } from "./ThemeProvider";
 import TabsProvider, {TabContext} from "./TabsProvider";
 import SplashProvider from "./SplashProvider";
 import SearchProvider from "./SearchProvider";
+import ShoppingBasketProvider, {ShoppingBasketContext} from "./ShoppingBasketProvider";
 
 export {
   AuthProvider,
@@ -11,5 +12,7 @@ export {
   TabsProvider,
   TabContext,
   SplashProvider,
-  SearchProvider
+  SearchProvider,
+  ShoppingBasketProvider,
+  ShoppingBasketContext
 };
