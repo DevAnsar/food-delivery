@@ -8,6 +8,5 @@ const GreyButton = styled(Button)(({ theme }) => ({
     backgroundColor: grey[300],
   },
   width: "100%",
-  height: "50px",
 }));
 export default GreyButton;

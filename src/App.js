@@ -12,6 +12,7 @@ import {
   SplashProvider,
   SearchProvider,
   ShoppingBasketProvider,
+  AddressProvider,
 } from "./providers";
 import { QueryParamProvider } from "use-query-params";
 import RouteAdapter from "./configs/RouteAdapter";
@@ -21,17 +22,19 @@ function App() {
     <ThemeProvider>
       <SplashProvider>
         <QueryParamProvider ReactRouterRoute={RouteAdapter}>
-            <AuthProvider>
+          <AuthProvider>
+            <AddressProvider>
               <ShoppingBasketProvider>
-          <MainTheme className="App">
-                <TabsProvider>
-                  <SearchProvider>
-                    <RouterComponent />
-                  </SearchProvider>
-                </TabsProvider>
-          </MainTheme>
+                <MainTheme className="App">
+                  <TabsProvider>
+                    <SearchProvider>
+                      <RouterComponent />
+                    </SearchProvider>
+                  </TabsProvider>
+                </MainTheme>
               </ShoppingBasketProvider>
-            </AuthProvider>
+            </AddressProvider>
+          </AuthProvider>
         </QueryParamProvider>
       </SplashProvider>
     </ThemeProvider>

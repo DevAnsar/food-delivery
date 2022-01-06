@@ -15,7 +15,7 @@ import {
 import PropTypes from "prop-types";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-const AddressRow = ({ id, name, city, unit, address }) => {
+const AddressRow = ({ id, name, city, unit, address ,checked,handleSelectAddress,handleDelete,handleEdit }) => {
   return (
     <Grid container xs={12} sx={{pt:1}}>
       <Grid xs={1} display="flex" flexDirection="row" justifyContent="center" alignItems="center">
@@ -24,7 +24,7 @@ const AddressRow = ({ id, name, city, unit, address }) => {
           control={<Radio name="defaultCityId" />}
           label=""
         /> */}
-        <Checkbox {...label} />
+        <Checkbox name={id} onClick={handleSelectAddress} checked={checked} {...label} />
       </Grid>
       <Grid xs={9}>
         <Typography sx={{ fontSize: "0.9rem", fontWeight: "bold" }}>
@@ -33,10 +33,10 @@ const AddressRow = ({ id, name, city, unit, address }) => {
         <Typography sx={{ fontSize: "0.8rem" }}>{address}</Typography>
       </Grid>
       <Grid xs={1} display="flex" flexDirection="row" justifyContent="center" alignItems="center">
-        <DeleteIcon />
+        <DeleteIcon onClick={()=>handleDelete(id)} />
       </Grid>
       <Grid xs={1} display="flex" flexDirection="row" justifyContent="center" alignItems="center">
-        <Mode />
+        <Mode onClick={()=>handleEdit(id)} />
       </Grid>
       <Grid xs={12} sx={{mt:1}}>
         <Divider />
@@ -50,5 +50,8 @@ AddressRow.propTypes = {
   city: PropTypes.string.isRequired,
   unit: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
+  checked : PropTypes.bool.isRequired,
+  handleEdit:PropTypes.func.isRequired,
+  handleDelete:PropTypes.func.isRequired
 };
 export default AddressRow;

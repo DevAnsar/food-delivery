@@ -19,11 +19,11 @@ import { Close as CloseIcon } from "@mui/icons-material";
 import { common } from "@mui/material/colors";
 import { OrangeButton } from "../buttons";
 import { useForm } from "react-hook-form";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { saveAddressApi } from "../../api/Address";
 import toast from "react-hot-toast";
 import { detalBaseLinearGradient } from "./../../configs/variables";
+import { useSelectedAddress, useAllAddress } from "../../hooks/useAddress";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -56,8 +56,8 @@ function AddressFormModal({ open, setOpen, address }) {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const [, setLocalStorageAddress] = useLocalStorage("user-address", null);
-
+  const [selectedAddress, setSelectedAddress] = useSelectedAddress();
+  const [, setAllAddress] = useAllAddress();
   const [loading, setLoading] = React.useState(false);
   const [selectedCityUnits, setSelectedCityUnits] = React.useState([]);
 
@@ -71,18 +71,25 @@ function AddressFormModal({ open, setOpen, address }) {
   const handleFormSubmit = async (formData) => {
     try {
       setLoading(true);
-      // console.log(data);
       /*
       send data for save to database
       */
       const { data } = await saveAddressApi(formData);
       const { status, address, message } = data;
-      // console.log(data);
+      let first_address = false;
       if (status) {
-        setLocalStorageAddress("user-address", address);
+        setAllAddress((prevAddresses) => {
+          if (selectedAddress === null) {
+            first_address = true;
+            setSelectedAddress({ ...address });
+          }
+          return [...prevAddresses, { ...address }];
+        });
         setLoading(false);
         setOpen(false);
-        navigate("/");
+        if (first_address) {
+          navigate("/");
+        }
       } else {
         toast.error(message);
       }
@@ -193,6 +200,7 @@ function AddressFormModal({ open, setOpen, address }) {
                     fullWidth
                     error={errors.name ? true : false}
                     helperText={errors.name?.message}
+                    defaultValue={address?.name}
                   />
 
                   <FormControl fullWidth sx={{ mt: 2 }}>

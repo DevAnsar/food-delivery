@@ -4,6 +4,7 @@ import TabsProvider, {TabContext} from "./TabsProvider";
 import SplashProvider from "./SplashProvider";
 import SearchProvider from "./SearchProvider";
 import ShoppingBasketProvider, {ShoppingBasketContext} from "./ShoppingBasketProvider";
+import AddressProvider, {AddressContext} from "./AddressProvider";
 
 export {
   AuthProvider,
@@ -14,5 +15,7 @@ export {
   SplashProvider,
   SearchProvider,
   ShoppingBasketProvider,
-  ShoppingBasketContext
+  ShoppingBasketContext,
+  AddressProvider,
+  AddressContext
 };
