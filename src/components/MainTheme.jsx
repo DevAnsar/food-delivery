@@ -7,8 +7,9 @@ import { deepOrange, common, grey } from "@mui/material/colors";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { BottomNavigation } from "./layouts/NavBar";
 import { useShowTheme } from "./../hooks/useShowTheme";
-import { Toaster } from 'react-hot-toast';
-import { ShoppingBasket } from './centers'
+import { Toaster } from "react-hot-toast";
+import { ShoppingBasket } from "./centers";
+import SideMenu from "./layouts/SideMenu";
 // Create rtl cache
 const cacheRtl = createCache({
   key: "muirtl",
@@ -56,6 +57,7 @@ function MainTheme({ children, className }) {
             {showTheme && <BottomNavigation />}
           </Grid>
           <ShoppingBasket />
+          <SideMenu />
           <Toaster />
         </Grid>
       </ThemeProvider>

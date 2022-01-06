@@ -3,8 +3,9 @@ const ThemeShowContext=createContext(undefined);
 
 function ThemeProvider({children}){
     const [showTheme,setShowTheme]=useState(true);
+    const [showMenu,setShowMenu]=useState(true);
     return (
-        <ThemeShowContext.Provider value={{showTheme,setShowTheme}}>
+        <ThemeShowContext.Provider value={{showTheme,setShowTheme , showMenu , setShowMenu }}>
             {children}
         </ThemeShowContext.Provider>
     )

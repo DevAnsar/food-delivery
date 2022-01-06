@@ -11,15 +11,11 @@ import { Link } from "react-router-dom";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { Navigation, ShoppingBasketReview } from ".";
 import DetalLogo from "./../../../images/detal.png";
+import { useSideMenu } from "./../../../hooks/useSideMenu";
 
 const NavBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const { setShowMenu } = useSideMenu();
+  const handleOpenSideMenu = () => setShowMenu(true);
 
   return (
     <AppBar
@@ -62,7 +58,7 @@ const NavBar = () => {
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleOpenNavMenu}
+                onClick={handleOpenSideMenu}
                 color="secondary"
               >
                 <MenuIcon />
@@ -76,19 +72,28 @@ const NavBar = () => {
               alignItems="center"
             >
               <Link to="/" style={{ width: "inherit" }}>
-                  <img style={{ width: "45px" }} src={DetalLogo} />
+                <img style={{ width: "45px" }} src={DetalLogo} />
               </Link>
             </Grid>
-
-            {/* /user basket/ */}
-            {/* <UserSettings /> */}
             <ShoppingBasketReview />
           </Grid>
 
-          <Grid sx={{ flexGrow: 0, display: { xs: "none", sm: "flex" } }}>
-            {/* /user basket/ */}
-            {/* <UserSettings /> */}
+          <Grid
+          display='flex'
+          flexDirection='row'
+          alignItems='center'
+          sx={{ flexGrow: 0, display: { xs: "none", sm: "flex" } }}>
             <ShoppingBasketReview />
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenSideMenu}
+              color="secondary"
+            >
+              <MenuIcon />
+            </IconButton>
           </Grid>
         </Toolbar>
       </Container>
