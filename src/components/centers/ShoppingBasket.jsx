@@ -12,7 +12,7 @@ import {
   Divider,
   colors,
 } from "@mui/material";
-import {  ArrowBack } from "@mui/icons-material";
+import { ArrowBack } from "@mui/icons-material";
 import { common } from "@mui/material/colors";
 import toast from "react-hot-toast";
 import { detalBaseLinearGradient } from "../../configs/variables";
@@ -38,11 +38,10 @@ function ShoppingBasket() {
       setIsShow(false);
     }
   };
-  const handleGotToCenter = () =>{
-
+  const handleGotToCenter = () => {
     navigate(`/center/${provider.id}`);
     setIsShow(false);
-  }
+  };
 
   return (
     <Dialog
@@ -62,7 +61,7 @@ function ShoppingBasket() {
         <Toolbar>
           <Container maxWidth="md">
             <Grid container>
-              <Grid display="flex" alignItems="center" xs={2}>
+              <Grid item display="flex" alignItems="center" xs={2}>
                 <Typography
                   sx={{
                     color: common.white,
@@ -80,6 +79,7 @@ function ShoppingBasket() {
                 justifyContent="center"
                 alignItems="center"
                 xs={8}
+                item
               >
                 <Typography
                   sx={{
@@ -92,7 +92,7 @@ function ShoppingBasket() {
                   سبد خرید
                 </Typography>
               </Grid>
-              <Grid display="flex" flexDirection="row-reverse" xs={2}>
+              <Grid item display="flex" flexDirection="row-reverse" xs={2}>
                 <IconButton
                   edge="start"
                   color="inherit"
@@ -117,15 +117,16 @@ function ShoppingBasket() {
         <Grid
           container
           display="flex"
-          direction="row"
+          flexDirection="row"
           justifyContent="center"
           alignItems="flex-start"
         >
           <Grid
+            item
             xs={12}
             sx={{ pt: 2 }}
             display="flex"
-            direction="row"
+            flexDirection="row"
             justifyContent="flex-start"
             alignItems="center"
           >
@@ -135,7 +136,7 @@ function ShoppingBasket() {
                 pr: 1,
                 color: colors.grey[900],
                 fontSize: { xs: "0.9rem", sm: "0.9rem", md: "1rem" },
-                cursor:"pointer"
+                cursor: "pointer",
               }}
             >
               {provider?.name}
@@ -154,10 +155,11 @@ function ShoppingBasket() {
             </Typography>
           </Grid>
           <Grid
+            item
             xs={12}
             sx={{ pt: 3 }}
             display="flex"
-            direction="column"
+            flexDirection="column"
             justifyContent="flex-start"
             alignItems="center"
           >
@@ -183,7 +185,7 @@ function ShoppingBasket() {
           <Container maxWidth="md">
             <Grid
               display="flex"
-              direction="row"
+              flexDirection="row"
               justifyContent="space-between"
               alignItems="center"
             >

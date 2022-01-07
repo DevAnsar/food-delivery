@@ -102,7 +102,7 @@ function CenterPage() {
   }
   return (
     <ThemeProvider theme={new_theme}>
-      <div className="container">
+      <div className="container"  style={{width:'100%'}}>
         <Box
           sx={{
             backgroundImage: detalBaseLinearGradient,
@@ -111,6 +111,7 @@ function CenterPage() {
           <Container maxWidth="lg">
             <Grid container>
               <Grid
+                item
                 xs={12}
                 sx={{
                   pt: { xs: 8, sm: 10, md: 11, lg: 12 },
@@ -121,8 +122,8 @@ function CenterPage() {
                 justifyContent="flex-start"
                 alignItems="center"
               >
-                <Grid xs={2} lg={1}></Grid>
-                <Grid xs={8} lg={9}>
+                <Grid item xs={2} lg={1}></Grid>
+                <Grid item xs={8} lg={9}>
                   {loading ? (
                     <Skeleton width={200} variant="text" />
                   ) : (
@@ -157,7 +158,7 @@ function CenterPage() {
                     </Typography>
                   )}
                 </Grid>
-                <Grid xs={2} display="flex" flexDirection="row-reverse">
+                <Grid item xs={2} display="flex" flexDirection="row-reverse">
                   <IconButton>
                     <ArrowBack
                       onClick={handleToBack}
@@ -300,7 +301,7 @@ function CenterPage() {
           </Grid>
           <Divider />
           <Grid container sx={{ pt: 0 }}>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Tabs
                 value={selectedTab}
                 onChange={(e, index) => handleChangeTab(index, e)}
@@ -331,7 +332,7 @@ function CenterPage() {
                 ))}
               </Tabs>
             </Grid>
-            <Grid xs={12} sx={{ mb: { xs: "55px" } }}>
+            <Grid item xs={12} sx={{ mb: { xs: "55px" } }}>
               <SwipeableViews
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                 index={selectedTab}

@@ -11,6 +11,11 @@ function TabsProvider({ children }) {
     getCategories();
   }, []);
 
+  useEffect(() => {
+    // console.log('selectedTab',categories)
+    if(categories.length > 0)getSubCategoryDeliveries(0,categories[selectedTab].id,0);
+  }, [selectedTab]);
+
   const getCategories = async () => {
     try {
       let { data } = await getAllCategoryApi();
@@ -36,16 +41,17 @@ function TabsProvider({ children }) {
     setSubSelectedTab(0);
     setSelectedTab(newValue);
   };
-  const getSubCategoryDeliveries = async (index, category, subCategory) => {
+  const getSubCategoryDeliveries = async (index, categoryId, subCategoryId) => {
     setSubSelectedTab(index);
     // console.log(subCategory);
-    let {data} = await getSubCategoryDelivers(category.id,subCategory.id);
+    let {data} = await getSubCategoryDelivers(categoryId,subCategoryId);
     if(data.status){
       setCategories((prev)=>{
         let newCategories = prev.map(cat=>{
-          if(cat.id === category.id){
+          if(cat.id === categoryId){
             let newSubs=cat.sub.map((subCat)=>{
-              if(subCat.id === subCategory.id){
+              // console.log(subCat);
+              if(subCat.id === subCategoryId){
                 return {...subCat,providers:data.providers}
               }else{
                 return {...subCat}

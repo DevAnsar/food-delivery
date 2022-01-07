@@ -32,15 +32,23 @@ function SideMenu() {
   };
   return (
     <Drawer anchor={"left"} open={showMenu} onClose={handleClose}>
-      <Grid container sx={{ width: {xs:"70vw" , sm:"40vw" ,md:"30vw" ,lg:"30vw",xl:"20vw"}, height: "100vh", p: 2 }}>
+      <Grid
+        container
+        sx={{
+          width: { xs: "70vw", sm: "40vw", md: "30vw", lg: "30vw", xl: "20vw" },
+          height: "100vh",
+          p: 2,
+        }}
+      >
         <Grid
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
         >
           <Grid container>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Grid
+                item
                 xs={12}
                 sx={{ pb: 2 }}
                 display="flex"
@@ -68,8 +76,9 @@ function SideMenu() {
               <Divider />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Grid
+                item
                 xs={12}
                 sx={{ py: 2 }}
                 display="flex"
@@ -116,8 +125,9 @@ function SideMenu() {
               <Divider />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Grid
+                item
                 xs={12}
                 sx={{ py: 2 }}
                 display="flex"
@@ -161,8 +171,9 @@ function SideMenu() {
               <Divider />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Grid
+                item
                 xs={12}
                 sx={{ py: 2 }}
                 display="flex"
@@ -203,10 +214,10 @@ function SideMenu() {
         </Grid>
       </Grid>
       <Grid
-      display='flex'
-      flexDirection='column'
-      justifyContent='center'
-      alignItems='center'
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
       >
         <Typography
           sx={{

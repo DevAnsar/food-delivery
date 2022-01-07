@@ -3,12 +3,12 @@ import { Grid, Typography, colors, Skeleton, Box } from "@mui/material";
 
 import BasketButton from "../layouts/BasketButton";
 
-function CenterProduct({ product ,provider  }) {
+function CenterProduct({ product, provider }) {
   return (
     <Grid container sx={{ my: 1 }}>
       <Grid container>
-        <Grid xs={12} container>
-          <Grid xs={10}>
+        <Grid item xs={12} container>
+          <Grid item xs={10}>
             {product.title ? (
               <Typography
                 sx={{
@@ -28,9 +28,10 @@ function CenterProduct({ product ,provider  }) {
               <Skeleton width={150} variant="text" />
             )}
           </Grid>
-          <Grid xs={2}></Grid>
+          <Grid item xs={2}></Grid>
         </Grid>
         <Grid
+          item
           xs={12}
           container
           direction="row"
@@ -57,7 +58,7 @@ function CenterProduct({ product ,provider  }) {
             <Skeleton width={120} variant="text" />
           )}
         </Grid>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           {product.price ? (
             <Typography
               variant="subtitle1"
@@ -72,18 +73,17 @@ function CenterProduct({ product ,provider  }) {
                 fontWeight: "bold",
               }}
             >
-              {product.price}
-              {" "}
-               تومان
+              {product.price} تومان
             </Typography>
           ) : (
             <Box display="flex" flexDirection="row">
-              <Skeleton width={50} variant="text" sx={{mr:1}} />
+              <Skeleton width={50} variant="text" sx={{ mr: 1 }} />
               <Skeleton width={30} variant="text" />
             </Box>
           )}
         </Grid>
         <Grid
+          item
           xs={12}
           container
           sx={{ mt: 0 }}
@@ -91,14 +91,11 @@ function CenterProduct({ product ,provider  }) {
           flexDirection={"row"}
           justifyContent={"flex-end"}
         >
-          {
-            product.id ? (
-              <BasketButton provider={{...provider}} product={{...product}} />
-            ):(
-              <Skeleton width={28} height={28} variant="circular"  />
-            )
-          }
-
+          {product.id ? (
+            <BasketButton provider={{ ...provider }} product={{ ...product }} />
+          ) : (
+            <Skeleton width={28} height={28} variant="circular" />
+          )}
         </Grid>
       </Grid>
     </Grid>

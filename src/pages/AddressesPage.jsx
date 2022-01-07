@@ -43,7 +43,7 @@ function AddressesPage() {
   };
   const handleClickActionBtn = () => {
     if (getFormStatus()) {
-      setEditingAddress(null)
+      setEditingAddress(null);
       setAddressModalOpen(true);
     } else {
       let address = addresses.filter((a) => a.id === checkedAddressId);
@@ -102,21 +102,20 @@ function AddressesPage() {
     }
   };
 
-  const handleEdit = (address_id)=>{
+  const handleEdit = (address_id) => {
     let address = addresses.filter((a) => a.id === address_id);
     if (address.length > 0) {
-      setEditingAddress(address[0])
+      setEditingAddress(address[0]);
       setAddressModalOpen(true);
     }
-
-
-  }
+  };
   return (
     <Container
       sx={{
         height: "100vh",
       }}
       maxWidth="lg"
+      style={{width:'100%'}}
     >
       <Grid
         display="flex"
@@ -125,6 +124,7 @@ function AddressesPage() {
         alignItems="flex-start"
       >
         <Grid
+          item
           xs={12}
           md={8}
           lg={6}
@@ -140,7 +140,7 @@ function AddressesPage() {
             justifyContent="flex-start"
             alignItems="center"
           >
-            <Grid xs={12} sm={6} md={9} lg={8}>
+            <Grid item xs={12} sm={6} md={9} lg={8}>
               <Typography
                 sx={{
                   mt: { xs: 7, md: 7 },

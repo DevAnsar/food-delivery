@@ -9,12 +9,12 @@ import {
   useTheme,
   ThemeProvider,
   createTheme,
-  Divider
+  Divider,
 } from "@mui/material";
 import SwipeableViews from "react-swipeable-views";
 import { TabPanel } from "../components/layouts/Tabs";
 import { detalBaseLinearGradient } from "../configs/variables";
-import { HeaderBox,PersonalData,MyOrders } from "./../components/profile";
+import { HeaderBox, PersonalData, MyOrders } from "./../components/profile";
 
 const new_theme = createTheme({
   palette: {
@@ -76,7 +76,7 @@ function ProfilePage() {
         </Box>
         <Container maxWidth="md">
           <Grid container sx={{ pt: 0 }}>
-            <Grid xs={12}>
+            <Grid item xs={12}>
               <Tabs
                 value={selectedTab}
                 onChange={(e, index) => handleChangeTab(index, e)}
@@ -91,7 +91,7 @@ function ProfilePage() {
                     key={`cat-${tabIndex}`}
                     sx={{
                       color: colors.grey[700],
-                      p: '15px 10px',
+                      p: "15px 10px",
                       minHeight: { xs: "30px", lg: "40px" },
                       minWidth: { xs: "60px", lg: "70px" },
                     }}
@@ -102,7 +102,7 @@ function ProfilePage() {
               </Tabs>
               <Divider />
             </Grid>
-            <Grid xs={12} sx={{ mb: { xs: "55px" } }}>
+            <Grid item xs={12} sx={{ mb: { xs: "55px" } }}>
               <SwipeableViews
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                 index={selectedTab}

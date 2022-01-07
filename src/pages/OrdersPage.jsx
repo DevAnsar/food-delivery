@@ -12,7 +12,7 @@ import { getMyOrderApi } from "../api";
 
 import toast from "react-hot-toast";
 import EmpityOrderList from "../components/orders/EmpityOrderList";
-import {detalBaseLinearGradient} from './../configs/variables'
+import { detalBaseLinearGradient } from "./../configs/variables";
 
 function OrdersPage() {
   const [orders, setOrders] = useState(null);
@@ -43,7 +43,7 @@ function OrdersPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container"  style={{width:'100%'}}>
       <Box
         sx={{
           backgroundImage: detalBaseLinearGradient,
@@ -52,6 +52,7 @@ function OrdersPage() {
         <Container maxWidth="lg">
           <Grid container>
             <Grid
+              item
               xs={12}
               sx={{
                 pt: { xs: 8, sm: 10, md: 11, lg: 12 },
@@ -70,7 +71,7 @@ function OrdersPage() {
                     md: "0.95rem",
                     lg: "1rem",
                   },
-                  color:colors.common.white
+                  color: colors.common.white,
                 }}
               >
                 سفارشات من
@@ -81,12 +82,8 @@ function OrdersPage() {
       </Box>
       <Container maxWidth="lg">
         <Grid container sx={{ pt: 1, pb: 1 }}>
-          <Grid xs={12}>
-            {
-              orders?.length === 0 && (
-                <EmpityOrderList />
-              )
-            }
+          <Grid item xs={12}>
+            {orders?.length === 0 && <EmpityOrderList />}
             {orders?.map((order, index) => {
               return (
                 <React.Fragment key={`provider-${index}`}>

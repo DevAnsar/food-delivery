@@ -43,7 +43,7 @@ function OrderTraking() {
   };
 
   return (
-    <div className="container">
+    <div className="container"  style={{width:'100%'}}>
       <Box
         sx={{
           backgroundImage: detalBaseLinearGradient,
@@ -52,6 +52,7 @@ function OrderTraking() {
         <Container maxWidth="lg">
           <Grid container>
             <Grid
+              item
               xs={12}
               sx={{
                 pt: { xs: 8, sm: 10, md: 11, lg: 12 },
@@ -81,7 +82,7 @@ function OrderTraking() {
       </Box>
       <Container maxWidth="lg">
         <Grid container sx={{ pt: 1, pb: 1 }}>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             {orders?.length === 0 && <EmpityOrderTraking />}
             {orders?.map((order, index) => {
               return (

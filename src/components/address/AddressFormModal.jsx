@@ -209,6 +209,7 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
           alignItems="flex-start"
         >
           <Grid
+            item
             xs={12}
             md={6}
             lg={6}
@@ -232,7 +233,7 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
                 justifyContent="flex-start"
                 alignItems="center"
               >
-                <Grid xs={12} sm={6} md={9} lg={8}>
+                <Grid item xs={12} sm={6} md={9} lg={8}>
                   <TextField
                     sx={{ mt: 3 }}
                     id="outlined-basic"

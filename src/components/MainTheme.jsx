@@ -48,11 +48,11 @@ function MainTheme({ children, className }) {
       <ThemeProvider theme={theme}>
         <Grid container spacing={1} {...className} sx={{ minHeight: "100%" }}>
           {showTheme && (
-            <Grid item xs={12} md={12}>
+            <Grid  container >
               <NavBar />
             </Grid>
           )}
-          <Grid sx={{ paddingTop: 0, minHeight: "100%" }} xs={12} md={12}>
+          <Grid sx={{ paddingTop: 0, minHeight: "100%" }} container>
             {children}
             {showTheme && <BottomNavigation />}
           </Grid>

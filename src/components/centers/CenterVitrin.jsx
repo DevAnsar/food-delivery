@@ -22,8 +22,8 @@ function CenterVitrin({
     <Grid container sx={{ my: 1 }}>
       <Link to={`/center/${centerId}`}>
         <Grid container>
-          <Grid xs={12} container>
-            <Grid xs={2} container alignItems="center">
+          <Grid item xs={12} container>
+            <Grid item xs={2} container alignItems="center">
               <Avatar
                 alt={name}
                 src={centerAvatar}
@@ -33,7 +33,7 @@ function CenterVitrin({
                 }}
               />
             </Grid>
-            <Grid xs={9}>
+            <Grid item xs={9}>
               <Typography
                 variant="subtitle1"
                 sx={{ display: "flex", alignItems: "center" }}
@@ -65,6 +65,7 @@ function CenterVitrin({
             </Grid>
           </Grid>
           <Grid
+            item
             xs={12}
             container
             direction="row"
@@ -72,13 +73,13 @@ function CenterVitrin({
             alignItems="center"
             sx={{ mt: 1 }}
           >
-            <Grid xs={11}>
+            <Grid item xs={11}>
               <Stack direction="row" sx={{ pb: 1 }} spacing={1}>
                 <ScoreLabel score={3.5} vote={16} />
                 <DeliveryLabel />
               </Stack>
             </Grid>
-            <Grid xs={1}>
+            <Grid item xs={1}>
               {favorite ? (
                 <Favorite sx={{ fontSize: 21, color: "#f44336" }} />
               ) : (

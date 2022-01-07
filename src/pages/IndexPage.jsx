@@ -43,7 +43,7 @@ function IndexPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{width:'100%'}}>
       <Box
         sx={{
           borderBottom: 1,
@@ -59,6 +59,7 @@ function IndexPage() {
             justifyContent="center"
           >
             <Grid
+              item
               xs={12}
               md={8}
               lg={6}
@@ -73,6 +74,7 @@ function IndexPage() {
                   alignItems="center"
                 >
                   <Grid
+                  item
                     xs={1}
                     display="flex"
                     flexDirection="row"
@@ -87,6 +89,7 @@ function IndexPage() {
                     />
                   </Grid>
                   <Grid
+                  item
                     display="flex"
                     flexDirection="row"
                     justifyContent="flex-start"
@@ -113,6 +116,7 @@ function IndexPage() {
                     </Typography>
                   </Grid>
                   <Grid
+                  item
                     xs={1}
                     display="flex"
                     flexDirection="row"
@@ -131,7 +135,7 @@ function IndexPage() {
             </Grid>
           </Grid>
           <Grid container spacing={0}>
-            <Grid xs={4} sx={{ flexGrow: 1 }}>
+            <Grid item xs={4} sx={{ flexGrow: 1 }}>
               {/* market */}
               <Box
                 sx={{
@@ -144,7 +148,7 @@ function IndexPage() {
                 }}
               />
             </Grid>
-            <Grid xs={8} item>
+            <Grid item xs={8} item>
               {/* slider */}
               <Box
                 sx={{
@@ -165,7 +169,7 @@ function IndexPage() {
         </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ padding: 0, height: 1600 }}>
+      <Container maxWidth="lg" sx={{ p: 0 , pb:10,minHeight :{xs:"320px"} }}>
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={selectedTab}
@@ -179,11 +183,11 @@ function IndexPage() {
                 value={selectedTab}
                 index={index}
               >
-                <Stack direction="row" sx={{ pb: 1 }} spacing={1}>
+                <Stack direction="row" sx={{ pb: 1,overflowX:"auto" }} spacing={1}>
                   {category.sub.map((subCategory, index) => (
                     <Chip
                       onClick={() =>
-                        getSubCategoryDeliveries(index, category, subCategory)
+                        getSubCategoryDeliveries(index, category.id, subCategory.id)
                       }
                       sx={{
                         backgroundImage:

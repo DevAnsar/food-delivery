@@ -52,7 +52,7 @@ const NavBar = () => {
             alignItems="center"
             sx={{ flexGrow: 1, display: { xs: "flex", sm: "none" } }}
           >
-            <Grid xs={1}>
+            <Grid item xs={1}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -65,6 +65,7 @@ const NavBar = () => {
               </IconButton>
             </Grid>
             <Grid
+              item
               xs={9}
               display="flex"
               flexDirection="column"
@@ -79,10 +80,11 @@ const NavBar = () => {
           </Grid>
 
           <Grid
-          display='flex'
-          flexDirection='row'
-          alignItems='center'
-          sx={{ flexGrow: 0, display: { xs: "none", sm: "flex" } }}>
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            sx={{ flexGrow: 0, display: { xs: "none", sm: "flex" } }}
+          >
             <ShoppingBasketReview />
             <IconButton
               size="large"
