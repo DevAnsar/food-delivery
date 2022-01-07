@@ -22,6 +22,7 @@ import {
 } from "./../../hooks/useShoppingBasket";
 import CenterProduct from "./CenterProduct";
 import { BrownButton } from "./../buttons";
+import ShoppingBasketEmpityImage from "./../../images/shoping_basket_empity.jpg";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -115,101 +116,144 @@ function ShoppingBasket() {
         maxWidth="md"
       >
         <Grid
-          container
           display="flex"
-          flexDirection="row"
-          justifyContent="center"
-          alignItems="flex-start"
+          flexDirection="column"
+          justifyContent="space-between"
+          sx={{ height: "100%" }}
         >
           <Grid
-            item
-            xs={12}
-            sx={{ pt: 2 }}
+            container
             display="flex"
             flexDirection="row"
-            justifyContent="flex-start"
-            alignItems="center"
+            justifyContent="center"
+            alignItems="flex-start"
           >
-            <Typography
-              onClick={handleGotToCenter}
-              sx={{
-                pr: 1,
-                color: colors.grey[900],
-                fontSize: { xs: "0.9rem", sm: "0.9rem", md: "1rem" },
-                cursor: "pointer",
-              }}
-            >
-              {provider?.name}
-            </Typography>
-
-            <Divider orientation="vertical" flexItem />
-
-            <Typography
-              sx={{
-                pl: 1,
-                color: colors.grey[900],
-                fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.9rem" },
-              }}
-            >
-              حداقل زمان تحویل {provider?.deliveryTime} دقیقه
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sx={{ pt: 3 }}
-            display="flex"
-            flexDirection="column"
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            {products?.map((product, productIndex) => (
-              <React.Fragment key={`key-${productIndex}`}>
-                <CenterProduct product={product} />
-                <Divider />
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid>
-      </Container>
-
-      <AppBar
-        sx={{
-          position: "relative",
-          borderBottom: 1,
-          borderColor: "divider",
-          backgroundImage: detalBaseLinearGradient,
-        }}
-      >
-        <Toolbar>
-          <Container maxWidth="md">
-            <Grid
-              display="flex"
-              flexDirection="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography
-                sx={{
-                  color: colors.common.white,
-                  fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.9rem" },
-                }}
+            {provider !== null && (
+              <Grid
+                item
+                xs={12}
+                sx={{ pt: 2 }}
+                display="flex"
+                flexDirection="row"
+                justifyContent="flex-start"
+                alignItems="center"
               >
-                جمع کل: {getTotalAmount()} تومان
-              </Typography>
-              <BrownButton>
+                <Typography
+                  onClick={handleGotToCenter}
+                  sx={{
+                    pr: 1,
+                    color: colors.grey[900],
+                    fontSize: { xs: "0.9rem", sm: "0.9rem", md: "1rem" },
+                    cursor: "pointer",
+                  }}
+                >
+                  {provider?.name}
+                </Typography>
+
+                <Divider orientation="vertical" flexItem />
+
                 <Typography
                   sx={{
+                    pl: 1,
+                    color: colors.grey[900],
                     fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.9rem" },
                   }}
                 >
-                  تکمیل خرید
+                  حداقل زمان تحویل {provider?.deliveryTime} دقیقه
                 </Typography>
-              </BrownButton>
+              </Grid>
+            )}
+
+            <Grid
+              item
+              xs={12}
+              sx={{ pt: 3 }}
+              display="flex"
+              flexDirection="column"
+              justifyContent="flex-start"
+              alignItems="center"
+            >
+              {products?.map((product, productIndex) => (
+                <React.Fragment key={`key-${productIndex}`}>
+                  <CenterProduct product={product} />
+                  <Divider />
+                </React.Fragment>
+              ))}
             </Grid>
-          </Container>
-        </Toolbar>
-      </AppBar>
+          </Grid>
+
+          {products.length === 0 && (
+            <Grid
+              container
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                maxWidth="md"
+              >
+                <Typography
+                  sx={{ fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" } }}
+                >
+                  ظرف غذات خالیه
+                </Typography>
+
+                <Typography
+                  sx={{ fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" } }}
+                >
+                  همین حالا سفارش بده برات بیاریم
+                </Typography>
+                <img src={ShoppingBasketEmpityImage} style={{ width: "85%" }} />
+              </Grid>
+            </Grid>
+          )}
+        </Grid>
+      </Container>
+
+      {products.length > 0 && (
+        <AppBar
+          sx={{
+            position: "relative",
+            borderBottom: 1,
+            borderColor: "divider",
+            backgroundImage: detalBaseLinearGradient,
+          }}
+        >
+          <Toolbar>
+            <Container maxWidth="md">
+              <Grid
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  sx={{
+                    color: colors.common.white,
+                    fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.9rem" },
+                  }}
+                >
+                  جمع کل: {getTotalAmount()} تومان
+                </Typography>
+                <BrownButton>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.9rem" },
+                    }}
+                  >
+                    تکمیل خرید
+                  </Typography>
+                </BrownButton>
+              </Grid>
+            </Container>
+          </Toolbar>
+        </AppBar>
+      )}
     </Dialog>
   );
 }

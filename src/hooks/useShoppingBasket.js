@@ -82,8 +82,12 @@ function useActionShoppingBasket() {
           }
         });
         newBasket = newBasket.filter((b) => b !== null);
+        let provider=prevBasket.provider;
+        if(newBasket.length === 0){
+          provider = null
+        }
         // console.log('newBasket',newBasket)
-        return { ...prevBasket, products: [...newBasket] };
+        return { ...prevBasket, products: [...newBasket] , provider };
       });
     }
   };
