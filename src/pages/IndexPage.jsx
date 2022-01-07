@@ -169,7 +169,7 @@ function IndexPage() {
         </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ p: 0 , pb:10,minHeight :{xs:"320px"} }}>
+      <Container maxWidth="lg" sx={{ p: 0 , pb:10,minHeight :{xs:"500px" , md:"600px" ,lg:"700px"} }}>
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={selectedTab}

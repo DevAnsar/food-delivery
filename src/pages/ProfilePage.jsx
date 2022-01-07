@@ -66,7 +66,7 @@ function ProfilePage() {
   }
   return (
     <ThemeProvider theme={new_theme}>
-      <div className="container">
+      <div className="container" style={{width:"100%"}}>
         <Box
           sx={{
             backgroundImage: detalBaseLinearGradient,

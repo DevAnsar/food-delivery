@@ -114,7 +114,7 @@ function CenterPage() {
                 item
                 xs={12}
                 sx={{
-                  pt: { xs: 8, sm: 10, md: 11, lg: 12 },
+                  pt: { xs: 9, sm: 10, md: 11, lg: 12 },
                   pb: { xs: 1, sm: 2, md: 3 },
                 }}
                 display="flex"
@@ -159,7 +159,7 @@ function CenterPage() {
                   )}
                 </Grid>
                 <Grid item xs={2} display="flex" flexDirection="row-reverse">
-                  <IconButton>
+                  {/* <IconButton>
                     <ArrowBack
                       onClick={handleToBack}
                       sx={{
@@ -167,7 +167,7 @@ function CenterPage() {
                         fontSize: { xs: "1.5rem", sm: "1.6rem", md: "2rem" },
                       }}
                     />
-                  </IconButton>
+                  </IconButton> */}
                 </Grid>
               </Grid>
             </Grid>

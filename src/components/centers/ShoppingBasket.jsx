@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { common } from "@mui/material/colors";
-import toast from "react-hot-toast";
 import { detalBaseLinearGradient } from "../../configs/variables";
 import {
   useActionShoppingBasket,
