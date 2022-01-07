@@ -43,6 +43,7 @@ function AddressesPage() {
   };
   const handleClickActionBtn = () => {
     if (getFormStatus()) {
+      setEditingAddress(null)
       setAddressModalOpen(true);
     } else {
       let address = addresses.filter((a) => a.id === checkedAddressId);
@@ -101,8 +102,8 @@ function AddressesPage() {
     }
   };
 
-  const handleEdit = (addressId)=>{
-    let address = addresses.filter((a) => a.id === addressId);
+  const handleEdit = (address_id)=>{
+    let address = addresses.filter((a) => a.id === address_id);
     if (address.length > 0) {
       setEditingAddress(address[0])
       setAddressModalOpen(true);
@@ -244,7 +245,7 @@ function AddressesPage() {
           justifyContent="center"
           id="alert-dialog-description"
           sx={{ fontSize: { xs: "0.9rem", md: "1rem", lg: "1.1rem" } }}
-          id="alert-dialog-title"
+          id="alert-dialog-title2"
         >
           توجه
         </DialogTitle>
@@ -273,7 +274,8 @@ function AddressesPage() {
         </DialogActions>
       </Dialog>
       <AddressFormModal
-        address={editingAddress}
+        editAddress={editingAddress}
+        setEditAddress={setEditingAddress}
         open={addressModalOpen}
         setOpen={setAddressModalOpen}
       />

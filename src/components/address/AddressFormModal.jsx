@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   Grid,
@@ -14,13 +14,14 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Button,
+  colors,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
 import { common } from "@mui/material/colors";
-import { OrangeButton } from "../buttons";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { saveAddressApi } from "../../api/Address";
+import { saveAddressApi, editAddressApi } from "../../api/Address";
 import toast from "react-hot-toast";
 import { detalBaseLinearGradient } from "./../../configs/variables";
 import { useSelectedAddress, useAllAddress } from "../../hooks/useAddress";
@@ -49,7 +50,8 @@ const cities = [
     ],
   },
 ];
-function AddressFormModal({ open, setOpen, address }) {
+
+function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
   const {
     register,
     handleSubmit,
@@ -58,8 +60,26 @@ function AddressFormModal({ open, setOpen, address }) {
   const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useSelectedAddress();
   const [, setAllAddress] = useAllAddress();
-  const [loading, setLoading] = React.useState(false);
-  const [selectedCityUnits, setSelectedCityUnits] = React.useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedCityUnits, setSelectedCityUnits] = useState([]);
+  const [formStatus, setFormStatus] = useState(true);
+
+  useEffect(() => {
+    setFormStatus(editAddress === null);
+    setSelectedCityUnits(getDefaultSelectedCityUnits());
+  }, [editAddress]);
+
+  const getDefaultSelectedCityUnits = () => {
+    if (editAddress !== null) {
+      console.log(cities);
+      let selectedCity = cities.filter((c) => c.name === editAddress.city);
+      console.log(selectedCity[0].units);
+      return selectedCity.length === 0 ? [] : selectedCity[0].units;
+    } else {
+      console.log("null");
+      return [];
+    }
+  };
 
   const handleChangeCityInput = (e) => {
     // e.preventDefault();
@@ -74,32 +94,63 @@ function AddressFormModal({ open, setOpen, address }) {
       /*
       send data for save to database
       */
-      const { data } = await saveAddressApi(formData);
-      const { status, address, message } = data;
-      let first_address = false;
-      if (status) {
-        setAllAddress((prevAddresses) => {
-          if (selectedAddress === null) {
-            first_address = true;
-            setSelectedAddress({ ...address });
-          }
-          return [...prevAddresses, { ...address }];
-        });
+
+      if (formStatus) {
+        let res = await saveAddressApi(formData);
+        const { status, address, message } = res.data;
+        let first_address = false;
+        if (status) {
+          setAllAddress((prevAddresses) => {
+            if (selectedAddress === null) {
+              first_address = true;
+              setSelectedAddress({ ...address });
+            }
+            return [...prevAddresses, { ...address }];
+          });
+        } else {
+          toast.error(message);
+        }
         setLoading(false);
         setOpen(false);
         if (first_address) {
           navigate("/");
         }
       } else {
-        toast.error(message);
+        let res = await editAddressApi(editAddress.id, formData);
+        const { status, message } = res.data;
+        let first_address = false;
+        if (status) {
+          setAllAddress((prevAddresses) => {
+            if (selectedAddress !== null) {
+              setSelectedAddress({ ...formData });
+            }
+            let newAddresses = prevAddresses.map((prevAddress) => {
+              if (prevAddress.id === editAddress.id) {
+                return { ...formData, id: editAddress.id };
+              } else {
+                return { ...prevAddress };
+              }
+            });
+            return newAddresses;
+          });
+        } else {
+          toast.error(message);
+        }
+        setLoading(false);
+        setOpen(false);
+        if (first_address) {
+          navigate("/");
+        }
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
 
   const handleClose = () => {
     if (!loading) {
+      setEditAddress(null);
       setOpen(false);
     }
   };
@@ -200,7 +251,7 @@ function AddressFormModal({ open, setOpen, address }) {
                     fullWidth
                     error={errors.name ? true : false}
                     helperText={errors.name?.message}
-                    defaultValue={address?.name}
+                    defaultValue={editAddress !== null ? editAddress.name : ""}
                   />
 
                   <FormControl fullWidth sx={{ mt: 2 }}>
@@ -214,10 +265,12 @@ function AddressFormModal({ open, setOpen, address }) {
                           value: true,
                           message: "انتخاب شهر الزامی هست",
                         },
-                        onChange: (e) => handleChangeCityInput(e),
                       })}
+                      onChange={(e) => handleChangeCityInput(e)}
                       error={errors.city ? true : false}
                       helperText={errors.city?.message}
+                      defaultChecked={editAddress?.city}
+                      defaultValue={editAddress?.city}
                     >
                       {cities.map((city, index) => (
                         <MenuItem
@@ -243,6 +296,8 @@ function AddressFormModal({ open, setOpen, address }) {
                       })}
                       error={errors.unit ? true : false}
                       helperText={errors.unit?.message}
+                      defaultChecked={editAddress?.unit}
+                      defaultValue={editAddress?.unit}
                     >
                       {selectedCityUnits.map((unit, index) => (
                         <MenuItem
@@ -274,17 +329,31 @@ function AddressFormModal({ open, setOpen, address }) {
                     fullWidth
                     error={errors.address ? true : false}
                     helperText={errors.address?.message}
+                    defaultValue={editAddress?.address}
                   />
                 </Grid>
                 <Grid container xs={12} sm={6} md={9} lg={8}>
-                  <OrangeButton
-                    sx={{ mt: 4 }}
+                  <Button
+                    sx={{
+                      color: colors.common.white,
+                      backgroundColor: formStatus
+                        ? colors.orange[500]
+                        : colors.blue[500],
+                      "&:hover": {
+                        backgroundColor: formStatus
+                          ? colors.orange[700]
+                          : colors.blue[700],
+                      },
+                      width: "100%",
+                      height: "50px",
+                      mt: 4,
+                    }}
                     disabled={loading}
                     type="submit"
                     variant="contained"
                   >
-                    ثبت آدرس جدید
-                  </OrangeButton>
+                    {formStatus ? "ثبت آدرس جدید" : "ویرایش آدرس"}
+                  </Button>
                 </Grid>
                 {loading && <CircularProgress sx={{ mt: 3 }} size="1.5rem" />}
               </Grid>
