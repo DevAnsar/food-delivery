@@ -56,6 +56,7 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
   const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useSelectedAddress();
@@ -65,6 +66,19 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
   const [formStatus, setFormStatus] = useState(true);
 
   useEffect(() => {
+    if (editAddress !== null) {
+      console.log("name", editAddress);
+      setValue("name", editAddress.name);
+      setValue("city", editAddress.city);
+      setValue("unit", editAddress.unit);
+      setValue("address", editAddress.address);
+    } else {
+      console.log("name else", editAddress);
+      setValue("name", "");
+      setValue("city", "");
+      setValue("unit", "");
+      setValue("address", "");
+    }
     setFormStatus(editAddress === null);
     setSelectedCityUnits(getDefaultSelectedCityUnits());
   }, [editAddress]);
@@ -252,7 +266,7 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
                     fullWidth
                     error={errors.name ? true : false}
                     helperText={errors.name?.message}
-                    defaultValue={editAddress !== null ? editAddress.name : ""}
+                    // defaultValue={editAddress !== null ? editAddress.name : ""}
                   />
 
                   <FormControl fullWidth sx={{ mt: 2 }}>
@@ -330,7 +344,7 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
                     fullWidth
                     error={errors.address ? true : false}
                     helperText={errors.address?.message}
-                    defaultValue={editAddress?.address}
+                    // defaultValue={editAddress?.address}
                   />
                 </Grid>
                 <Grid container xs={12} sm={6} md={9} lg={8}>
