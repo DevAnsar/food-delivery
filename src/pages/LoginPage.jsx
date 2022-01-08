@@ -84,8 +84,8 @@ function LoginPage() {
       let diff = diffSecound();
       setResendTimer(diff);
       if (diff <= 0) {
-        console.log("diff:", diff);
-        // stopTimer();
+        // console.log("diff:", diff);
+        stopTimer();
       }
     }, 1000);
     setTimerInterval(timerInit);
@@ -167,7 +167,7 @@ function LoginPage() {
       try {
         const res = await sendLoginCodeApi(filterPhoneNumber(), loginCode);
         const { data } = res;
-        console.log(data);
+        // console.log(data);
         const {
           data: { status, message, user },
         } = res;

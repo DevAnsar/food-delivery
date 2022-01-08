@@ -67,13 +67,13 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
 
   useEffect(() => {
     if (editAddress !== null) {
-      console.log("name", editAddress);
+      // console.log("name", editAddress);
       setValue("name", editAddress.name);
       setValue("city", editAddress.city);
       setValue("unit", editAddress.unit);
       setValue("address", editAddress.address);
     } else {
-      console.log("name else", editAddress);
+      // console.log("name else", editAddress);
       setValue("name", "");
       setValue("city", "");
       setValue("unit", "");
@@ -136,7 +136,13 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
         if (status) {
           setAllAddress((prevAddresses) => {
             if (selectedAddress !== null) {
-              setSelectedAddress({ ...formData });
+              setSelectedAddress((prevSelectedAddress)=>{
+                if(prevSelectedAddress.id === editAddress.id){
+                  return { ...formData, id: editAddress.id }
+                }else{
+                  return {...prevSelectedAddress}
+                }
+              });
             }
             let newAddresses = prevAddresses.map((prevAddress) => {
               if (prevAddress.id === editAddress.id) {
