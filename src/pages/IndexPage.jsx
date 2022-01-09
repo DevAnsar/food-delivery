@@ -20,6 +20,8 @@ import { useLocalStorage } from "./../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
 import { useTab } from "../hooks/useTab";
 import { WhiteButton } from "./../components/buttons";
+import superMarketImage from "./../images/super_market.png";
+import SliderImage from "./../images/SliderImage.jpg";
 
 function IndexPage() {
   const theme = useTheme();
@@ -43,7 +45,7 @@ function IndexPage() {
   };
 
   return (
-    <div className="container" style={{width:'100%'}}>
+    <div className="container" style={{ width: "100%" }}>
       <Box
         sx={{
           borderBottom: 1,
@@ -51,7 +53,7 @@ function IndexPage() {
           backgroundImage: detalBaseLinearGradient,
         }}
       >
-        <Container maxWidth="lg">
+        <Container maxWidth="md">
           <Grid
             container
             display="flex"
@@ -61,8 +63,6 @@ function IndexPage() {
             <Grid
               item
               xs={12}
-              md={8}
-              lg={6}
               sx={{ flexGrow: 1, pt: { xs: 9, sm: 10, md: 11, lg: 12 } }}
             >
               <WhiteButton fullWidth onClick={() => navigate("/my-addresses")}>
@@ -74,7 +74,7 @@ function IndexPage() {
                   alignItems="center"
                 >
                   <Grid
-                  item
+                    item
                     xs={1}
                     display="flex"
                     flexDirection="row"
@@ -89,7 +89,7 @@ function IndexPage() {
                     />
                   </Grid>
                   <Grid
-                  item
+                    item
                     display="flex"
                     flexDirection="row"
                     justifyContent="flex-start"
@@ -116,7 +116,7 @@ function IndexPage() {
                     </Typography>
                   </Grid>
                   <Grid
-                  item
+                    item
                     xs={1}
                     display="flex"
                     flexDirection="row"
@@ -134,42 +134,47 @@ function IndexPage() {
               </WhiteButton>
             </Grid>
           </Grid>
-          <Grid container spacing={0}>
-            <Grid item xs={4} sx={{ flexGrow: 1 }}>
+          <Grid
+            container
+            spacing={0}
+            sx={{ mt: 2, mb: 2 }}
+            display="flex"
+            flexDirection="row"
+            justifyContent='space-between'
+          >
+            <Box sx={{  width: "34.5%" }}>
               {/* market */}
-              <Box
-                sx={{
-                  height: 300,
-                  backgroundColor: "primary",
-                  "&:hover": {
-                    backgroundColor: "primary",
-                    opacity: [0.9, 0.8, 0.7],
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item xs={8} item>
-              {/* slider */}
-              <Box
-                sx={{
-                  height: 300,
-                  backgroundColor: "primary",
-                  "&:hover": {
-                    backgroundColor: "primary",
-                    opacity: [0.9, 0.8, 0.7],
-                  },
-                }}
-              />
-            </Grid>
-          </Grid>
 
+              <img
+                src={superMarketImage}
+                style={{ width: "100%", borderRadius: 10 }}
+              />
+            </Box>
+            <Box sx={{width: "61.5%" }}>
+              {/* slider */}
+
+              <img
+                src={SliderImage}
+                style={{ width: "100%", borderRadius: 10 }}
+              />
+            </Box>
+          </Grid>
+        </Container>
+        <Container maxWidth="lg">
           <Grid position="sticky" top="30px">
             <CategoriesTabs />
           </Grid>
         </Container>
       </Box>
 
-      <Container maxWidth="lg" sx={{ p: 0 , pb:10,minHeight :{xs:"500px" , md:"600px" ,lg:"700px"} }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          p: 0,
+          pb: 10,
+          minHeight: { xs: "500px", md: "600px", lg: "700px" },
+        }}
+      >
         <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={selectedTab}
@@ -183,11 +188,19 @@ function IndexPage() {
                 value={selectedTab}
                 index={index}
               >
-                <Stack direction="row" sx={{ pb: 1,overflowX:"auto" }} spacing={1}>
+                <Stack
+                  direction="row"
+                  sx={{ pb: 1, overflowX: "auto" }}
+                  spacing={1}
+                >
                   {category.sub.map((subCategory, index) => (
                     <Chip
                       onClick={() =>
-                        getSubCategoryDeliveries(index, category.id, subCategory.id)
+                        getSubCategoryDeliveries(
+                          index,
+                          category.id,
+                          subCategory.id
+                        )
                       }
                       sx={{
                         backgroundImage:
