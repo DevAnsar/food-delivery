@@ -119,7 +119,7 @@ function AddressesPage() {
     >
       <Grid
         display="flex"
-        direction="row"
+        flexDirection="row"
         justifyContent="center"
         alignItems="flex-start"
       >
@@ -130,13 +130,13 @@ function AddressesPage() {
           lg={6}
           sx={{ pt: 3 }}
           display="flex"
-          direction="column"
+          flexDirection="column"
           justifyContent="flex-start"
           alignItems="center"
         >
           <Grid
             container
-            direction="column"
+            flexDirection="column"
             justifyContent="flex-start"
             alignItems="center"
           >

@@ -118,7 +118,7 @@ function CenterPage() {
                   pb: { xs: 1, sm: 2, md: 3 },
                 }}
                 display="flex"
-                direction="row"
+                flexDirection="row"
                 justifyContent="flex-start"
                 alignItems="center"
               >
@@ -175,7 +175,7 @@ function CenterPage() {
         </Box>
         <Container maxWidth="lg">
           <Grid container sx={{ pt: 1, pb: 1 }}>
-            <Grid xs={2} lg={1} sx={{ position: "relative" }}>
+            <Grid item xs={2} lg={1} sx={{ position: "relative" }}>
               {loading ? (
                 <Skeleton
                   sx={{
@@ -209,7 +209,7 @@ function CenterPage() {
                 />
               )}
             </Grid>
-            <Grid xs={8} lg={9}>
+            <Grid item xs={8} lg={9}>
               {loading ? (
                 <Skeleton width={150} variant="text" />
               ) : online ? (
@@ -266,6 +266,7 @@ function CenterPage() {
               )}
             </Grid>
             <Grid
+            item
               xs={2}
               display="flex"
               flexDirection="row-reverse"
@@ -325,7 +326,7 @@ function CenterPage() {
                       tab.title ? (
                         tab.title
                       ) : (
-                        <Skeleton width={50} variant="text" />
+                        <Skeleton key={`cat-Skeleton-${tabIndex}`} width={50} variant="text" />
                       )
                     }
                   />
