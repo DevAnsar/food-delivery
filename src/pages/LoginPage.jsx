@@ -130,7 +130,7 @@ function LoginPage() {
       try {
         const res = await sendPhoneNumberApi(phone);
         const {
-          data: { status, message, loginCode, mobile },
+          data: { status, message, data:{mobile,loginCode} },
         } = res;
         if (status) {
           // console.log(mobile);
@@ -166,13 +166,11 @@ function LoginPage() {
       setLoading(true);
       try {
         const res = await sendLoginCodeApi(filterPhoneNumber(), loginCode);
-        const { data } = res;
-        // console.log(data);
         const {
-          data: { status, message, user },
+          data: { status, message ,data :{token} },
         } = res;
         if (status) {
-          toggleAuth();
+          toggleAuth(token);
           navigate("/");
         } else {
           // console.log(message);

@@ -33,9 +33,6 @@ function AddressesPage() {
   const [deleteAddressId, setDeleteAddressId] = useState(0);
   const [editingAddress, setEditingAddress] = useState(null);
 
-  useEffect(() => {
-    // getUserAllAddresses();
-  }, []);
 
   const handleSelectAddress = (e) => {
     let newSelectedAddressId = Number(e.target.name);
@@ -164,7 +161,7 @@ function AddressesPage() {
                   mb: { xs: 10 },
                 }}
               >
-                {addresses.map((address, index) => (
+                {addresses?.map((address, index) => (
                   <AddressRow
                     key={`address-${index + Math.random()}`}
                     checked={checkedAddressId === address.id}
@@ -188,7 +185,7 @@ function AddressesPage() {
                     />
                   </Typography>
                 )}
-                {!loading && addresses.length === 0 && (
+                {!loading && addresses?.length === 0 && (
                   <Typography
                     sx={{
                       mt: { xs: 10 },

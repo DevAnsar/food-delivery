@@ -24,34 +24,35 @@ import { useNavigate } from "react-router-dom";
 import { saveAddressApi, editAddressApi } from "../../api/Address";
 import toast from "react-hot-toast";
 import { detalBaseLinearGradient } from "./../../configs/variables";
-import { useSelectedAddress, useAllAddress } from "../../hooks/useAddress";
+import { useSelectedAddress, useAllAddress ,useAddress } from "../../hooks/useAddress";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const cities = [
-  {
-    id: 1,
-    name: "urmia",
-    title: "ارومیه",
-    units: [
-      { id: 2, name: "molavi", title: "مولوی" },
-      { id: 3, name: "meysan", title: "میثم" },
-    ],
-  },
-  {
-    id: 4,
-    name: "tabriz",
-    title: "تبریز",
-    units: [
-      { id: 5, name: "abbasi", title: "محله عباسی" },
-      { id: 5, name: "zaferanie", title: "زعفرانیه" },
-    ],
-  },
-];
+// const cities = [
+//   {
+//     id: 1,
+//     name: "urmia",
+//     title: "ارومیه",
+//     units: [
+//       { id: 2, name: "molavi", title: "مولوی" },
+//       { id: 3, name: "meysan", title: "میثم" },
+//     ],
+//   },
+//   {
+//     id: 4,
+//     name: "tabriz",
+//     title: "تبریز",
+//     units: [
+//       { id: 5, name: "abbasi", title: "محله عباسی" },
+//       { id: 5, name: "zaferanie", title: "زعفرانیه" },
+//     ],
+//   },
+// ];
 
 function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
+  const {cities} =useAddress();
   const {
     register,
     handleSubmit,
@@ -67,16 +68,16 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
 
   useEffect(() => {
     if (editAddress !== null) {
-      // console.log("name", editAddress);
+      console.log("editAddress:", editAddress);
       setValue("name", editAddress.name);
-      setValue("city", editAddress.city);
-      setValue("unit", editAddress.unit);
+      setValue("cityId", editAddress.cityId);
+      setValue("areaId", editAddress.areaId);
       setValue("address", editAddress.address);
     } else {
       // console.log("name else", editAddress);
       setValue("name", "");
-      setValue("city", "");
-      setValue("unit", "");
+      setValue("cityId", "");
+      setValue("areaId", "");
       setValue("address", "");
     }
     setFormStatus(editAddress === null);
@@ -85,12 +86,12 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
 
   const getDefaultSelectedCityUnits = () => {
     if (editAddress !== null) {
-      console.log(cities);
-      let selectedCity = cities.filter((c) => c.name === editAddress.city);
-      console.log(selectedCity[0].units);
-      return selectedCity.length === 0 ? [] : selectedCity[0].units;
+      // console.log(cities);
+      let selectedCity = cities.filter((c) => c.id === editAddress.cityId);
+      console.log(selectedCity[0].areas);
+      return selectedCity.length === 0 ? [] : selectedCity[0].areas;
     } else {
-      console.log("null");
+      // console.log("null");
       return [];
     }
   };
@@ -99,8 +100,8 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
     // e.preventDefault();
     // console.log(e);
     let { value } = e.target;
-    let units = cities.filter((city) => city.name === value)[0].units;
-    setSelectedCityUnits(units);
+    let areas = cities.filter((city) => city.id === value)[0].areas;
+    setSelectedCityUnits(areas);
   };
   const handleFormSubmit = async (formData) => {
     try {
@@ -111,7 +112,7 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
 
       if (formStatus) {
         let res = await saveAddressApi(formData);
-        const { status, address, message } = res.data;
+        const { status, message ,data : {address} } = res.data;
         let first_address = false;
         if (status) {
           setAllAddress((prevAddresses) => {
@@ -131,6 +132,7 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
         }
       } else {
         let res = await editAddressApi(editAddress.id, formData);
+            console.log('editAddressApi:',res);
         const { status, message } = res.data;
         let first_address = false;
         if (status) {
@@ -153,14 +155,16 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
             });
             return newAddresses;
           });
+          setOpen(false);
+          if (first_address) {
+            navigate("/");
+          }
         } else {
           toast.error(message);
         }
         setLoading(false);
-        setOpen(false);
-        if (first_address) {
-          navigate("/");
-        }
+        
+
       }
     } catch (error) {
       setLoading(false);
@@ -281,22 +285,22 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       label="شهر"
-                      {...register("city", {
+                      {...register("cityId", {
                         required: {
                           value: true,
                           message: "انتخاب شهر الزامی هست",
                         },
                       })}
                       onChange={(e) => handleChangeCityInput(e)}
-                      error={errors.city ? true : false}
-                      helperText={errors.city?.message}
-                      defaultChecked={editAddress?.city}
-                      defaultValue={editAddress?.city}
+                      error={errors.cityId ? true : false}
+                      helperText={errors.cityId?.message}
+                      defaultChecked={editAddress?.cityId}
+                      defaultValue={editAddress?.cityId}
                     >
                       {cities.map((city, index) => (
                         <MenuItem
                           key={`cities-${index + Date.now() + Math.random()}`}
-                          value={city.name}
+                          value={city.id}
                         >
                           {city.title}
                         </MenuItem>
@@ -309,21 +313,21 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
                     <Select
                       labelId="demo-simple-select-label"
                       label="محله"
-                      {...register("unit", {
+                      {...register("areaId", {
                         required: {
                           value: true,
                           message: "انتخاب محله الزامی هست",
                         },
                       })}
-                      error={errors.unit ? true : false}
-                      helperText={errors.unit?.message}
-                      defaultChecked={editAddress?.unit}
-                      defaultValue={editAddress?.unit}
+                      error={errors.areaId ? true : false}
+                      helperText={errors.areaId?.message}
+                      defaultChecked={editAddress?.areaId}
+                      defaultValue={editAddress?.areaId}
                     >
                       {selectedCityUnits.map((unit, index) => (
                         <MenuItem
                           key={`unit-${index + Date.now() + Math.random()}`}
-                          value={unit.name}
+                          value={unit.id}
                         >
                           {unit.title}
                         </MenuItem>

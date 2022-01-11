@@ -22,8 +22,8 @@ function App() {
     <ThemeProvider>
       <SplashProvider>
         <QueryParamProvider ReactRouterRoute={RouteAdapter}>
-          <AuthProvider>
-            <AddressProvider>
+          <AddressProvider>
+            <AuthProvider>
               <ShoppingBasketProvider>
                 <MainTheme className="App">
                   <TabsProvider>
@@ -33,8 +33,8 @@ function App() {
                   </TabsProvider>
                 </MainTheme>
               </ShoppingBasketProvider>
-            </AddressProvider>
-          </AuthProvider>
+            </AuthProvider>
+          </AddressProvider>
         </QueryParamProvider>
       </SplashProvider>
     </ThemeProvider>

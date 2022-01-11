@@ -19,7 +19,7 @@ const AddressRow = ({
   id,
   name,
   city,
-  unit,
+  area,
   address,
   checked,
   handleSelectAddress,

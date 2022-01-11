@@ -1,10 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useLocalStorage } from "./../hooks/useLocalStorage";
+import { useAddress } from "./../hooks/useAddress";
 const AuthContext = createContext(undefined);
 
 function AuthProvider({ children }) {
+  const {getUserAllAddresses} = useAddress();
   const [storageValue, setLocalStorageValue] = useLocalStorage("user", {
     loggedIn: false,
+    token: null,
     level: 1,
     lastSendTime: null,
     name: null,
@@ -18,12 +21,14 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     setLocalStorageValue("user", user);
+    getUserAllAddresses(user);
   }, [user]);
 
-  const toggleAuth = () => {
+  const toggleAuth = (loginToken=false) => {
     setUser((prev) => ({
       ...prev,
       loggedIn: !prev.loggedIn,
+      token : loginToken ? loginToken : prev.token
     }));
   };
 

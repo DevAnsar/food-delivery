@@ -1,14 +1,22 @@
 import axios from "axios";
-const BASE_URL="http://localhost:8000/api";
+const getHeaders = ()=>{
+    return {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user'))?.token}`
+    };
+}
+
+const BASE_URL="http://localhost:8000/api/v1";
 
 const Axios = axios.create({
     baseURL :BASE_URL,
+    withCredentials :true
 
 });
 
 const AuthAxios = axios.create({
     baseURL :BASE_URL,
+    withCredentials:true,
+    headers :getHeaders()
 
 });
-
-export {Axios,AuthAxios};
+export {Axios,AuthAxios,getHeaders};

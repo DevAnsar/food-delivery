@@ -1,6 +1,6 @@
 import { AuthAxios } from "./Axios";
 
-const getAllCategoryApi = () => AuthAxios.get(`/delivery/categories`);
+const getAllCategoryApi = () => AuthAxios.get(`/categories`);
 const getSubCategoryDelivers = (categoryId, subCategoryId) =>{
 
     let query=`?categoryId=${categoryId}`;
