@@ -35,17 +35,7 @@ const profileMenu = [
   {
     title: "سفارشات من",
     element: <MyOrders />,
-  },
-
-  {
-    title: "تراکنش های حساب",
-    element: <PersonalData />,
-  },
-
-  {
-    title: "اعتبارات دریافتی",
-    element: <PersonalData />,
-  },
+  }
 ];
 
 function ProfilePage() {

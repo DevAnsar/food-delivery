@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { common } from "@mui/material/colors";
-import { detalBaseLinearGradient } from "../../configs/variables";
+import { detalBaseLinearGradient ,currencyFormatted } from "../../configs/variables";
 import {
   useActionShoppingBasket,
   useShoppingBasket,
@@ -22,6 +22,7 @@ import {
 import CenterProduct from "./CenterProduct";
 import { BrownButton } from "./../buttons";
 import ShoppingBasketEmpityImage from "./../../images/shoping_basket_empity.jpg";
+import toast from 'react-hot-toast';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -42,6 +43,9 @@ function ShoppingBasket() {
     navigate(`/center/${provider.slug}`);
     setIsShow(false);
   };
+  const handlePay = () =>{
+    toast.success('بخش پرداخت و ثبت سفارش در حال توسعه است')
+  }
 
   return (
     <Dialog
@@ -237,9 +241,9 @@ function ShoppingBasket() {
                     fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.9rem" },
                   }}
                 >
-                  جمع کل: {getTotalAmount()} تومان
+                  جمع کل: {currencyFormatted(getTotalAmount())} تومان
                 </Typography>
-                <BrownButton>
+                <BrownButton onClick={handlePay}>
                   <Typography
                     sx={{
                       fontSize: { xs: "0.75rem", sm: "0.85rem", md: "0.9rem" },

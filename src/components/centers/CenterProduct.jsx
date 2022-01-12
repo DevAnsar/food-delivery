@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Grid, Typography, colors, Skeleton, Box } from "@mui/material";
+import {currencyFormatted} from './../../configs/variables'
 
 import BasketButton from "../layouts/BasketButton";
 
@@ -73,7 +74,7 @@ function CenterProduct({ product, provider }) {
                 fontWeight: "bold",
               }}
             >
-              {product.price} تومان
+              {currencyFormatted(product.price)} تومان
             </Typography>
           ) : (
             <Box display="flex" flexDirection="row">

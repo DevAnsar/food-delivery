@@ -9,7 +9,7 @@ function MyOrders() {
   const [orders, setOrders] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    console.log("render my orders");
+    // console.log("render my orders");
     getMyOrders();
   }, []);
 
@@ -17,7 +17,7 @@ function MyOrders() {
     try {
       setLoading(true);
       const { data } = await getMyOrderApi();
-      const { status, message, myOrders } = data;
+      const { status, message, data:{myOrders} } = data;
       // console.log(data);
       if (status) {
         setOrders(myOrders);

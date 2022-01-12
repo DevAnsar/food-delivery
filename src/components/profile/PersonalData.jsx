@@ -34,11 +34,12 @@ function PersonalData() {
 
   useEffect(() => {
     // console.log("render : presonal data");
-    getAuthUser();
     setValue("name",name);
     setValue("email",email);
     setValue("birth",birth);
     setValue("newsletter",newsletter);
+
+    getAuthUser();
   }, []);
 
   const getAuthUser = async () => {
@@ -48,6 +49,11 @@ function PersonalData() {
       const { status, message, data:{user} } = data;
       // console.log(data);
       if (status) {
+        setValue("name",user.name);
+        setValue("email",user.email);
+        setValue("birth",user.birth);
+        setValue("newsletter",user.newsletter);
+        
         setPersonalData({
           ...{ name, email, mobile, birth, newsletter },
           user,
