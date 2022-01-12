@@ -31,7 +31,7 @@ const routes = [
   },
 
   {
-    path: "/center/:id",
+    path: "/center/:slug",
     element: <CenterPage />,
     private: true,
   },

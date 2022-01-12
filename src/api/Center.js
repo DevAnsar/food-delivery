@@ -1,5 +1,5 @@
-import { AuthAxios } from "./Axios";
+import { AuthAxios,getHeaders } from "./Axios";
 
-const getCenterApi = (id) => AuthAxios.get(`/delivery/dtl/${id}`);
+const getCenterApi = (slug) => AuthAxios.get(`/providers/${slug}`,{headers:getHeaders()});
 
 export { getCenterApi };

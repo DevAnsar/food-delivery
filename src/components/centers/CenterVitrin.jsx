@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 function CenterVitrin({
   centerId,
   name,
+  slug,
   centerAvatar,
   description,
   deliveryTime,
@@ -20,7 +21,7 @@ function CenterVitrin({
 }) {
   return (
     <Grid container sx={{ my: 1 }}>
-      <Link to={`/center/${centerId}`}>
+      <Link to={`/center/${slug}`}>
         <Grid container>
           <Grid item xs={12} container>
             <Grid item xs={2} container alignItems="center">
@@ -99,6 +100,7 @@ CenterVitrin.defaultProps = {
 
 CenterVitrin.propTypes = {
   centerId: PropTypes.any.isRequired,
+  slug: PropTypes.string.isRequired,
   favorite: PropTypes.bool,
   centerAvatar: PropTypes.string,
   name: PropTypes.string.isRequired,

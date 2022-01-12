@@ -41,7 +41,7 @@ const new_theme = createTheme({
 function CenterPage() {
   const theme = useTheme();
   const navigate = useNavigate();
-  const { id: deliveryId } = useParams();
+  const { slug: deliverySlug } = useParams();
   const [delivery, setDelivery] = useState({});
   const [menu, setMenu] = useState([
     { title: "", products: [{}, {}] },
@@ -55,19 +55,20 @@ function CenterPage() {
 
   useEffect(() => {
     getDelivery();
-  }, [deliveryId]);
+  }, [deliverySlug]);
 
   const getDelivery = async () => {
     try {
       setLoading(true);
-      const { data } = await getCenterApi(deliveryId);
-      const { status, message, delivery } = data;
+      const { data } = await getCenterApi(deliverySlug);
       // console.log(data);
+      const { status, message, data:{provider} } = data;
+      
       if (status) {
-        setDelivery(delivery);
-        if (delivery.menu && delivery.menu.length > 0) {
+        setDelivery(provider);
+        if (provider.menu && provider.menu.length > 0) {
           setMenu((prevMenu) => {
-            let newMenu = delivery.menu;
+            let newMenu = provider.menu;
             prevMenu = [...newMenu];
             return prevMenu;
           });

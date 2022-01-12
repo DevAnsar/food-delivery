@@ -35,7 +35,7 @@ function TabsProvider({ children }) {
           };
         });
         newCategories[0].sub[0].providers = providers;
-        console.log(newCategories);
+        // console.log(newCategories);
         setCategories(newCategories);
       } else {
         toast.error(message);

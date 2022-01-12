@@ -225,6 +225,7 @@ function IndexPage() {
                         <CenterVitrin
                           centerId={provider.id}
                           name={provider.name}
+                          slug={provider.slug}
                           description={provider.description}
                           deliveryTime={provider.deliveryTime}
                         />
