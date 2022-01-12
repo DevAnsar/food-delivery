@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
-import { getAllCategoryApi,getSubCategoryDelivers } from "./../api/Category";
+import { getAllCategoryApi, getSubCategoryDelivers } from "./../api/Category";
 import toast from "react-hot-toast";
 
 const TabContext = createContext(undefined);
@@ -13,25 +13,32 @@ function TabsProvider({ children }) {
 
   useEffect(() => {
     // console.log('selectedTab',categories)
-    if(categories.length > 0)getSubCategoryDeliveries(0,categories[selectedTab].id,0);
+    if (categories.length > 0)
+      getSubCategoryDeliveries(0, categories[selectedTab].id, 0);
   }, [selectedTab]);
 
   const getCategories = async () => {
     try {
       let { data } = await getAllCategoryApi();
       // console.log('categories:',data);
-      if (data.status) {
-        let categories = data.categories.map((category) => {
+      let {
+        status,
+        message,
+        data: { categories, providers },
+      } = data;
+
+      if (status) {
+        let newCategories = categories.map((category) => {
           return {
             ...category,
             sub: [{ id: 0, title: "همه", providers: [] }, ...category.sub],
           };
         });
-        categories[0].sub[0].providers = data.providers;
-        // console.log(categories);
-        setCategories(categories);
+        newCategories[0].sub[0].providers = providers;
+        console.log(newCategories);
+        setCategories(newCategories);
       } else {
-        toast.error(data.message);
+        toast.error(message);
       }
     } catch (error) {
       console.log(error);
@@ -43,32 +50,34 @@ function TabsProvider({ children }) {
   };
   const getSubCategoryDeliveries = async (index, categoryId, subCategoryId) => {
     setSubSelectedTab(index);
-    // console.log(subCategory);
-    let {data} = await getSubCategoryDelivers(categoryId,subCategoryId);
-    if(data.status){
-      setCategories((prev)=>{
-        let newCategories = prev.map(cat=>{
-          if(cat.id === categoryId){
-            let newSubs=cat.sub.map((subCat)=>{
+    let { data } = await getSubCategoryDelivers(categoryId, subCategoryId);
+    let {
+      message,
+      status,
+      data: { providers },
+    } = data;
+    if (status) {
+      setCategories((prev) => {
+        let newCategories = prev.map((cat) => {
+          if (cat.id === categoryId) {
+            let newSubs = cat.sub.map((subCat) => {
               // console.log(subCat);
-              if(subCat.id === subCategoryId){
-                return {...subCat,providers:data.providers}
-              }else{
-                return {...subCat}
+              if (subCat.id === subCategoryId) {
+                return { ...subCat, providers };
+              } else {
+                return { ...subCat };
               }
             });
-            return {...cat,sub : [...newSubs]}
-          }else{
-            return {...cat}
+            return { ...cat, sub: [...newSubs] };
+          } else {
+            return { ...cat };
           }
         });
-        return [...newCategories]
-      })
-
-    }else{
-      toast.error(data.message)
+        return [...newCategories];
+      });
+    } else {
+      toast.error(message);
     }
-
   };
   return (
     <TabContext.Provider

@@ -30,27 +30,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-// const cities = [
-//   {
-//     id: 1,
-//     name: "urmia",
-//     title: "ارومیه",
-//     units: [
-//       { id: 2, name: "molavi", title: "مولوی" },
-//       { id: 3, name: "meysan", title: "میثم" },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     name: "tabriz",
-//     title: "تبریز",
-//     units: [
-//       { id: 5, name: "abbasi", title: "محله عباسی" },
-//       { id: 5, name: "zaferanie", title: "زعفرانیه" },
-//     ],
-//   },
-// ];
-
 function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
   const {cities} =useAddress();
   const {
@@ -68,7 +47,7 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
 
   useEffect(() => {
     if (editAddress !== null) {
-      console.log("editAddress:", editAddress);
+      // console.log("editAddress:", editAddress);
       setValue("name", editAddress.name);
       setValue("cityId", editAddress.cityId);
       setValue("areaId", editAddress.areaId);
@@ -132,7 +111,6 @@ function AddressFormModal({ open, setOpen, editAddress, setEditAddress }) {
         }
       } else {
         let res = await editAddressApi(editAddress.id, formData);
-            console.log('editAddressApi:',res);
         const { status, message } = res.data;
         let first_address = false;
         if (status) {

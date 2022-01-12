@@ -9,7 +9,7 @@ import {
   Typography,
   colors,
 } from "@mui/material";
-import { ArrowBack, Circle, LocationOn, AccessTime } from "@mui/icons-material";
+import { ArrowBack, LocationOn } from "@mui/icons-material";
 import { common } from "@mui/material/colors";
 import { useTheme } from "@mui/material/styles";
 import SwipeableViews from "react-swipeable-views";
