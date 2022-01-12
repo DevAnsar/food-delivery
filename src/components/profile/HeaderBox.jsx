@@ -81,7 +81,7 @@ function HeaderBox() {
             </Typography>
           </Grid>
           <Grid xs={2} display="flex" flexDirection="row-reverse">
-            <IconButton>
+            {/* <IconButton>
               <ArrowBack
                 onClick={handleToBack}
                 sx={{
@@ -89,7 +89,7 @@ function HeaderBox() {
                   fontSize: { xs: "1.5rem", sm: "1.6rem", md: "2rem" },
                 }}
               />
-            </IconButton>
+            </IconButton> */}
           </Grid>
         </Grid>
       </Grid>

@@ -1,6 +1,6 @@
 import { Box, Typography, colors } from "@mui/material";
 
-const EmpityOrderTraking = () => {
+const EmpityOrderTracking = () => {
   return (
     <Box
       sx={{ minHeight: "200px" }}
@@ -21,4 +21,4 @@ const EmpityOrderTraking = () => {
   );
 };
 
-export default EmpityOrderTraking;
+export default EmpityOrderTracking;

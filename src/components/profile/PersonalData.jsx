@@ -24,6 +24,7 @@ function PersonalData() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue
   } = useForm();
   const {
     user: { name, email, mobile, birth, newsletter },
@@ -32,20 +33,24 @@ function PersonalData() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log("render : presonal data");
+    // console.log("render : presonal data");
     getAuthUser();
+    setValue("name",name);
+    setValue("email",email);
+    setValue("birth",birth);
+    setValue("newsletter",newsletter);
   }, []);
 
   const getAuthUser = async () => {
     try {
       setLoading(true);
       const { data } = await getAuthUserApi();
-      const { status, message, user: userData } = data;
+      const { status, message, data:{user} } = data;
       // console.log(data);
       if (status) {
         setPersonalData({
           ...{ name, email, mobile, birth, newsletter },
-          userData,
+          user,
         });
       } else {
         // console.log(message);
@@ -62,8 +67,7 @@ function PersonalData() {
     try {
       setLoading(true);
       const { data } = await getAuthUserUpdatApi(formData);
-      const { status, message, user } = data;
-      console.log(formData);
+      const { status, message, data :{user} } = data;
       if (status) {
         setPersonalData(user);
       } else {
@@ -122,7 +126,6 @@ function PersonalData() {
                     message: "نام و نام خانوادگی باید بیشتر از 3 کاراکتر باشد",
                   },
                 })}
-                defaultValue={name}
               />
               {/* <Typography ></Typography> */}
             </Grid>
@@ -156,7 +159,6 @@ function PersonalData() {
                   message: "ایمیل مشکل داره",
                 },
               })}
-              defaultValue={email}
             />
           </Grid>
           <Divider />
@@ -205,7 +207,6 @@ function PersonalData() {
                 placeholder="تاریخ تولد"
                 inputProps={{ "aria-label": "user name" }}
                 {...register("birth")}
-                defaultValue={birth}
               />
             </Typography>
           </Grid>

@@ -39,7 +39,7 @@ function ShoppingBasket() {
     }
   };
   const handleGotToCenter = () => {
-    navigate(`/center/${provider.id}`);
+    navigate(`/center/${provider.slug}`);
     setIsShow(false);
   };
 

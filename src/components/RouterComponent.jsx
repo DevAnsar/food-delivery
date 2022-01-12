@@ -9,7 +9,7 @@ import {
   CenterPage,
   SearchPage,
   OrdersPage,
-  OrderTrakingPage,
+  OrderTrackingPage,
   ProfilePage
 } from "../pages";
 
@@ -52,7 +52,7 @@ const routes = [
   },
   {
     path: "/order-traking",
-    element: <OrderTrakingPage />,
+    element: <OrderTrackingPage />,
     private: true,
   },
   {

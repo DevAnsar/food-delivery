@@ -26,7 +26,7 @@ function OrdersPage() {
     try {
       setLoading(true);
       const { data } = await getMyOrderApi();
-      const { status, message, myOrders } = data;
+      const { status, message, data:{myOrders} } = data;
       // console.log(data);
       if (status) {
         setOrders([...orders, ...myOrders]);
@@ -55,7 +55,7 @@ function OrdersPage() {
               item
               xs={12}
               sx={{
-                pt: { xs: 8, sm: 10, md: 11, lg: 12 },
+                pt: { xs: 11, sm: 11, md: 11, lg: 12 },
                 pb: { xs: 1, sm: 2, md: 3 },
               }}
               display="flex"

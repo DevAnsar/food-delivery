@@ -18,7 +18,7 @@ import { useSearch } from "./../hooks/useSearch";
 import { detalBaseLinearGradient } from "./../configs/variables";
 
 function SearchPage() {
-  const { results, setResults } = useSearch();
+  const { results, setResults } = useSearch([]);
   const [query, setQuery] = useQueryParam("q", StringParam);
   const [loading, setLoading] = useState(false);
 
@@ -29,12 +29,10 @@ function SearchPage() {
     try {
       setLoading(true);
       const { data } = await getSearchApi(query);
-      const { status, message, searchResults } = data;
-      // console.log(data);
+      const { status, message, data:{results} } = data;
       if (status) {
-        setResults(searchResults);
+        setResults(results);
       } else {
-        // console.log(message);
         setResults([]);
         toast.error(message);
       }
@@ -60,7 +58,7 @@ function SearchPage() {
               item
               xs={12}
               sx={{
-                pt: { xs: 8, sm: 10, md: 11, lg: 12 },
+                pt: { xs: 11, sm: 11, md: 11, lg: 12 },
                 pb: { xs: 1, sm: 2, md: 3 },
               }}
               display="flex"
@@ -88,6 +86,7 @@ function SearchPage() {
                         md: "0.95rem",
                         lg: "1rem",
                       },
+                      height:{xs:"35px",sm:"40px"}
                     }}
                     placeholder="دنبال هر چی میگردی بگو تا پیدا کنم ..."
                     inputProps={{ "aria-label": "search google maps" }}
@@ -96,7 +95,7 @@ function SearchPage() {
                   />
                   <IconButton
                     type="submit"
-                    sx={{ p: "10px" }}
+                    sx={{ p: "5px" , m:"0 5px" }}
                     aria-label="search"
                     onClick={handleSearch}
                   >
@@ -117,6 +116,7 @@ function SearchPage() {
                   <CenterVitrin
                     centerId={provider.id}
                     name={provider.name}
+                    slug={provider.slug}
                     description={provider.description}
                     deliveryTime={provider.deliveryTime}
                   />
