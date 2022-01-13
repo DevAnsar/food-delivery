@@ -1,5 +1,9 @@
 import React, { useState, createContext, useEffect } from "react";
-import { getAllCategoryApi, getSubCategoryDelivers } from "./../api/Category";
+import {
+  getAllCategoryApi,
+  getSubCategoryDelivers,
+  likeDelivery,
+} from "./../api/Category";
 import toast from "react-hot-toast";
 
 const TabContext = createContext(undefined);
@@ -79,6 +83,35 @@ function TabsProvider({ children }) {
       toast.error(message);
     }
   };
+  const setProviderLike = async (providerId, like) => {
+    let { data } = await likeDelivery(providerId,like);
+    console.log(data);
+    let { status, message , data:{stage} } = data;
+    if (status) {
+      setCategories((prev) => {
+        let newCategories = prev.map((cat) => {
+          let newSubs = cat.sub.map((subCat) => {
+            let new_providers = [];
+            if (subCat.providers) {
+               new_providers = subCat.providers.map((provider) => {
+                if (provider.id === providerId) {
+                  return { ...provider, like: stage };
+                } else {
+                  return { ...provider };
+                }
+              });
+            }
+
+            return { ...subCat, providers: [...new_providers] };
+          });
+          return { ...cat, sub: [...newSubs] };
+        });
+        return [...newCategories];
+      });
+    } else {
+      toast.error(message);
+    }
+  };
   return (
     <TabContext.Provider
       value={{
@@ -87,6 +120,7 @@ function TabsProvider({ children }) {
         setTab,
         subSelectedTab,
         getSubCategoryDeliveries,
+        setProviderLike,
       }}
     >
       {children}

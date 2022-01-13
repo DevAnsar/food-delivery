@@ -211,22 +211,41 @@ function SideMenu() {
               </Grid>
             </Grid>
           </Grid>
+          <Grid
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography
+              sx={{
+                color: colors.red[700],
+                fontSize: { xs: "0.75rem" },
+              }}
+            >
+              این یک نسخه ی کلون شده از اپلبکیشن دتال میباشد و صرفا جنبه ی
+              نمایشی دارد
+            </Typography>
+            <Typography
+              sx={{
+                color: colors.blue[700],
+                fontSize: { xs: "0.75rem" },
+              }}
+            >
+              ساخته شده توسط
+              {" "}
+              <a href="https://github.com/DevAnsar">DevAnsar</a>
+            </Typography>
+            <Typography
+              sx={{
+                color: colors.grey[700],
+                fontSize: { xs: "0.75rem" },
+              }}
+            >
+              2.5.2
+            </Typography>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Typography
-          sx={{
-            color: colors.grey[700],
-            fontSize: { xs: "0.75rem" },
-          }}
-        >
-          2.5.2
-        </Typography>
       </Grid>
     </Drawer>
   );

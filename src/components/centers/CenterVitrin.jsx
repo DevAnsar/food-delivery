@@ -18,13 +18,15 @@ function CenterVitrin({
   description,
   deliveryTime,
   favorite,
+  handleLike,
+  handleDisLike,
 }) {
   return (
     <Grid container sx={{ my: 1 }}>
-      <Link to={`/center/${slug}`}>
-        <Grid container>
-          <Grid item xs={12} container>
-            <Grid item xs={2} container alignItems="center">
+      <Grid container>
+        <Grid item xs={12} container>
+          <Grid item xs={2} container alignItems="center">
+            <Link to={`/center/${slug}`}>
               <Avatar
                 alt={name}
                 src={centerAvatar}
@@ -33,8 +35,10 @@ function CenterVitrin({
                   height: { xs: 56, sm: 70, md: 90, lg: 100 },
                 }}
               />
-            </Grid>
-            <Grid item xs={9}>
+            </Link>
+          </Grid>
+          <Grid item xs={9}>
+            <Link to={`/center/${slug}`}>
               <Typography
                 variant="subtitle1"
                 sx={{ display: "flex", alignItems: "center" }}
@@ -63,33 +67,36 @@ function CenterVitrin({
                 تحویل :{deliveryTime}
                 دقیقه{" "}
               </Typography>
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            container
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{ mt: 1 }}
-          >
-            <Grid item xs={11}>
-              <Stack direction="row" sx={{ pb: 1 }} spacing={1}>
-                <ScoreLabel score={3.5} vote={16} />
-                <DeliveryLabel />
-              </Stack>
-            </Grid>
-            <Grid item xs={1}>
-              {favorite ? (
-                <Favorite sx={{ fontSize: 21, color: "#f44336" }} />
-              ) : (
-                <FavoriteBorder sx={{ fontSize: 21 }} />
-              )}
-            </Grid>
+            </Link>
           </Grid>
         </Grid>
-      </Link>
+        <Grid
+          item
+          xs={12}
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ mt: 1 }}
+        >
+          <Grid item xs={11}>
+            <Stack direction="row" sx={{ pb: 1 }} spacing={1}>
+              <ScoreLabel score={3.5} vote={16} />
+              <DeliveryLabel />
+            </Stack>
+          </Grid>
+          <Grid item xs={1}>
+            {favorite ? (
+              <Favorite
+                onClick={handleDisLike}
+                sx={{ fontSize: 21, color: "#f44336" }}
+              />
+            ) : (
+              <FavoriteBorder onClick={handleLike} sx={{ fontSize: 21 }} />
+            )}
+          </Grid>
+        </Grid>
+      </Grid>
     </Grid>
   );
 }

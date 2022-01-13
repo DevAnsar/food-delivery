@@ -33,6 +33,7 @@ function IndexPage() {
     setTab,
     categories,
     getSubCategoryDeliveries,
+    setProviderLike
   } = useTab();
 
   useEffect(() => {
@@ -40,9 +41,23 @@ function IndexPage() {
       navigate("/my-addresses");
     }
   }, [address]);
+
   const handleChangeIndex = (index) => {
     setTab(index);
   };
+
+  const handleLikeProvider = (e,providerId)=>{
+    e.preventDefault();
+    console.log(providerId);
+    setProviderLike(providerId,true);
+  }
+
+  
+  const handleDisLikeProvider = (e,providerId)=>{
+    e.preventDefault();
+    console.log(providerId);
+    setProviderLike(providerId,false);
+  }
 
   return (
     <div className="container" style={{ width: "100%" }}>
@@ -228,6 +243,9 @@ function IndexPage() {
                           slug={provider.slug}
                           description={provider.description}
                           deliveryTime={provider.deliveryTime}
+                          favorite={provider.like}
+                          handleLike={(e)=>handleLikeProvider(e,provider.id)}
+                          handleDisLike={(e)=>handleDisLikeProvider(e,provider.id)}
                         />
                         <Divider />
                       </React.Fragment>
