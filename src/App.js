@@ -16,6 +16,8 @@ import {
 } from "./providers";
 import { QueryParamProvider } from "use-query-params";
 import RouteAdapter from "./configs/RouteAdapter";
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 function App() {
   return (

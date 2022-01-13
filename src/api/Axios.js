@@ -5,7 +5,8 @@ const getHeaders = ()=>{
     };
 }
 
-const BASE_URL="http://localhost:8000/api/v1";
+// const BASE_URL="http://localhost:8000/api/v1";
+const BASE_URL="http://192.168.1.103:8000/api/v1";
 
 const Axios = axios.create({
     baseURL :BASE_URL,
