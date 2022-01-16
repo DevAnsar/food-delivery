@@ -15,7 +15,7 @@ import { useSideMenu } from "./../../hooks/useSideMenu";
 import { useAuth } from "./../../hooks/useAuth";
 import toast from "react-hot-toast";
 import CallCenter from "./../../images/CallCenter.png";
-
+import { Link } from "react-router-dom";
 function SideMenu() {
   const {
     user: { name },
@@ -165,7 +165,7 @@ function SideMenu() {
                     fontSize: { xs: "0.8rem" },
                   }}
                 >
-                  اشتراک با دوستان
+                  <Link to="/my-shop">مدیریت فروشگاه من</Link>
                 </Button>
               </Grid>
               <Divider />
@@ -232,9 +232,7 @@ function SideMenu() {
                 fontSize: { xs: "0.75rem" },
               }}
             >
-              ساخته شده توسط
-              {" "}
-              <a href="https://github.com/DevAnsar">DevAnsar</a>
+              ساخته شده توسط <a href="https://github.com/DevAnsar">DevAnsar</a>
             </Typography>
             <Typography
               sx={{

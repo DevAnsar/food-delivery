@@ -10,9 +10,9 @@ import {
   SearchPage,
   OrdersPage,
   OrderTrackingPage,
-  ProfilePage
+  ProfilePage,
 } from "../pages";
-
+import { Master, AllMenu, FormMenu } from "./../components/shop";
 //import components
 import { TermsOfUse } from "../components/auth";
 
@@ -91,6 +91,23 @@ function RouterComponent() {
           );
         }
       })}
+
+      <Route
+        path="/my-shop"
+        element={
+          <ProtectedRoute>
+            <Master />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<AllMenu />} />
+        <Route path="menus" element={<AllMenu />} />
+        <Route path="menus/:id/edit" element={<FormMenu mode="edit" />} />
+        <Route path="menus/create" element={<FormMenu mode="add" />} />
+
+        <Route path="payments" element={<AllMenu />} />
+        <Route path="orders" element={<AllMenu />} />
+      </Route>
     </Routes>
   );
 }

@@ -8,8 +8,6 @@ import {
 } from "@mui/material";
 import {
   Delete as DeleteIcon,
-  DeleteOutline,
-  NoteAlt,
   Mode,
 } from "@mui/icons-material";
 import PropTypes from "prop-types";
