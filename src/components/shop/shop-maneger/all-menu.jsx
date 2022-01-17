@@ -146,7 +146,7 @@ function AllMenu() {
             justifyContent="center"
             sx={{ my: 5 }}
           >
-            <CircularProgress />
+            <CircularProgress size={25} />
           </Grid>
         )}
       </Grid>
