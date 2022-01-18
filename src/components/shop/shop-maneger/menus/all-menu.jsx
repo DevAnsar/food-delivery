@@ -17,10 +17,10 @@ import {
   Menu as MenuIcon,
   Mode,
 } from "@mui/icons-material";
-import { getMyMenusApi, deleteMenuApi } from "./../../../api/Shop";
-import YesNoModal from "../../layouts/YesNoModal";
+import { getMyMenusApi, deleteMenuApi } from "./../../../../api/Shop";
+import YesNoModal from "./../../../layouts/YesNoModal";
 import { useNavigate } from "react-router-dom";
-import GreyButton from "./../../buttons/GreyButton";
+import GreyButton from "./../../../buttons/GreyButton";
 
 function AllMenu() {
   const navigate = useNavigate();
@@ -87,6 +87,9 @@ function AllMenu() {
   const handleNewMenu = () => {
     navigate(`/my-shop/menus/create`);
   };
+  const handleGoToProducts = (menuId)=>{
+    navigate(`/my-shop/menus/${menuId}/products`);
+  }
 
   return (
     <Grid container>
@@ -98,7 +101,9 @@ function AllMenu() {
         justifyContent="space-between"
         sx={{ mt: 2, mb: 4 }}
       >
-        <Typography>لیست منوی فروشگاه شما</Typography>
+        <Typography sx={{ fontWeight: "bold" }}>
+          لیست منوی فروشگاه شما
+        </Typography>
         <GreyButton sx={{ width: "100px" }} onClick={handleNewMenu}>
           افزودن منو
         </GreyButton>
@@ -113,15 +118,25 @@ function AllMenu() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell>
-                    <IconButton size="small">
-                      <MenuIcon />
-                    </IconButton>{" "}
-                    {menu.title}
-                  </TableCell>
-                  <TableCell>
-                      {menu.productCount}
-                      {" "}
-                      آیتم
+                    <Grid
+                      display="flex"
+                      flexDirection="row"
+                      alignItems="center"
+                      onClick={()=>handleGoToProducts(menu.id)}
+                      sx={{cursor:"pointer"}}
+                    >
+                      <IconButton size="small">
+                        <MenuIcon />
+                      </IconButton>{" "}
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        {menu.title}
+                      </Typography>
+                      <Typography sx={{ ml: 1 }}>
+                        {"("}
+                        {menu.productCount}
+                        {" آیتم) "}
+                      </Typography>
+                    </Grid>
                   </TableCell>
                   <TableCell align="right">
                     <IconButton>

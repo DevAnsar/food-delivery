@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import toast from "react-hot-toast";
 import { ArrowBack } from "@mui/icons-material";
-import { getMenuApi, createMenuApi, editMenuApi } from "./../../../api/Shop";
+import { getMenuApi, createMenuApi, editMenuApi } from "./../../../../api/Shop";
 import { useNavigate, useParams } from "react-router-dom";
-import GreyButton from "./../../buttons/GreyButton";
-import { serverErrorMessage } from "./../../../configs/variables";
+import GreyButton from "./../../../buttons/GreyButton";
+import { serverErrorMessage } from "./../../../../configs/variables";
 import { useForm } from "react-hook-form";
 
 function FormMenu({ mode }) {
@@ -31,7 +31,7 @@ function FormMenu({ mode }) {
     }else{
         setLoading(false);
     }
-  }, []);
+  }, [mode]);
 
   const getMenu = async () => {
     try {
