@@ -12,7 +12,7 @@ import {
   OrderTrackingPage,
   ProfilePage,
 } from "../pages";
-import { Master, AllMenu, FormMenu , Products ,Product ,FormProduct } from "./../components/shop";
+import { Master, AllMenu, FormMenu , Products ,Product ,FormProduct,ShopInformation ,ShopInformationEdit } from "./../components/shop";
 //import components
 import { TermsOfUse } from "../components/auth";
 
@@ -108,6 +108,8 @@ function RouterComponent() {
         <Route path="menus/:menuId/products/:productId" element={<Product  />} />
         <Route path="menus/:menuId/products/create" element={<FormProduct mode="add"  />} />
         <Route path="menus/:menuId/products/:productId/edit" element={<FormProduct mode="edit"  />} />
+        <Route path="information" element={<ShopInformation />} />
+        <Route path="information/edit" element={<ShopInformationEdit />} />
 
         <Route path="payments" element={<AllMenu />} />
         <Route path="orders" element={<AllMenu />} />

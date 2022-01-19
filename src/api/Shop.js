@@ -20,8 +20,10 @@ const editMenuApi = (menuId, data) =>
 const getMyProductsApi = (menuId) =>
   AuthAxios.get(`/my-shop/menus/${menuId}/products`, { headers: getHeaders() });
 
-const deleteProductApi = (menuId,productId) =>
-  AuthAxios.delete(`/my-shop/menus/${menuId}/products/${productId}`, { headers: getHeaders() });
+const deleteProductApi = (menuId, productId) =>
+  AuthAxios.delete(`/my-shop/menus/${menuId}/products/${productId}`, {
+    headers: getHeaders(),
+  });
 
 const editProductApi = (menuId, productId, data) =>
   AuthAxios.put(`/my-shop/menus/${menuId}/products/${productId}`, data, {
@@ -33,8 +35,18 @@ const getProductApi = (menuId, productId) =>
     headers: getHeaders(),
   });
 
-const createProductApi = (menuId,data) =>
-  AuthAxios.post(`/my-shop/menus/${menuId}/products`, data, { headers: getHeaders() });
+const createProductApi = (menuId, data) =>
+  AuthAxios.post(`/my-shop/menus/${menuId}/products`, data, {
+    headers: getHeaders(),
+  });
+
+//shop information
+const getInformationApi = () =>
+  AuthAxios.get(`/my-shop/information`, { headers: getHeaders() });
+
+const getInformationEditApi = (data) =>
+AuthAxios.put(`/my-shop/information/edit`,data, { headers: getHeaders() });
+
 
 export {
   getMyMenusApi,
@@ -46,5 +58,7 @@ export {
   deleteProductApi,
   editProductApi,
   getProductApi,
-  createProductApi
+  createProductApi,
+  getInformationApi,
+  getInformationEditApi
 };

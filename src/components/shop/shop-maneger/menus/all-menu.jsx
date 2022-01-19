@@ -21,6 +21,8 @@ import { getMyMenusApi, deleteMenuApi } from "./../../../../api/Shop";
 import YesNoModal from "./../../../layouts/YesNoModal";
 import { useNavigate } from "react-router-dom";
 import GreyButton from "./../../../buttons/GreyButton";
+import MyShopNavigation ,{MyShopNavigationList} from './../navigation/Navigations';
+
 
 function AllMenu() {
   const navigate = useNavigate();
@@ -87,19 +89,21 @@ function AllMenu() {
   const handleNewMenu = () => {
     navigate(`/my-shop/menus/create`);
   };
-  const handleGoToProducts = (menuId)=>{
+  const handleGoToProducts = (menuId) => {
     navigate(`/my-shop/menus/${menuId}/products`);
-  }
+  };
 
   return (
     <Grid container>
+      <MyShopNavigation selected={MyShopNavigationList['menus'].path} />
+
       <Grid
         item
         xs={12}
         display="flex"
         flexDirection="row"
         justifyContent="space-between"
-        sx={{ mt: 2, mb: 4 }}
+        sx={{ mb: 4 }}
       >
         <Typography sx={{ fontWeight: "bold" }}>
           لیست منوی فروشگاه شما
@@ -122,8 +126,8 @@ function AllMenu() {
                       display="flex"
                       flexDirection="row"
                       alignItems="center"
-                      onClick={()=>handleGoToProducts(menu.id)}
-                      sx={{cursor:"pointer"}}
+                      onClick={() => handleGoToProducts(menu.id)}
+                      sx={{ cursor: "pointer" }}
                     >
                       <IconButton size="small">
                         <MenuIcon />
