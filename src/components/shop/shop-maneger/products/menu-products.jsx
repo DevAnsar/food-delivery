@@ -16,6 +16,7 @@ import {
   Delete as DeleteIcon,
   Menu as MenuIcon,
   Mode,
+  ArrowBack
 } from "@mui/icons-material";
 import { getMyProductsApi, deleteProductApi } from "./../../../../api/Shop";
 import YesNoModal from "./../../../layouts/YesNoModal";
@@ -24,7 +25,7 @@ import GreyButton from "./../../../buttons/GreyButton";
 
 function MenuProducts() {
   const navigate = useNavigate();
-  const params = useParams();
+  const {menuId} = useParams();
   const [menu, setMenu] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +38,8 @@ function MenuProducts() {
   }, []);
   const getMyProducts = async () => {
     try {
-      let { data } = await getMyProductsApi(params.menuId);
+      console.log("menuId,",menuId);
+      let { data } = await getMyProductsApi(menuId);
       let {
         status,
         message,
@@ -55,8 +57,8 @@ function MenuProducts() {
       toast.error("مشکلی در دریافت اطلاعات به وجود آمد");
     }
   };
-  const handleDeleteAlert = (menuId) => {
-    setDeleteProductId(menuId);
+  const handleDeleteAlert = (productId) => {
+    setDeleteProductId(productId);
     setShowDeleteModal(true);
   };
   const handleDeleteAlertClose = () => {
@@ -66,7 +68,7 @@ function MenuProducts() {
   const handleDeleteProduct = async () => {
     try {
       setDeleteLoading(true);
-      let { data } = await deleteProductApi(deleteProductId);
+      let { data } = await deleteProductApi(menuId,deleteProductId);
       let { status, message } = data;
       if (status) {
         setProducts((prevProducts) => {
@@ -84,15 +86,18 @@ function MenuProducts() {
       console.log(error);
     }
   };
-  const handleEdit = (menuId) => {
-    navigate(`/my-shop/products/${menuId}/edit`);
+  const handleEdit = (productId) => {
+    navigate(`/my-shop/menus/${menuId}/products/${productId}/edit`);
   };
   const handleNewProduct = () => {
-    navigate(`/my-shop/products/create`);
+    navigate(`/my-shop/menus/${menuId}/products/create`);
   };
   const handleGoToProduct = (productId)=>{
-    navigate(`/my-shop/products/${menu.id}/products/${productId}`);
+    navigate(`/my-shop/menus/${menu.id}/products/${productId}`);
   }
+  const handleGoBack = () => {
+    navigate("/my-shop");
+  };
 
   return (
     <Grid container>
@@ -109,9 +114,15 @@ function MenuProducts() {
           {" "}
           {menu?.title}
         </Typography>
-        <GreyButton sx={{ width: "150px" }} onClick={handleNewProduct}>
+        <Grid>
+        <GreyButton sx={{ width: "150px",mr:2 }} onClick={handleNewProduct}>
           افزودن محصول جدید
         </GreyButton>
+        <IconButton onClick={handleGoBack}>
+          <ArrowBack size={30} />
+        </IconButton>
+        </Grid>
+
       </Grid>
       <Grid item xs={12}>
         <TableContainer component={Paper}>
@@ -127,7 +138,7 @@ function MenuProducts() {
                       display="flex"
                       flexDirection="row"
                       alignItems="center"
-                      onClick={()=>handleGoToProduct(menu?menu.id:0,product.id)}
+                      onClick={()=>handleGoToProduct(product.id)}
                       sx={{cursor:"pointer"}}
                     >
                       <IconButton size="small">

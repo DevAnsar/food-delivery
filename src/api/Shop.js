@@ -20,8 +20,21 @@ const editMenuApi = (menuId, data) =>
 const getMyProductsApi = (menuId) =>
   AuthAxios.get(`/my-shop/menus/${menuId}/products`, { headers: getHeaders() });
 
-const deleteProductApi = (productId) =>
-  AuthAxios.delete(`/my-shop/products/${productId}`, { headers: getHeaders() });
+const deleteProductApi = (menuId,productId) =>
+  AuthAxios.delete(`/my-shop/menus/${menuId}/products/${productId}`, { headers: getHeaders() });
+
+const editProductApi = (menuId, productId, data) =>
+  AuthAxios.put(`/my-shop/menus/${menuId}/products/${productId}`, data, {
+    headers: getHeaders(),
+  });
+
+const getProductApi = (menuId, productId) =>
+  AuthAxios.get(`/my-shop/menus/${menuId}/products/${productId}`, {
+    headers: getHeaders(),
+  });
+
+const createProductApi = (menuId,data) =>
+  AuthAxios.post(`/my-shop/menus/${menuId}/products`, data, { headers: getHeaders() });
 
 export {
   getMyMenusApi,
@@ -31,4 +44,7 @@ export {
   editMenuApi,
   getMyProductsApi,
   deleteProductApi,
+  editProductApi,
+  getProductApi,
+  createProductApi
 };
