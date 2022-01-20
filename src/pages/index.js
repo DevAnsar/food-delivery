@@ -6,6 +6,7 @@ import SearchPage from "./SearchPage";
 import OrdersPage from "./OrdersPage";
 import OrderTrackingPage from './OrderTrackingPage';
 import ProfilePage from "./ProfilePage";
+import CreateProviderPage from "./CreateProviderPage";
 
 export {
   IndexPage,
@@ -15,5 +16,6 @@ export {
   SearchPage,
   OrdersPage,
   OrderTrackingPage,
-  ProfilePage
+  ProfilePage,
+  CreateProviderPage
 };

@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
+import ProviderRoute from "./ProviderRoute";
 
 //import pages
 import {
@@ -11,6 +12,7 @@ import {
   OrdersPage,
   OrderTrackingPage,
   ProfilePage,
+  CreateProviderPage
 } from "../pages";
 import { Master, AllMenu, FormMenu , Products ,Product ,FormProduct,ShopInformation ,ShopInformationEdit } from "./../components/shop";
 //import components
@@ -30,6 +32,11 @@ const routes = [
     private: false,
   },
 
+  {
+    path: "/create-provider-account",
+    element: <CreateProviderPage />,
+    private: true,
+  },
   {
     path: "/center/:slug",
     element: <CenterPage />,
@@ -100,19 +107,19 @@ function RouterComponent() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<AllMenu />} />
-        <Route path="menus" element={<AllMenu />} />
-        <Route path="menus/:id/edit" element={<FormMenu mode="edit" />} />
-        <Route path="menus/create" element={<FormMenu mode="add" />} />
-        <Route path="menus/:menuId/products" element={<Products  />} />
-        <Route path="menus/:menuId/products/:productId" element={<Product  />} />
-        <Route path="menus/:menuId/products/create" element={<FormProduct mode="add"  />} />
-        <Route path="menus/:menuId/products/:productId/edit" element={<FormProduct mode="edit"  />} />
-        <Route path="information" element={<ShopInformation />} />
-        <Route path="information/edit" element={<ShopInformationEdit />} />
+        <Route index element={<ProviderRoute><AllMenu /></ProviderRoute>} />
+        <Route path="menus" element={<ProviderRoute><AllMenu /></ProviderRoute>} />
+        <Route path="menus/:id/edit" element={<ProviderRoute><FormMenu mode="edit" /></ProviderRoute>} />
+        <Route path="menus/create" element={<ProviderRoute><FormMenu mode="add" /></ProviderRoute>} />
+        <Route path="menus/:menuId/products" element={<ProviderRoute><Products  /></ProviderRoute>} />
+        <Route path="menus/:menuId/products/:productId" element={<ProviderRoute><Product  /></ProviderRoute>} />
+        <Route path="menus/:menuId/products/create" element={<ProviderRoute><FormProduct mode="add"  /></ProviderRoute>} />
+        <Route path="menus/:menuId/products/:productId/edit" element={<ProviderRoute><FormProduct mode="edit"  /></ProviderRoute>} />
+        <Route path="information" element={<ProviderRoute><ShopInformation /></ProviderRoute>} />
+        <Route path="information/edit" element={<ProviderRoute><ShopInformationEdit /></ProviderRoute>} />
 
-        <Route path="payments" element={<AllMenu />} />
-        <Route path="orders" element={<AllMenu />} />
+        <Route path="payments" element={<ProviderRoute><AllMenu /></ProviderRoute>} />
+        <Route path="orders" element={<ProviderRoute><AllMenu /></ProviderRoute>} />
       </Route>
     </Routes>
   );

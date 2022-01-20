@@ -154,7 +154,7 @@ function ShopInformation() {
                       height={50}
                     />
                   ) : (
-                    shop.description
+                        `${shop.address.city.title} ${shop.address.area.title} ${shop.address.address}`
                   )}
                 </Typography>
               </Grid>

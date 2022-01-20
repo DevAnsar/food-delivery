@@ -1,5 +1,9 @@
 import { AuthAxios, getHeaders } from "./Axios";
 
+//create provider
+const createProviderApi = (data)=>AuthAxios.post(`/auth/providers/create`, data, { headers: getHeaders() });
+
+
 //menus api
 const getMyMenusApi = () =>
   AuthAxios.get(`/my-shop/menus`, { headers: getHeaders() });
@@ -44,7 +48,7 @@ const createProductApi = (menuId, data) =>
 const getInformationApi = () =>
   AuthAxios.get(`/my-shop/information`, { headers: getHeaders() });
 
-const getInformationEditApi = (data) =>
+const informationEditApi = (data) =>
 AuthAxios.put(`/my-shop/information/edit`,data, { headers: getHeaders() });
 
 
@@ -60,5 +64,6 @@ export {
   getProductApi,
   createProductApi,
   getInformationApi,
-  getInformationEditApi
+  informationEditApi,
+  createProviderApi
 };

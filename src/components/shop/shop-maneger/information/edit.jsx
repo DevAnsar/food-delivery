@@ -8,15 +8,14 @@ import {
 } from "@mui/material";
 import toast from "react-hot-toast";
 import { ArrowBack } from "@mui/icons-material";
-import { getMenuApi, createMenuApi, editMenuApi } from "../../../../api/Shop";
+import { getInformationApi, informationEditApi } from "../../../../api/Shop";
 import { useNavigate, useParams } from "react-router-dom";
 import GreyButton from "../../../buttons/GreyButton";
 import { serverErrorMessage } from "../../../../configs/variables";
 import { useForm } from "react-hook-form";
 
-function FormInformation({ mode }) {
+function FormInformation() {
   const navigate = useNavigate();
-  const params = useParams();
   const {
     handleSubmit,
     register,
@@ -26,24 +25,22 @@ function FormInformation({ mode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (mode === "edit") {
-      getMenu();
-    }else{
-        setLoading(false);
-    }
-  }, [mode]);
+    getInformation();
+  }, []);
 
-  const getMenu = async () => {
+  const getInformation = async () => {
     try {
       setLoading(true);
-      let { data } = await getMenuApi(params.id);
+      let { data } = await getInformationApi();
       let {
         status,
         message,
-        data: { menu },
+        data: { delivery },
       } = data;
       if (status) {
-        setValue("title", menu.title);
+        setValue("name", delivery.name);
+        setValue("description", delivery.description);
+        setValue("deliveryTime", delivery.deliveryTime);
       } else {
         toast.error(message);
       }
@@ -54,21 +51,17 @@ function FormInformation({ mode }) {
       toast.error(serverErrorMessage);
     }
   };
-  const handleGoMenus = () => {
-    navigate("/my-shop");
+  const handleGoBack = () => {
+    navigate("/my-shop/information");
   };
   const handleForm = async (formData) => {
     try {
-      let res;
-      if (mode === "edit") {
-        res = await editMenuApi(params.id, formData);
-      } else {
-        res = await createMenuApi(formData);
-      }
+      setLoading(true);
+      let res = await informationEditApi(formData);
       let { status, message } = res.data;
       if (status) {
         toast.success(message);
-        navigate("/my-shop");
+        navigate("/my-shop/information");
       } else {
         toast.error(message);
       }
@@ -86,10 +79,8 @@ function FormInformation({ mode }) {
         justifyContent="space-between"
         sx={{ mt: 2, mb: 4 }}
       >
-        <Typography>
-          {mode === "edit" ? "ویرایش منو" : "افزودن منو برای فروشگاه"}
-        </Typography>
-        <IconButton onClick={handleGoMenus}>
+        <Typography>{"ویرایش اطلاعات فروشگاه"}</Typography>
+        <IconButton onClick={handleGoBack}>
           <ArrowBack />
         </IconButton>
       </Grid>
@@ -109,26 +100,70 @@ function FormInformation({ mode }) {
                 alignItems="center"
               >
                 <TextField
+                  sx={{ mb: 3 }}
                   fullWidth
                   id="outlined-basic"
-                  label="عنوان منو"
+                  label="عنوان فروشگاه"
                   variant="outlined"
-                  {...register("title", {
+                  {...register("name", {
                     required: {
                       value: true,
-                      message: "عنوان منوی خود را وارد کنید",
+                      message: "عنوان فروشگاه خود را وارد کنید",
                     },
                     minLength: {
-                      value: 2,
-                      message: "عنوان منو باید بیشتر از دو کاراکتر باشد",
+                      value: 3,
+                      message: "عنوان  باید بیشتر از سه کاراکتر باشد",
                     },
                   })}
-                  error={errors.title ? true : false}
-                  helperText={errors.title?.message}
+                  error={errors.name ? true : false}
+                  helperText={errors.name?.message}
                   autoFocus
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
+
+                <TextField
+                  sx={{ mb: 3 }}
+                  fullWidth
+                  id="outlined-basic"
+                  label="توضیحات فروشگاه"
+                  variant="outlined"
+                  {...register("description", {
+                    required: {
+                      value: false,
+                    },
+                  })}
+                  error={errors.description ? true : false}
+                  helperText={errors.description?.message}
+                  multiline
+                  rows={2}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+                <TextField
+                  sx={{ mb: 3 }}
+                  fullWidth
+                  id="outlined-basic"
+                  label="مدت زمان تحوبل سفارش به دقیقه "
+                  variant="outlined"
+                  {...register("deliveryTime", {
+                    required: {
+                      value: true,
+                      message: "مدت زمان تحویل سفارش را مشخص کنید",
+                    },
+                  })}
+                  error={errors.deliveryTime ? true : false}
+                  helperText={errors.deliveryTime?.message}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
                 <GreyButton sx={{ my: 2 }} disabled={loading} type="submit">
-                  {mode === "edit" ? "ویرایش" : "افزودن"}
+                  {"ویرایش"}
                 </GreyButton>
                 {loading && <CircularProgress size={20} />}
               </Grid>

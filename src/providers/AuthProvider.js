@@ -8,6 +8,7 @@ function AuthProvider({ children }) {
   const [storageValue, setLocalStorageValue] = useLocalStorage("user", {
     loggedIn: false,
     token: null,
+    provider:null,
     level: 1,
     lastSendTime: null,
     name: null,
@@ -28,9 +29,10 @@ function AuthProvider({ children }) {
     setUser((prev) => ({
       ...prev,
       loggedIn: !prev.loggedIn,
-      token : loginToken ? loginToken : prev.token
+      token : loginToken ? loginToken : prev.token,
     }));
   };
+
 
   const setLevel = (level) => {
     setUser((prev) => ({
@@ -54,6 +56,13 @@ function AuthProvider({ children }) {
     }));
   };
 
+  const setProvider = (provider) => {
+    setUser((prev) => ({
+      ...prev,
+      provider,
+    }));
+  };
+
   const setPersonalData = ({name, gender,email,birth,newsletter}) => {
     setUser((prev) => ({
       ...prev,
@@ -67,7 +76,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, toggleAuth, setLevel, setLastSendTime ,setPersonalData,setMobile }}
+      value={{ user, toggleAuth,setProvider, setLevel, setLastSendTime ,setPersonalData,setMobile }}
     >
       {children}
     </AuthContext.Provider>

@@ -167,10 +167,10 @@ function LoginPage() {
       try {
         const res = await sendLoginCodeApi(filterPhoneNumber(), loginCode);
         const {
-          data: { status, message ,data :{token} },
+          data: { status, message ,data :{token,provder} },
         } = res;
         if (status) {
-          toggleAuth(token);
+          toggleAuth(token,provder);
           navigate("/");
         } else {
           // console.log(message);
